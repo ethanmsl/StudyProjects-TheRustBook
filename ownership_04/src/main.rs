@@ -10,10 +10,17 @@ fn main() {
     // I wish that made it clearer that it changed the value of its input (!)
     println!("{}", s_mut);
 
-
-
     let s1 = String::from("move me, baby!");
     let s2 = s1;
     //println!("{}", s1); // because s1 belongs to s2, println! can't have it!
     println!("{}", s2); // <-- fine! :)
+
+    /*
+    let x = String::from("hello");
+    let mut y = x;
+    y.push_str(" world");
+    println!("{x}");
+    */
+    // Despite 'let x' being immutable "Copy" trait still isn't implemented
+    // so movement of value still occurs.
 }

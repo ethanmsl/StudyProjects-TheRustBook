@@ -30,4 +30,9 @@ fn main() {
     println!("The 1st value of arr is: {}", arr[0]);
     println!("The 2nd value of arr is: {}", arr[1]);
     println!("The 3rd value of arr is: {}", arr[2]);
+
+    // 'f32' a valid type, but 'fsize' *not* accepted for some reason...
+    //let x: fsize = 2.0;
+    let x: f32 = 2.0;
+    println!("x = {x}");
 }
