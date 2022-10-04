@@ -1,6 +1,7 @@
 fn main() {
     /*
      * Not much to see here; pretty standard conditionals
+     * EXCEPT the last section
      */
     let number = 6;
 
@@ -25,4 +26,11 @@ fn main() {
     // ^ conditionin assignment
 
     println!("The value of number is: {number}");
+
+    // prints "()" with debug formatting
+    // ':?' is a formatting option
+    //      triggers use of 'std::fmt::Debug'
+    let x = true;
+    let y = if x {};
+    println!("Debug-formatted value of y: {y:?}");
 }
