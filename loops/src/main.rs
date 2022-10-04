@@ -81,10 +81,15 @@ fn main() {
         };
         println!("The {number}{postfix} Fibonacci number is {fib_num}");
     }
+    println!("-------------------------");
+    let c2f = centigrade_and_farenheit_conv(12.0, 'C');
+    println!("12 deg centigrade is {} {}", c2f.0, c2f.1);
+
+    let f2c = centigrade_and_farenheit_conv(36.2, 'F');
+    println!("36.2 deg farenheit is {} {}", f2c.0, f2c.1);
 }
 
-
-fn fibonacci_nth(n: u32) ->u32 {
+fn fibonacci_nth(n: u32) -> u32 {
     let mut prev = 0;
     let mut current = 1;
     let mut temp_value;
@@ -98,4 +103,23 @@ fn fibonacci_nth(n: u32) ->u32 {
         current = temp_value;
     }
     current
+}
+
+fn centigrade_and_farenheit_conv(deg: f32, unit: char) -> (f32, char) {
+    match unit {
+        'C' => ((deg * 9.0 / 5.0) + 32.0, 'F'),
+        'F' => ((deg - 32.0) * 5.0 / 9.0, 'C'),
+        _ => panic!("Invalid unit"),  //<-- copilot suggested that
+    }
+    // um, lol ... I was going to let copilot write out the function signature
+    // , but it just wrote out the whole thing.
+    // formula seems to check out
+    // the 'panic!("...")' is something I hadn't seen before.
+    // neat to see, but I'll change that
+    //  ^ ... hmm, without enuming the numeric type it might be awkward...
+    //  I could make the whole thing out put strings (and force conversion)
+    //  in some hypothetical consumers that wanted the math.
+    //  ... but for our purposes I'm going to leave the panic on imperfection
+    //  // changed function to return a tuple instead
+    //   ... maybe a nicer syntax for doing that in the match
 }
