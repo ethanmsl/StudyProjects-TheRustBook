@@ -24,6 +24,27 @@ enum IpAddr {
     V6(String),
 }
 
+//---------------------------
+// nice and useful example of an enum
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+impl Message {
+    fn call(&self) {
+        // stuff
+    }
+}
+
+// Option type, as an example
+enum Option<T> {
+    None,
+    Some(T)
+}
+
 fn main() {
     let _four = IpAddrKind::V4;
     let _six = IpAddrKind::V6;
