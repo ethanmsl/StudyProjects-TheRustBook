@@ -1,5 +1,10 @@
 fn main() {
     let s = String::from("hello world");
+    let _s_literal = "hello world";
+    // note that the first is a *String*
+    // , but the second is a *&str* <-- an IMmutable reference
+    // it is a slice of something stored (as constant, basically?)
+    // in "the binary" <-- which doesn't quite makes sense in general
 
     // NOTE: [..5] == [0..5]
     let hello = &s[0..5];
@@ -14,7 +19,7 @@ fn main() {
 
 // example of trying to work with data minus slices
 // using memory-independent, but conceptually-depenedent values
-fn _first_word(s: &String) -> usize /*index of word*/ {
+fn _first_word_raw(s: &String) -> usize /*index of word*/ {
     let bytes = s.as_bytes();
     
     for (i, &item) in bytes.iter().enumerate() {
@@ -24,4 +29,17 @@ fn _first_word(s: &String) -> usize /*index of word*/ {
     }
 
     s.len() // if we don't find a ' '
+}
+
+// examply of above with string slices
+fn _first_word_slice(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i]; // if we find a ' '
+        }
+    }
+
+    &s[..] // if we don't find a ' '
 }
