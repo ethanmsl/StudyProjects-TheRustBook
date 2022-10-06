@@ -31,6 +31,16 @@ fn main() {
     );
 
     println!("derived debug display of rect1 is: {:?}", rect1);
+    println!("derived debug display of rect1 is: {:#?}", rect1);
+//--------------------------
+// looking at debug macro (dbg!)
+    let scale = 3;
+    let rect2 = Rectangle {
+        width: dbg!(30 * scale),  // *
+        height: 50,
+    };
+    // NOTE: 'dbg!' macro takes and then gives ownership
+    dbg!(&rect1);  // *
 }
 
 fn area_raw(width: u32, height: u32) -> u32 {
