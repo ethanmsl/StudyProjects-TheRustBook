@@ -4,18 +4,25 @@ enum IpAddrKind {
     V6,
 }
 
-enum IpAddr {
-    V4(String),
-    V6(String),
-}
-
 // Struct with an enum valued field
 struct IpAddr_struct {
     kind: IpAddrKind,
     address: String,
 }
 
+// effectively a struct x enum with convenient syntax
+// (will be improved below)
+enum IpAddr_string {
+    V4(String),
+    V6(String),
+}
 
+// an improved improved mix of struct and enum
+// like a hetero-product -- each enum value combining with a different struct
+enum IpAddr {
+    V4(u8, u8, u8, u8),
+    V6(String),
+}
 
 fn main() {
     let _four = IpAddrKind::V4;
@@ -42,8 +49,11 @@ fn main() {
 
     // nicer example
     // using an enum with... subtypes(?)
-    let home = IpAddr::V4(String::from("127.0.0.1"))
-    let loopback = IpAddr::V6(String::from("::1"))
+    let home = IpAddr_string::V4(String::from("127.0.0.1"));
+    let loopback = IpAddr_string::V6(String::from("::1"));
+    //
+    // still nicer example
+    let home2 = IpAddr::V4(127, 0, 0, 1);
 }
 
 fn route(IpAddrKind: IpAddrKind) {}
