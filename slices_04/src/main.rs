@@ -1,8 +1,11 @@
 fn main() {
     let s = String::from("hello world");
 
+    // NOTE: [..5] == [0..5]
     let hello = &s[0..5];
     let world = &s[6..11];
+    // NOTE: [6..] == [6..11] (for this string that has 11 elements)
+    // NOTE: [..] == [0..11] (for this string that has 11 elements)
 
     println!("world = {world}");
     println!("hello = {hello}");
