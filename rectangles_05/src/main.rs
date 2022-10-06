@@ -1,3 +1,4 @@
+#[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
@@ -29,7 +30,7 @@ fn main() {
         area_struct(&rect1)
     );
 
-
+    println!("derived debug display of rect1 is: {:?}", rect1);
 }
 
 fn area_raw(width: u32, height: u32) -> u32 {
