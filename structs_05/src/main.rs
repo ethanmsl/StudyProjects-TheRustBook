@@ -44,9 +44,20 @@ fn main() {
         //          and user1 would not be moved.... (!!!)
     };
 
+    // ------tuple structs
+    let _black = Color(0,0,0);
+    let _origin = Point(0,0,0);
 
+    let _subject = AlwaysEqual;
 }
 
+
+// Unit-Like Struct
+struct AlwaysEqual;
+
+// Tuple Structs
+struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
 
 // defining struct
 struct User{
