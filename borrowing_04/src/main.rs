@@ -7,7 +7,23 @@ fn main() {
 
     let mut sm = String::from("welkom");
     let outp = change(&mut sm);
-    println!("output of change() is : {outp}")
+    println!("output of change() is : {outp}");
+
+    // NLL: Non-Lexical Lifetimes
+    //      r3 can take write access to value
+    //      even though read access was had in the
+    //      formal scope
+    //      as the compiler can tell that the read references
+    //      are no longer used at granting of write reference
+    let mut r_source = String::from("hello");
+
+    let r1 = &r_source; // no problem
+    let r2 = &r_source; // no problem
+    println!("{} and {}", r1, r2);
+    // variables r1 and r2 will not be used after this point
+
+    let r3 = &mut r_source; // no problem
+    println!("{}", r3);
 }
 
 fn calculate_length(s: &String) -> usize {
