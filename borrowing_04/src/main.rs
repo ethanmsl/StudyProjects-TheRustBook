@@ -9,6 +9,7 @@ fn main() {
     let outp = change(&mut sm);
     println!("output of change() is : {outp}");
 
+    // -----------------------------------------
     // NLL: Non-Lexical Lifetimes
     //      r3 can take write access to value
     //      even though read access was had in the
@@ -24,6 +25,20 @@ fn main() {
 
     let r3 = &mut r_source; // no problem
     println!("{}", r3);
+
+    // ---------------------------------------
+    // Implicit Borrowing
+    let mut em_source = String::from("explicit move");
+    let em2 = &mut em_source;
+    let _em3 = em2;
+    // println!("em2 = {em2}")
+    // ^ would not be valid as em2 has 'moved'
+    let mut ib_source = String::from("implicit borrow");
+    let ib2 = &mut ib_source;
+    calculate_length(ib2);
+    // implicitely becomes : 'consume(&mut *s2)' ... apparently
+    println!("ib2 = {ib2}");
+    // ^ valid because ib2 is NOT 'moved'
 }
 
 fn calculate_length(s: &String) -> usize {
