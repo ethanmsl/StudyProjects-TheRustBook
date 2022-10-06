@@ -15,10 +15,16 @@ enum Coin {
 }
 
 fn main() {
+    // Coin stuff
     let nickle_coin = Coin::Nickle;
     println!("Value of a Nickle: {}", value_in_cents(nickle_coin));
     let texas_quarter = Coin::Quarter(UsState::Texas);
     println!("Value of a Quarter: {}", value_in_cents(texas_quarter));
+
+    // Adding to 'maybe' stuff
+    let five = Some(5);
+    let _six = plus_one(five);
+    let _none = plus_one(None);
 }
 
 fn value_in_cents(coin: Coin) -> u8 {
@@ -35,4 +41,14 @@ fn value_in_cents(coin: Coin) -> u8 {
         }
         //Coin::Quarter(_) => 25,
     }
+}
+
+
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        None => None,
+        Some(i) => Some(i+1),
+    }
+    // NOTE: "clippy" warns about my "manual implementation"
+    //       and suggests 'x.map(|i| x+1)', instead
 }
