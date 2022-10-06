@@ -7,6 +7,23 @@ fn main() {
         active: true,
         sign_in_count: 1,
     };
+
+    // access fields with dot-notation
+    println!("user1's email: {}", user1.email);
+
+    // let mut user2 = user1.copy();
+    // ^ didn't work '.copy()' method didn't work
+
+    let mut user2 = User {
+        email: String::from("someone@example.com"),
+        username: String::from("someusername123"),
+        active: true,
+        sign_in_count: 1,
+    };
+    println!("user2's email, before change: {}", user2.email);
+    user2.email = String::from("bbooppbboopp@example.com");
+    println!("user2's email, after change: {}", user2.email);
+
 }
 
 
