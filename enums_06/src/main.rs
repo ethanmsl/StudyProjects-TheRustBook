@@ -40,10 +40,12 @@ impl Message {
 }
 
 // Option type, as an example
+/*
 enum Option<T> {
     None,
-    Some(T)
+    Some(T),
 }
+*/
 
 fn main() {
     let _four = IpAddrKind::V4;
@@ -67,14 +69,24 @@ fn main() {
         kind: IpAddrKind::V6,
         address: String::from("::1"),
     };
-
     // nicer example
     // using an enum with... subtypes(?)
-    let home = IpAddr_string::V4(String::from("127.0.0.1"));
-    let loopback = IpAddr_string::V6(String::from("::1"));
+    let _home = IpAddr_string::V4(String::from("127.0.0.1"));
+    let _loopback = IpAddr_string::V6(String::from("::1"));
+
     //
     // still nicer example
-    let home2 = IpAddr::V4(127, 0, 0, 1);
+    let _home2 = IpAddr::V4(127, 0, 0, 1);
+
+    //-------------------------
+    // the Option<t>
+    let _some_number = Some(5);
+    let _some_char = Some('3');
+
+    let _absent_number: Option<i32> = None;
+    // ^ NOTE: the above Option manual definition
+    //         conflicted with this line,
+    //         but not the Explicit 'Some' lines above
 }
 
 fn route(IpAddrKind: IpAddrKind) {}
