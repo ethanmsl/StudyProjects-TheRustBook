@@ -14,6 +14,13 @@ fn main() {
 
     println!("world = {world}");
     println!("hello = {hello}");
+
+
+    // Array Slices
+    let arr = [1,2,3,4,5];
+    let arr_slice = &arr[1..3];
+    assert_eq!(arr_slice, &[2,3]);
+    // ^ panics if false
 }
 
 
@@ -33,6 +40,7 @@ fn _first_word_raw(s: &String) -> usize /*index of word*/ {
 
 // examply of above with string slices
 fn _first_word_slice(s: &String) -> &str {
+    //                  ^ can be generalized by use of '&str'
     let bytes = s.as_bytes();
 
     for (i, &item) in bytes.iter().enumerate() {
