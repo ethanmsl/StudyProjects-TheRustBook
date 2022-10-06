@@ -15,7 +15,7 @@ fn main() {
     // ^ didn't work '.copy()' method didn't work
 
     let mut user2 =
-        build_user("user2@example.com".to_string(), 
+        build_user("user2@example.com".to_string(),
                    "name2".to_string());
     // NOTE: ^ the function doesn't build a mutable struct
     //         mutability is a feature of the variable
@@ -24,6 +24,25 @@ fn main() {
     println!("user2's email, before change: {}", user2.email);
     user2.email = String::from("bbooppbboopp@example.com");
     println!("user2's email, after change: {}", user2.email);
+
+
+    // Struct Update Syntax
+    let _user3 = User{
+        email: String::from("3rd@example.com"),
+        //username: String::from("U3"),
+        ..user1
+        // ^ NOTE: this is nice
+        // WARNING: this *MOVES* user1 values to user3
+        //          WHERE MOVES CAN OCCUR
+        //          (i.e. in 'username')
+        //          and thus user1 no longer has ownership of its data
+        //          (what becomes of the fields that aren't pointed to
+        //          I'm not sure)
+        //          Had neither username nor email been moved
+        //          then all other values (stack values; implm copy trait) 
+        //          would have been copied
+        //          and user1 would not be moved.... (!!!)
+    };
 
 
 }
@@ -38,10 +57,12 @@ struct User{
 }
 
 
-fn build_user(email: String, username: String) -> User {
+// NOTE: special shorthand syntax for sending parameters to fields
+//       (where both have same name)
+fn build_user(email: String, username_param: String) -> User {
     User {
         email,  // Note this is shorthand for "email: email"
-        username,  // Note this is shorthand for "username: username"
+        username: username_param,  // this also works
         active: true,
         sign_in_count: 1,
     }
