@@ -5,7 +5,9 @@ fn main() {
 
     ref_chain(&s1);
 
-
+    let mut sm = String::from("welkom");
+    let outp = change(&mut sm);
+    println!("output of change() is : {outp}")
 }
 
 fn calculate_length(s: &String) -> usize {
@@ -42,3 +44,8 @@ fn ref_chain_broken(s: &String) -> &&&String {
     b
 }
 */
+
+fn change(some_string: &mut String) -> &String {
+    some_string.push_str(", world");
+    some_string
+}
