@@ -14,15 +14,17 @@ fn main() {
     // let mut user2 = user1.copy();
     // ^ didn't work '.copy()' method didn't work
 
-    let mut user2 = User {
-        email: String::from("someone@example.com"),
-        username: String::from("someusername123"),
-        active: true,
-        sign_in_count: 1,
-    };
+    let mut user2 =
+        build_user("user2@example.com".to_string(), 
+                   "name2".to_string());
+    // NOTE: ^ the function doesn't build a mutable struct
+    //         mutability is a feature of the variable
+    //         it's how the compiler requires the handle to be used
+
     println!("user2's email, before change: {}", user2.email);
     user2.email = String::from("bbooppbboopp@example.com");
     println!("user2's email, after change: {}", user2.email);
+
 
 }
 
@@ -33,4 +35,14 @@ struct User{
     username: String,
     email: String,
     sign_in_count: u64,
+}
+
+
+fn build_user(email: String, username: String) -> User {
+    User {
+        email,  // Note this is shorthand for "email: email"
+        username,  // Note this is shorthand for "username: username"
+        active: true,
+        sign_in_count: 1,
+    }
 }
