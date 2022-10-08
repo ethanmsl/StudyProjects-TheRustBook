@@ -1,3 +1,27 @@
+// Unit-Like Struct
+struct AlwaysEqual;
+
+// Tuple Structs
+struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
+
+// defining struct
+struct User{
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+struct PointB {
+    x: i32,
+    y: i32,
+}
+
+impl PointB {
+    fn get_x(&mut self) -> &mut i32 {
+        &mut self.x
+    }
+}
 fn main() {
     // instantiating an instance of struct
     // NOTE: order of field definition doesn't matter
@@ -49,23 +73,17 @@ fn main() {
     let _origin = Point(0,0,0);
 
     let _subject = AlwaysEqual;
+    //---------------------------------
+
+    /*
+    let mut p = PointB {x:1, y:2};
+    let x = p.get_x();
+    *x += 1;
+    println!("{} {}", *x, p.y);
+    */ // will not compile
 }
 
 
-// Unit-Like Struct
-struct AlwaysEqual;
-
-// Tuple Structs
-struct Color(i32, i32, i32);
-struct Point(i32, i32, i32);
-
-// defining struct
-struct User{
-    active: bool,
-    username: String,
-    email: String,
-    sign_in_count: u64,
-}
 
 
 // NOTE: special shorthand syntax for sending parameters to fields
