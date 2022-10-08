@@ -80,7 +80,22 @@ fn main() {
     let x = p.get_x();
     *x += 1;
     println!("{} {}", *x, p.y);
+    //                 ^   ^  both are refs to p, and x is a mutable ref
+    //                 what the *x += 1 does is not yet clear to me...
     */ // will not compile
+
+
+    let _abla = PointB {x:10, y:12};
+    let mut babla = PointB {x:33, y:55};
+    let bab = &babla.x;
+    let bab2 = *bab + 2;
+    println!("bab={bab}, bab2={bab2}");
+
+    let mut p = PointB {x:1, y:2};
+    let x = p.get_x();
+    *x += 1;
+    println!("x = {}", x);
+    println!("*x = {}", *x);
 }
 
 
