@@ -37,21 +37,20 @@ fn value_in_cents(coin: Coin) -> u8 {
         Coin::_Penny => {
             println!("Lucky penny!");
             1
-        },
+        }
         Coin::Nickle => 5,
         Coin::_Dime => 10,
         Coin::Quarter(state) => {
             println!("Ooh, a State quarter from {:?}.", state);
             25
-        }
-        //Coin::Quarter(_) => 25,
+        } //Coin::Quarter(_) ~~> 25,
     }
 }
 
 fn plus_one(x: Option<i32>) -> Option<i32> {
     match x {
         None => None,
-        Some(i) => Some(i+1),
+        Some(i) => Some(i + 1),
     }
     // NOTE: "clippy" warns about my "manual implementation"
     //       and suggests 'x.map(|i| x+1)', instead
