@@ -6,6 +6,11 @@ enum UsState {
     Texas,
     _Vermont,
 }
+/// I'm writing documentation code.
+/// Nominally this supports Markdown syntax.
+/// *bold* and _italic_.
+/// , but apparently that doesn't get picked and highlighted
+/// by my lsp & TreeSitter interface
 enum Coin {
     _Penny,
     Nickle,
