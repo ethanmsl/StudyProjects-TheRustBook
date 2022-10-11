@@ -33,6 +33,10 @@ fn main() {
         //             If it were mutable could you not (as a matter of syntax)
         //             shadow the same type?
         //             (Can you shadow, immutable, the same type?)
+        //  QUESTION: am I confusing shadowing (one synatix name eclipsing
+        //            another for a period of time)
+        //            with syntactic name implicitely holding its type
+        //            and therefore existing as a separate variable?
             Ok(num) => num,
             Err(_) => {
                 println!("I was not able to cast that input as a number.");
