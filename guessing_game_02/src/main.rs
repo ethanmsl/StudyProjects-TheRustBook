@@ -22,10 +22,17 @@ fn main() {
             println!("Game Ended.");
             break;
         }
+        // QUESTION: Why does guesss:String scope past loop?
 
         // let guess: u32 = guess.trim().parse().expect("Please type a number!");
         // ^ alternate way of dealing with the (ok|Err) enum from .parse()
         let guess: u32 = match guess.trim().parse() {
+        //   ^ co-exists with guess:String
+        //   QUESTION: it seems to be the same scope as guess:String
+        //             does it count as shadowing if different type?
+        //             If it were mutable could you not (as a matter of syntax)
+        //             shadow the same type?
+        //             (Can you shadow, immutable, the same type?)
             Ok(num) => num,
             Err(_) => {
                 println!("I was not able to cast that input as a number.");
