@@ -18,12 +18,15 @@ fn main() {
     //      are no longer used at granting of write reference
     let mut r_source = String::from("hello");
 
-    let r1 = &r_source; // no problem
-    let r2 = &r_source; // no problem
+    // these two read-refs are fine
+    let r1 = &r_source;
+    let r2 = &r_source;
     println!("{} and {}", r1, r2);
     // variables r1 and r2 will not be used after this point
 
-    let r3 = &mut r_source; // no problem
+    // this write-ref is fine *because* rust detects that the
+    // r1, r2 refs had their final use *prior* to it
+    let r3 = &mut r_source;
     println!("{}", r3);
 
     // ---------------------------------------
