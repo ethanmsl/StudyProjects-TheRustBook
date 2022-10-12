@@ -36,7 +36,7 @@ fn main() {
     let five = Some(5);
     let _six = plus_one(five);
     let _none = plus_one(None);
-//-----------------------------------------------
+    //-----------------------------------------------
 
     let from0 = decr_twice_v1(0);
     println!("decr_twice_v1(0) = {:?}", from0);
@@ -47,11 +47,36 @@ fn main() {
     let from2 = decr_twice_v1(2);
     println!("decr_twice_v1(2) = {:?}", from2);
 
-//-----------------------------------------------
+    //-----------------------------------------------
     let x = Either::Right(String::from("Hello world!"));
     let value = wonkadoo(&x);
     println!("wonkadoo(x): {value}, x: {x:?}");
 
+    let dice_roll = 9;
+    match dice_roll {
+        //3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        _ => (),
+        // ^ takes anything without variable binding
+        // and ^ returns "unit" value (and type -- the type has just one value)
+    }
+
+    fn add_fancy_hat() {}
+    fn remove_fancy_hat() {}
+
+    // or, equivalently, we could use the slightly
+    // odd re: casual semantics of 'if let'
+    let dice_roll2 = 8;
+    if let 7 = dice_roll2 {
+        remove_fancy_hat();
+    }
+
+    let dice_roll3 = 8;
+    if let 7 = dice_roll3 {
+        remove_fancy_hat();
+    } else {
+        add_fancy_hat();
+    }
 }
 
 fn wonkadoo(x: &Either) -> usize {
@@ -61,7 +86,7 @@ fn wonkadoo(x: &Either) -> usize {
     }
 }
 
-fn decr_twice_v1(n:u32) -> Option<u32> {
+fn decr_twice_v1(n: u32) -> Option<u32> {
     match n {
         0 => None,
         1 => None,
