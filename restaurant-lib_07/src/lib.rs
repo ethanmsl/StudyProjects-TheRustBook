@@ -44,3 +44,17 @@ pub fn eat_at_restauraunt() {
     // Relative path
     front_of_house::hosting::add_to_waitlist();
 }
+
+// -------------------------------
+
+fn deliver_order() {}
+
+mod back_of_house {
+    fn fix_incorrect_order() {
+        cook_order();
+        // uses 'super' keyword to refer to parent module
+        super::deliver_order();
+    }
+
+    fn cook_order() {}
+}
