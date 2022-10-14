@@ -17,8 +17,12 @@
 
 
 mod front_of_house {
-    mod hosting {
-        fn add_to_waitlist() {}
+    // 'pub mod' allows ancestor modules to refer to it, but does not provide
+    // access to its member functions
+    // I'm not sure what the purpose of non-pub modules would be -- a module
+    // where you couldn't access it or anything within it?  ... to what purpose?
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
 
         fn seat_at_table() {}
     }
