@@ -72,4 +72,9 @@ fn main() {
     println!("map: {:?}", map);
     println!("------------------------------");
 
+
+    // NOTE: `SipHash` is apparently the default hashing algorithm
+    //      it trades some speed for anti-DoS security
+    //      other "hasher"s an be specified
+
 }
