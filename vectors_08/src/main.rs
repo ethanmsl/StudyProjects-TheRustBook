@@ -2,6 +2,9 @@
 
 #[allow(unused_variables)]
 fn main() {
+    // // this will result in a compiler error; it needs a type declaration
+    // let mut v_mysterious_type = Vec::new();
+
     let v_tbd: Vec<i32> = Vec::new();
     let v_known = vec![1, 2, 3];
 
@@ -27,5 +30,40 @@ fn main() {
         Some(twentieth) => println!("The twentieth element is {}", twentieth),
         None => println!("There is no twentieth element."),
     }
+
+    // auto-looping through a vector
+    let v = vec!['a', 'b', 'c'];
+    for i in &v {
+        println!("{i}");
+    }
+
+    let mut v = vec![0, 1, 2];
+    for i in &mut v {
+        *i += 50;
+    }
+    for i in &v {
+        println!("{i}");
+    }
+
+
+// -----------------------------------
+    // enum typed vectors
+    #[derive(Debug)]
+    enum SpreadsheetCell {
+        Int(i32),
+        Float(f64),
+        Text(String),
+    }
+
+    let row = vec![
+        SpreadsheetCell::Int(3),
+        SpreadsheetCell::Text(String::from("blue")),
+        SpreadsheetCell::Float(10.12),
+    ];
+
+    for row in &row {
+        println!("This row from row is {:?}", row);
+    }
+
 
 }
