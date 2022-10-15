@@ -39,6 +39,10 @@ mod front_of_house {
     }
 }
 
+// can also declare 'pub use ...' and... I think that makes the aliasing
+// essentially work outside of the scope it's declared in...
+// I'm not yet sure ... sounds like this will be revisited at least in 
+// Ch14, so confident I'll have some examples to work it out with
 use crate::front_of_house::hosting;
 
 pub fn whatever_name() {
