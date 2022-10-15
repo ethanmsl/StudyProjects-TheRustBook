@@ -36,6 +36,14 @@ mod front_of_house {
     }
 }
 
+use crate::front_of_house::hosting;
+
+pub fn whatever_name() {
+    // making use of the 'use' declaration above
+    // MUST be in same scope as a 'use' statement enabling access to 'hosting'
+    hosting::add_to_waitlist();
+}
+
 mod back_of_house {
     fn fix_incorrect_order() {
         cook_order();
