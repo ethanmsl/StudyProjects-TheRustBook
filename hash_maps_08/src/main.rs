@@ -26,4 +26,16 @@ fn main() {
     for (key, value) in &scores {
         println!("key: {}, value: {}", key, value);
     }
+
+    // WARNING: copy vs move of values inserted into HashMap requires awareness
+
+    let field_name = String::from("Favorite color");
+    let field_value = String::from("Blue");
+
+    let mut map = HashMap::new();
+    map.insert(field_name, field_value);
+    // field_name and field_value have moved their values to map
+    // // the following code will create an error:
+    // println!("field_name: {}, field_value: {}", field_name, field_value);
+
 }
