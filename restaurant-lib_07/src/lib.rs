@@ -21,7 +21,7 @@ use std::io::Result as IoResult;
 
 use std::{cmp::Ordering, io};
 //       ^ "nested paths"
-use std::io::{self, Write};
+// use std::io::{self, Write};
 //             ^ defines 'use std::io'
 use std::collections::*;
 //                    ^ brings everything into name space
@@ -32,7 +32,7 @@ use std::collections::*;
 // this brings our module into scope
 mod moving_to_another_file;
 
-pub use crate::moving_to_another_file;
+//pub use crate::moving_to_another_file;
 
 mod front_of_house {
     // 'pub mod' allows ancestor modules to refer to it, but does not provide
