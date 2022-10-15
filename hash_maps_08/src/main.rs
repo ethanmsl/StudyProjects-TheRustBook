@@ -77,4 +77,12 @@ fn main() {
     //      it trades some speed for anti-DoS security
     //      other "hasher"s an be specified
 
+
+
+    // ------------- (unrelated; trying .enumerate() )-------------
+    for (index, val) in "ABCDEF".chars().enumerate() {
+        println!("index: {}, val: {}", index, val);
+    }
+
+
 }
