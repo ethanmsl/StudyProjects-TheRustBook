@@ -62,6 +62,18 @@ fn main() {
     println!("&({s1})[0..=0] = {}", h);
 
     let hello = "Здравствуйте";
-    let answer = &hello[0..=1];
-    println!("&({hello})[0..=1] = {}", answer);
+    let answer = &hello[0..4];
+    println!("&({hello})[0..4] = {}", answer);
+
+// WARNING: an 'inappropriate' string slice will cause a ¡panic!
+    // // e.g.
+    // let answer = &hello[0..3];
+    // println!("&({hello})[0..3] = {}", answer);
+
+    // using the "..".chars() method
+    let word = "नमस्ते";
+    println!("word is {word}");
+    for char in word.chars() {
+        println!("char: - {} -", char);
+    }
 }
