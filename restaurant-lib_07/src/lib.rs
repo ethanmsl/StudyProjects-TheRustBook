@@ -19,6 +19,16 @@ use std::fmt::Result;
 use std::io::Result as IoResult;
 //                  ^ 'as'
 
+use std::{cmp::Ordering, io};
+//       ^ "nested paths"
+use std::io::{self, Write};
+//             ^ defines 'use std::io'
+use std::collections::*;
+//                    ^ brings everything into name space
+//                    often used to import tests ('...test::*')
+//                    ^ only items at that level or also all their children
+//                      and paths to their children...?
+
 mod front_of_house {
     // 'pub mod' allows ancestor modules to refer to it, but does not provide
     // access to its member functions
