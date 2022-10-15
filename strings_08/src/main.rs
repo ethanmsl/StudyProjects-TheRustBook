@@ -50,4 +50,18 @@ fn main() {
 
     let s = format!("{}-{}-{}", s1, s2, s3);
     println!("s is {}", s);
+
+    let s1 = String::from("hello");
+    // let h = s1[0];  //<-- won't compile; not valid string indexing
+    let h = &s1[0..=0];
+    //      ^ hmm, without this I get a complain that all local variables must
+    //      have a static size, which is no good for strings
+    //      so it looks like it doesn't want to move the string there, but it's
+    //      happy with a reference....
+    //      ... but I can define local variables as strings... so I'm not following
+    println!("&({s1})[0..=0] = {}", h);
+
+    let hello = "Здравствуйте";
+    let answer = &hello[0..=1];
+    println!("&({hello})[0..=1] = {}", answer);
 }
