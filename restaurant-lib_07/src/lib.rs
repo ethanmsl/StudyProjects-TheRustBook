@@ -15,6 +15,9 @@
 //     }
 // }
 
+use std::fmt::Result;
+use std::io::Result as IoResult;
+//                  ^ 'as'
 
 mod front_of_house {
     // 'pub mod' allows ancestor modules to refer to it, but does not provide
