@@ -29,6 +29,11 @@ use std::collections::*;
 //                    ^ only items at that level or also all their children
 //                      and paths to their children...?
 
+// this brings our module into scope
+mod moving_to_another_file;
+
+pub use crate::moving_to_another_file;
+
 mod front_of_house {
     // 'pub mod' allows ancestor modules to refer to it, but does not provide
     // access to its member functions
