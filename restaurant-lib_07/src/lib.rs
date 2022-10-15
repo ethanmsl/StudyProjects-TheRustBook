@@ -36,8 +36,45 @@ mod front_of_house {
     }
 }
 
+mod back_of_house {
+    fn fix_incorrect_order() {
+        cook_order();
+        // uses 'super' keyword to refer to parent module
+        super::deliver_order();
+    }
+
+    fn cook_order() {}
+
+
+    // even though struct is public
+    // it's fields are variable public/private
+    pub struct Breakfast {
+        pub toast: String,
+        seasonal_fruit: String,
+    }
+
+    // this public function gives 'outsiders' a way to set the private field
+    impl Breakfast {
+        pub fn summer (toast: &str) -> Breakfast {
+            Breakfast {
+                toast: String::from(toast),
+                seasonal_fruit: String::from("peaches"),
+            }
+        }
+    }
+}
 
 pub fn eat_at_restauraunt() {
+    // Order a breakfast in the summer with Rye toast
+    let mut meal = back_of_house::Breakfast::summer("Rye");
+    // Change our mind about what bread we'd like
+    meal.toast = String::from("Wheat");
+    println!("I'd like {} toast please", meal.toast);
+
+    // The next line won't compile if we uncomment it; we're not allowed
+    // to see or modify the seasonal fruit that comes with the meal
+    // meal.seasonal_fruit = String::from("blueberries");
+
     // Absolute path
     crate::front_of_house::hosting::add_to_waitlist();
 
@@ -49,12 +86,4 @@ pub fn eat_at_restauraunt() {
 
 fn deliver_order() {}
 
-mod back_of_house {
-    fn fix_incorrect_order() {
-        cook_order();
-        // uses 'super' keyword to refer to parent module
-        super::deliver_order();
-    }
 
-    fn cook_order() {}
-}
