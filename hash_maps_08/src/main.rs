@@ -38,4 +38,38 @@ fn main() {
     // // the following code will create an error:
     // println!("field_name: {}, field_value: {}", field_name, field_value);
 
+
+    // ------------- Ovewriting a value -------------
+    let mut scores = HashMap::new();
+
+    scores.insert(String::from("Blue"), 10);
+    println!("scores: {:?}", scores);
+    scores.insert(String::from("Blue"), 25);
+    println!("scores: {:?}", scores);
+    println!("------------------------------");
+
+    // ------------- Conditional adding of a key:value -------------
+    let mut scores = HashMap::new();
+
+    scores.insert(String::from("Blue"), 10);
+    println!("scores: {:?}", scores);
+    
+    scores.entry(String::from("Yellow")).or_insert(50);
+    println!("scores: {:?}", scores);
+    scores.entry(String::from("Blue")).or_insert(50);
+    println!("scores: {:?}", scores);
+    println!("------------------------------");
+
+    // ------------- Updating a value conditioned on old value -------------
+    let text = "hello world wonderful world";
+    //                     ^ lack of ',' intended
+    let mut map = HashMap::new();
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+
+    println!("map: {:?}", map);
+    println!("------------------------------");
+
 }
