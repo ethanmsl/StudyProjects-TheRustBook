@@ -76,4 +76,9 @@ fn main() {
     for char in word.chars() {
         println!("char: - {} -", char);
     }
+    for byte in word.bytes() {
+        println!("char: - {} -", byte);
+    }
+    // NOTE: it appears that there was no ownership taken over 'word' 
+    //       by those loops or methods
 }
