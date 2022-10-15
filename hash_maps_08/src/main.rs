@@ -19,5 +19,11 @@ fn main() {
     //                 ^ get ref to val
     //                                  ^ copy ref's data
     //                                           ^ extract the T from the Some(T)
-    println!("score: {score}")
+    println!("score: {score}");
+
+    // looping oveer key:value pairs in a hashmap
+    // Note: looping order is ambiguous to the programmer
+    for (key, value) in &scores {
+        println!("key: {}, value: {}", key, value);
+    }
 }
