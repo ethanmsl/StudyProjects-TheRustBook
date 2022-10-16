@@ -59,6 +59,32 @@ impl<T> PointHomo<T> {
     // }
 }
 
+// example to show that type naming convenctions can be varied from underlying
+// struct -- e.g. for purpose of clarity here
+// (actually the books example is unclear here: text weems to suggest that as
+// the purpose, but then it renames the struct's type variables in the same
+// example ... :shrug:)
+// WARNING: This can take types (a,b), (c,d) and put out (a,d)
+//          ... the signature actually makes this clear, so that should be fine
+//          ('warning' probably not needed here), but it's still important
+//          to note ... even though this is an impl on xxx(a,b) and it returns
+//          an xxx(...) it returns an xxx(a, _), with a potentially different
+//          type signature.
+impl<X1, Y1> PointHetero<X1, Y1> {
+    // takex x from main point and y from a secondary input point
+    fn mixup<X2, Y2>(self, other: PointHetero<X2, Y2>) -> PointHetero<X1, Y2> {
+        // hmmm... I wanted to create a new point
+        // , but I don't think I can do that without implementing
+        // 'copy' on the input struct elements
+        // so just going to allow a move instead
+        PointHetero {
+            x: self.x,
+            y: other.y,
+        }
+        // returns the above Point
+    }
+}
+
 //NOTE: we can implement methods for specific types only!
 //QUESTION: what's the story on generic and specific methods with name collision
 //         hierarchy of defaults or unallowable conflict?
@@ -128,6 +154,15 @@ fn main() {
     let p_f32: PointHomo<f32> = PointHomo { x: 12.0, y: 11.11 };
     let dist = p_f32.distance_from_origin();
     println!("point at: {:?}, which has dist from origin: {},", p_f32, dist);
+//---------------------------------------------------
+    // type mix-alation
+    //  P<a,b>.f(<P<c,d>) -> P<a,d>
+    let p1 = PointHetero { x: 5, y: 10.4 };
+    let p2 = PointHetero { x: "Hello", y: 'c' };
+    println!("p1: {:?}", p1);
+    println!("p2: {:?}", p2);
+    let p3 = p1.mixup(p2);
+    println!("p3: {:?}", p3);
 }
 
 
