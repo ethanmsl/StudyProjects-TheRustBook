@@ -26,7 +26,7 @@ fn largest_char(list: &[char]) -> &char {
 
 // generic struct -- single type variable
 #[derive(Debug)]
-struct Point_homo<T> {
+struct PointHomo<T> {
     x: T,
     y: T,
 }
@@ -36,13 +36,14 @@ struct Point_homo<T> {
 //       Overloading/~multiple-dispatch is not enabled for these structs
 //       (probably for the best -- but I can see arguments either way)
 #[derive(Debug)]
-struct Point_hetero<T, U> {
+#[allow(dead_code)]
+struct PointHetero<T, U> {
     x: T,
     y: U,
 }
 
 // implementing typed methods for Point_homo(<T>)
-impl<T> Point_homo<T> {
+impl<T> PointHomo<T> {
     fn x_val(&self) -> &T {
         &self.x
     }
@@ -62,7 +63,7 @@ impl<T> Point_homo<T> {
 //QUESTION: what's the story on generic and specific methods with name collision
 //         hierarchy of defaults or unallowable conflict?
 // here we define methods for Point_homo specific to f32 float type
-impl Point_homo<f32>{
+impl PointHomo<f32>{
     fn distance_from_origin(&self) -> f32 {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
     }
@@ -104,9 +105,9 @@ fn main() {
 //---------------------------------------------------
     // Using Generic Struct to take variable types
     //     seems very neat -- curious about specifics!
-    let integer = Point_homo {x: 5, y: 10 };
-    let float = Point_homo { x: 1.0, y: 4.0 };
-    let float2: Point_homo<f32> = Point_homo { x: 1.0, y: 4.0 };
+    let integer = PointHomo {x: 5, y: 10 };
+    let float = PointHomo { x: 1.0, y: 4.0 };
+    let float2: PointHomo<f32> = PointHomo { x: 1.0, y: 4.0 };
     println!("struct 'integer': {:?}", integer);
     println!("struct 'float': {:?}", float);
     println!("struct 'float2': {:?}", float2);
@@ -116,15 +117,15 @@ fn main() {
     // // meant was...' seems like quite a good thing)
     // let wont_work = Point_homo { x:5, y: 4.0 };
     // but we can define a Point_hetero<T,U> that allows different typed fields
-    let will_work = Point_hetero { x:5, y: 4.0 };
+    let will_work = PointHetero { x:5, y: 4.0 };
     println!("struct 'will_work': {:?}", will_work);
 //---------------------------------------------------
     // using typed methods
-    let p = Point_homo { x: 5, y: 10 };
+    let p = PointHomo { x: 5, y: 10 };
     println!("p.x = {}", p.x_val());
 
     // we can define methods that only operate on specific types
-    let p_f32: Point_homo<f32> = Point_homo { x: 12.0, y: 11.11 };
+    let p_f32: PointHomo<f32> = PointHomo { x: 12.0, y: 11.11 };
     let dist = p_f32.distance_from_origin();
     println!("point at: {:?}, which has dist from origin: {},", p_f32, dist);
 }
