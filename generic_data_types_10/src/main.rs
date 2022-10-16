@@ -46,6 +46,26 @@ impl<T> Point_homo<T> {
     fn x_val(&self) -> &T {
         &self.x
     }
+
+    // // this is not allowable if we have the same-named function in the 
+    // // type-specific impl(ementation) block below
+    // // (likely TLDR: there's no allowed multiple-dispatch/function overloading
+    // //               allowed.  -- if we wanted that sort of functionality
+    // //               we'd, presumably, do it with internal logic in a function
+    // //               accepting generic types)
+    // fn distance_from_origin(&self) -> f32 {
+    //     return 0.0
+    // }
+}
+
+//NOTE: we can implement methods for specific types only!
+//QUESTION: what's the story on generic and specific methods with name collision
+//         hierarchy of defaults or unallowable conflict?
+// here we define methods for Point_homo specific to f32 float type
+impl Point_homo<f32>{
+    fn distance_from_origin(&self) -> f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
 }
 
 // generic accepting size sorter
@@ -102,6 +122,11 @@ fn main() {
     // using typed methods
     let p = Point_homo { x: 5, y: 10 };
     println!("p.x = {}", p.x_val());
+
+    // we can define methods that only operate on specific types
+    let p_f32: Point_homo<f32> = Point_homo { x: 12.0, y: 11.11 };
+    let dist = p_f32.distance_from_origin();
+    println!("point at: {:?}, which has dist from origin: {},", p_f32, dist);
 }
 
 
