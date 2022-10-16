@@ -6,7 +6,7 @@ fn largest_i32(list: &[i32]) -> &i32 {
         if item > largest {
             largest = item;
         }
-    };
+    }
 
     largest
 }
@@ -19,7 +19,7 @@ fn largest_char(list: &[char]) -> &char {
         if item > largest {
             largest = item;
         }
-    };
+    }
 
     largest
 }
@@ -48,7 +48,7 @@ impl<T> PointHomo<T> {
         &self.x
     }
 
-    // // this is not allowable if we have the same-named function in the 
+    // // this is not allowable if we have the same-named function in the
     // // type-specific impl(ementation) block below
     // // (likely TLDR: there's no allowed multiple-dispatch/function overloading
     // //               allowed.  -- if we wanted that sort of functionality
@@ -71,7 +71,16 @@ impl<T> PointHomo<T> {
 //          an xxx(...) it returns an xxx(a, _), with a potentially different
 //          type signature.
 impl<X1, Y1> PointHetero<X1, Y1> {
+    //    ^                   ^    QUESTION: why do I declare those twice?
+    //                                       can they be different?
     // takex x from main point and y from a secondary input point
+    // NOTE: the declaration of Type-Var Names for mixup is somewhat confusing...
+    //       we declared 'mixup<X2, Y2>', which are the names we use for the
+    //       accessory input, but X1, Y1 are still available from the
+    //       'impl<X1, Y1>' declaration.
+    //       what if mixup() had 2 different accessory inputs with separate
+    //       type variables allowed...?
+    //       ^ SEE: 'triple_mixup()' below, which looks to addres that
     fn mixup<X2, Y2>(self, other: PointHetero<X2, Y2>) -> PointHetero<X1, Y2> {
         // hmmm... I wanted to create a new point
         // , but I don't think I can do that without implementing
@@ -85,11 +94,35 @@ impl<X1, Y1> PointHetero<X1, Y1> {
     }
 }
 
+#[allow(dead_code)]
+struct Point3DHetero<T, U, V> {
+    x: T,
+    y: U,
+    z: V,
+}
+
+#[allow(dead_code)]
+impl<T, U, V> Point3DHetero<T, U, V> {
+    // mix three points together
+    // Point3DHeteero, other1, other2 -- where all three take different types
+    fn triple_mixup<X2, Y2, Z2, X3, Y3, Z3>(
+        self,
+        other1: Point3DHetero<X2, Y2, Z2>,
+        other2: Point3DHetero<X3, Y3, Z3>,
+    ) -> Point3DHetero<T, Y2, Z3> {
+        Point3DHetero {
+            x: self.x,
+            y: other1.y,
+            z: other2.z,
+        }
+    }
+}
+
 //NOTE: we can implement methods for specific types only!
 //QUESTION: what's the story on generic and specific methods with name collision
 //         hierarchy of defaults or unallowable conflict?
 // here we define methods for Point_homo specific to f32 float type
-impl PointHomo<f32>{
+impl PointHomo<f32> {
     fn distance_from_origin(&self) -> f32 {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
     }
@@ -103,7 +136,7 @@ fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
         if item > largest {
             largest = item;
         }
-    };
+    }
 
     largest
 }
@@ -119,8 +152,8 @@ fn main() {
     let char_list = vec!['y', 'm', 'a', 'q'];
     let result = largest_char(&char_list);
     println!("The largest char in {:?} is: {}", char_list, result);
-//---------------------------------------------------
-//  Using Generic Types
+    //---------------------------------------------------
+    //  Using Generic Types
     let number_list = vec![34, 50, 25, 100, 65];
     let result = largest(&number_list);
     println!("The largest number in {:?} is: {}", number_list, result);
@@ -128,10 +161,10 @@ fn main() {
     let char_list = vec!['y', 'm', 'a', 'q'];
     let result = largest(&char_list);
     println!("The largest char in {:?} is: {}", char_list, result);
-//---------------------------------------------------
+    //---------------------------------------------------
     // Using Generic Struct to take variable types
     //     seems very neat -- curious about specifics!
-    let integer = PointHomo {x: 5, y: 10 };
+    let integer = PointHomo { x: 5, y: 10 };
     let float = PointHomo { x: 1.0, y: 4.0 };
     let float2: PointHomo<f32> = PointHomo { x: 1.0, y: 4.0 };
     println!("struct 'integer': {:?}", integer);
@@ -139,13 +172,13 @@ fn main() {
     println!("struct 'float2': {:?}", float2);
     // // Point_homo<T> operates over a single type
     // // notable, 5 & 4.0 aren't both cast/interepreted as floats, instead it
-    // // refuses to compile -- (this desire for clarity, 'to be clear what you 
+    // // refuses to compile -- (this desire for clarity, 'to be clear what you
     // // meant was...' seems like quite a good thing)
     // let wont_work = Point_homo { x:5, y: 4.0 };
     // but we can define a Point_hetero<T,U> that allows different typed fields
-    let will_work = PointHetero { x:5, y: 4.0 };
+    let will_work = PointHetero { x: 5, y: 4.0 };
     println!("struct 'will_work': {:?}", will_work);
-//---------------------------------------------------
+    //---------------------------------------------------
     // using typed methods
     let p = PointHomo { x: 5, y: 10 };
     println!("p.x = {}", p.x_val());
@@ -153,8 +186,11 @@ fn main() {
     // we can define methods that only operate on specific types
     let p_f32: PointHomo<f32> = PointHomo { x: 12.0, y: 11.11 };
     let dist = p_f32.distance_from_origin();
-    println!("point at: {:?}, which has dist from origin: {},", p_f32, dist);
-//---------------------------------------------------
+    println!(
+        "point at: {:?}, which has dist from origin: {},",
+        p_f32, dist
+    );
+    //---------------------------------------------------
     // type mix-alation
     //  P<a,b>.f(<P<c,d>) -> P<a,d>
     let p1 = PointHetero { x: 5, y: 10.4 };
@@ -168,5 +204,3 @@ fn main() {
     //       de facto public within scope (?) <--TODO: clarify that
     println!("p3.x: {}, p3.y: {}", p3.x, p3.y)
 }
-
-
