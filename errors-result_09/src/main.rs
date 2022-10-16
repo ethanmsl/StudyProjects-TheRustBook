@@ -5,9 +5,15 @@
 
 use std::fs::{self, File};
 use std::io::{self, ErrorKind, Read};
+use std::error::Error;
 
 #[allow(unused_variables)]
-fn main() {
+//         V so the main function can actually have (some) return types
+// NOTE: main() will now return a 0 if it returns an Ok()
+//       , and non-0 if it returns an Err()
+// NOTE: main may return any types that implement the:
+//       'std::process::Termination' trait'
+fn main() -> Result<(), Box<dyn Error>> {
     // // the assignment will succeed even if the file isn't found, but the
     // // variable's value will be of type Error
     // let greeting_file_result = File::open("hello.txt");
@@ -44,7 +50,7 @@ fn main() {
     // let greeting_file_result = File::open("hello.txt")
     //     .expect("hello.txt should be included in this project");
 
-
+    Ok(())
 }
 
 
