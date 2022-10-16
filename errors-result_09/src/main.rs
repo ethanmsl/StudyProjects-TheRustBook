@@ -3,7 +3,7 @@
 //     Err(E),
 // }
 
-use std::fs::File;
+use std::fs::{self, File};
 use std::io::{self, ErrorKind, Read};
 
 #[allow(unused_variables)]
@@ -97,4 +97,12 @@ fn read_username_from_file_chaining() -> Result<String, io::Error> {
     File::open("hello.txt")?.read_to_string(&mut username)?;
 
     Ok(username)
+}
+
+
+#[allow(dead_code)]
+// ------------- Propagating errors, using fs::.. -------------
+fn read_username_from_file_fs() -> Result<String, io::Error> {
+    fs::read_to_string("hello.txt")
+    // ^ an in std library solution to all this
 }
