@@ -81,6 +81,10 @@ impl<X1, Y1> PointHetero<X1, Y1> {
     //                                       NOTE: unsuccesfull attempt to implement that
     //                                       below in commented out Point3DHetero impl code
     //                                       MAYBE: it's just for listing traits...
+    //                                       SEE: added comments (& stackoverflow link)
+    //                                            that seem to answer it, with
+    //                                            TLDR: declare all unique vars
+    //                                                  in struct<...> signature
     // takex x from main point and y from a secondary input point
     // NOTE: the declaration of Type-Var Names for mixup is somewhat confusing...
     //       we declared 'mixup<X2, Y2>', which are the names we use for the
@@ -128,6 +132,18 @@ impl<T, U, V> Point3DHetero<T, U, V> {
 
 // // This does not compile
 // // I'm not sure what the story on impl signature and struct signatures is yet
+// NOTE: see this stack overflow on impl<> sig declarations:
+// https://stackoverflow.com/questions/45473626/why-does-rust-require-generic-type-declarations-after-the-impl-keyword/45473717#45473717
+//  TLDR: looks like the following 3 styles are viable:
+//        (1) impl<T, U, V> Structo<T, U, V> { ... }         <--full freedom
+//        (2) impl          Structo<i32, u32, char> { ... }  <--concretes
+//        (3) impl<U, V>    Structo<V, U, V> { ... }         <--repetition constraint
+//        TLDR: I *think*, you have to declare every unique variable type in 
+//                         the struct signature
+//                  so: impl<A, D> Structo<A, A, i32, D> { ... }
+//                    would be a thing, for example
+//                    More and future testing to confirm/expand
+//
 // #[allow(dead_code)]
 // impl<T> Point3DHetero<T, U, V> {
 //     fn x_val(&self) -> &T {
