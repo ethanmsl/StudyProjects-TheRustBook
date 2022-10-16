@@ -1,8 +1,8 @@
 # RustBookProjects
 Projects from "The Rust Programming Language" / "THE Rust Book" / standard Rust Intro.
 
-
-
+**The Rust Programming Language** -- Rust 1.62 -- Steve Klabnik and Carol Nichols  
+  experimental/enhanced version -- Will Crichton & (?)
 
 For Reference, using learning experiment version from Brown: [(Brown) Rust Book](https://rust-book.cs.brown.edu/experiment-intro.html)
 
