@@ -73,6 +73,14 @@ impl<T> PointHomo<T> {
 impl<X1, Y1> PointHetero<X1, Y1> {
     //    ^                   ^    QUESTION: why do I declare those twice?
     //                                       can they be different?
+    //                                       probably if I only want to pass some
+    //                                       of the points variables to the methods
+    //                                       the impl<...> def coudl be different
+    //                                       e.g. if I had an impl block that only
+    //                                       operated on one field of a struct
+    //                                       NOTE: unsuccesfull attempt to implement that
+    //                                       below in commented out Point3DHetero impl code
+    //                                       MAYBE: it's just for listing traits...
     // takex x from main point and y from a secondary input point
     // NOTE: the declaration of Type-Var Names for mixup is somewhat confusing...
     //       we declared 'mixup<X2, Y2>', which are the names we use for the
@@ -117,6 +125,15 @@ impl<T, U, V> Point3DHetero<T, U, V> {
         }
     }
 }
+
+// // This does not compile
+// // I'm not sure what the story on impl signature and struct signatures is yet
+// #[allow(dead_code)]
+// impl<T> Point3DHetero<T, U, V> {
+//     fn x_val(&self) -> &T {
+//         &self.x
+//     }
+// }
 
 //NOTE: we can implement methods for specific types only!
 //QUESTION: what's the story on generic and specific methods with name collision
