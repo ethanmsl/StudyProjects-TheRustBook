@@ -24,6 +24,11 @@ fn largest_char(list: &[char]) -> &char {
     largest
 }
 
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
 // generic accepting size sorter
 fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
     let mut largest = &list[0];
@@ -37,6 +42,7 @@ fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
     largest
 }
 
+#[allow(unused_variables)]
 fn main() {
     //using i32 type specific code
     let number_list = vec![34, 50, 25, 100, 65];
@@ -56,4 +62,17 @@ fn main() {
     let char_list = vec!['y', 'm', 'a', 'q'];
     let result = largest(&char_list);
     println!("The largest char in {:?} is: {}", char_list, result);
+//---------------------------------------------------
+    // Using Generic Struct to take variable types
+    //     seems very neat -- curious about specifics!
+    let integer = Point {x: 5, y: 10 };
+    let float = Point { x: 1.0, y: 4.0 };
+    let float2: Point<f32> = Point { x: 1.0, y: 4.0 };
+    // // Point<T> operates over a single type
+    // // notable, 5 & 4.0 aren't both cast/interepreted as floats, instead it
+    // // refuses to compile -- (this desire for clarity, 'to be clear what you 
+    // // meant was...' seems like quite a good thing)
+    // let wont_work = Point { x:5, y: 4.0 };
 }
+
+
