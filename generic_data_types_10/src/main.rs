@@ -163,6 +163,10 @@ fn main() {
     println!("p2: {:?}", p2);
     let p3 = p1.mixup(p2);
     println!("p3: {:?}", p3);
+    // note: we can also call the individual fields even though
+    //       the struct isn't declared public -- I suppose it's
+    //       de facto public within scope (?) <--TODO: clarify that
+    println!("p3.x: {}, p3.y: {}", p3.x, p3.y)
 }
 
 
