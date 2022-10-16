@@ -35,6 +35,8 @@ struct PointHomo<T> {
 // NOTE: Point<T> & Point<T,U> are not allowed to both exist
 //       Overloading/~multiple-dispatch is not enabled for these structs
 //       (probably for the best -- but I can see arguments either way)
+//       NOTE: see 'mystery()' defined beneath main() for note on limitations
+//             , which are significant, no runtime decisions about types.
 #[derive(Debug)]
 #[allow(dead_code)]
 struct PointHetero<T, U> {
@@ -54,6 +56,9 @@ impl<T> PointHomo<T> {
     // //               allowed.  -- if we wanted that sort of functionality
     // //               we'd, presumably, do it with internal logic in a function
     // //               accepting generic types)
+    //                  ^ WARNING: No. You apparently can't have internal logic
+    //                  that is dependent on types.  Type-logic is all compile-time logic
+    //                  and apparently not set-up to do in-function work.
     // fn distance_from_origin(&self) -> f32 {
     //     return 0.0
     // }
@@ -236,4 +241,22 @@ fn main() {
     //       the struct isn't declared public -- I suppose it's
     //       de facto public within scope (?) <--TODO: clarify that
     println!("p3.x: {}, p3.y: {}", p3.x, p3.y)
+//---------------------------------------------------
+
 }
+
+
+// // IMPORTANT: the following is NOT allowed!
+// //            you can't dynamically run based on type that came in
+// //            the code must be generic over the type that comes in
+// //            WITHOUT any explicit logic on that type
+// //            (one could add traits ahead of time)
+// //            This very much changes some questions about alternate ways
+// //            to implement multiple-dispatch/function-overloading
+// //            (specifically... in many cases that's just not available, it seems)
+// fn mystery<T>(x: T) -> T {
+//     match T {
+//         i32 => return x+2,
+//         _ => return x,
+//     }
+// }
