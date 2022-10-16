@@ -41,6 +41,13 @@ struct Point_hetero<T, U> {
     y: U,
 }
 
+// implementing typed methods for Point_homo(<T>)
+impl<T> Point_homo<T> {
+    fn x_val(&self) -> &T {
+        &self.x
+    }
+}
+
 // generic accepting size sorter
 fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
     let mut largest = &list[0];
@@ -91,6 +98,10 @@ fn main() {
     // but we can define a Point_hetero<T,U> that allows different typed fields
     let will_work = Point_hetero { x:5, y: 4.0 };
     println!("struct 'will_work': {:?}", will_work);
+//---------------------------------------------------
+    // using typed methods
+    let p = Point_homo { x: 5, y: 10 };
+    println!("p.x = {}", p.x_val());
 }
 
 
