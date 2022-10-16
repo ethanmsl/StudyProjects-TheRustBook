@@ -24,9 +24,21 @@ fn largest_char(list: &[char]) -> &char {
     largest
 }
 
-struct Point<T> {
+// generic struct -- single type variable
+#[derive(Debug)]
+struct Point_homo<T> {
     x: T,
     y: T,
+}
+
+// generic struct -- two types variables
+// NOTE: Point<T> & Point<T,U> are not allowed to both exist
+//       Overloading/~multiple-dispatch is not enabled for these structs
+//       (probably for the best -- but I can see arguments either way)
+#[derive(Debug)]
+struct Point_hetero<T, U> {
+    x: T,
+    y: U,
 }
 
 // generic accepting size sorter
@@ -65,14 +77,20 @@ fn main() {
 //---------------------------------------------------
     // Using Generic Struct to take variable types
     //     seems very neat -- curious about specifics!
-    let integer = Point {x: 5, y: 10 };
-    let float = Point { x: 1.0, y: 4.0 };
-    let float2: Point<f32> = Point { x: 1.0, y: 4.0 };
-    // // Point<T> operates over a single type
+    let integer = Point_homo {x: 5, y: 10 };
+    let float = Point_homo { x: 1.0, y: 4.0 };
+    let float2: Point_homo<f32> = Point_homo { x: 1.0, y: 4.0 };
+    println!("struct 'integer': {:?}", integer);
+    println!("struct 'float': {:?}", float);
+    println!("struct 'float2': {:?}", float2);
+    // // Point_homo<T> operates over a single type
     // // notable, 5 & 4.0 aren't both cast/interepreted as floats, instead it
     // // refuses to compile -- (this desire for clarity, 'to be clear what you 
     // // meant was...' seems like quite a good thing)
-    // let wont_work = Point { x:5, y: 4.0 };
+    // let wont_work = Point_homo { x:5, y: 4.0 };
+    // but we can define a Point_hetero<T,U> that allows different typed fields
+    let will_work = Point_hetero { x:5, y: 4.0 };
+    println!("struct 'will_work': {:?}", will_work);
 }
 
 
