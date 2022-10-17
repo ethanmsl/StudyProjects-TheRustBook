@@ -35,11 +35,13 @@ fn main() {
 //--------------------------
 // looking at debug macro (dbg!)
     let scale = 3;
+    println!("---'dbg!(30 * scale)'---");
     let rect2 = Rectangle {
         width: dbg!(30 * scale),  // *
         height: 50,
     };
     // NOTE: 'dbg!' macro takes and then gives ownership
+    println!("---'dbg!(&rect1)'---");
     dbg!(&rect1);  // *
 }
 
