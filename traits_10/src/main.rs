@@ -1,59 +1,19 @@
 #![allow(unused_variables)]
 
-/////////////////////////////////////aggregator////////////////////////////////
-mod aggregator {
-    pub trait Summary {
-        fn summarize(&self) -> String;
-    }
-
-    pub struct NewsArticle {
-        pub headline: String,
-        pub location: String,
-        pub author: String,
-        pub content: String,
-    }
-
-    // we list the trait that we're implementing
-    impl Summary for NewsArticle {
-        fn summarize(&self) -> String {
-            format!("{}, by {} ({})", self.headline, self.author, self.location)
-        }
-    }
-
-    pub struct Tweet {
-        pub username: String,
-        pub content: String,
-        pub reply: bool,
-        pub retweet: bool,
-    }
-
-    // we list the trait that we're implementing
-    impl Summary for Tweet {
-        fn summarize(&self) -> String {
-            format!("{}: {}", self.username, self.content)
-        }
-    }
-
-    impl Tweet {
-        fn say_hi() {
-            println!("Hi");
-        }
-    }
-}
-///////////////////////////////////////////////////////////////////////////////
-
-
-// use aggregator::{Summary, Tweet};
-// mod aggregator;
+use aggregator::{Summary, Tweet};
+mod aggregator;  // <-- sufficient along with raw path use for Tweet and say_hi()
+                 //     , but not sure hot to call the Summary trait with raw path
 
 fn main() {
-    let tweet = aggregator::Tweet {
+    let tweet = Tweet {
         username: String::from("horse_ebooks"),
         content: String::from("of course, as you probably already know, people"),
         reply: false,
         retweet: false,
     };
 
-    // println!("1 new tweet: {}", tweet.summarize());
-    println!("1 new tweet: {}", tweet.(aggregator::say_hi()));
+    let boop = 12 *3;
+
+    println!("1 new tweet: {}", tweet.summarize());
+    tweet.say_hi();
 }
