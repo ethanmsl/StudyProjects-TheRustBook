@@ -12,6 +12,8 @@ fn main() {
         retweet: false,
     };
 
+    // just to check on inlay hints' presence
+    let boop = 12 *3;
     let boop = 12 *3;
 
     println!("1 new tweet: {}", tweet.summarize());
