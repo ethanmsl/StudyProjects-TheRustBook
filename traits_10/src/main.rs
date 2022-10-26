@@ -1,5 +1,6 @@
 #![allow(unused_variables)]
 
+/////////////////////////////////////aggregator////////////////////////////////
 mod aggregator {
     pub trait Summary {
         fn summarize(&self) -> String;
@@ -32,18 +33,27 @@ mod aggregator {
             format!("{}: {}", self.username, self.content)
         }
     }
+
+    impl Tweet {
+        fn say_hi() {
+            println!("Hi");
+        }
+    }
 }
+///////////////////////////////////////////////////////////////////////////////
 
 
-use aggregator::{Summary, Tweet};
+// use aggregator::{Summary, Tweet};
+// mod aggregator;
 
 fn main() {
-    let tweet = Tweet {
+    let tweet = aggregator::Tweet {
         username: String::from("horse_ebooks"),
         content: String::from("of course, as you probably already know, people"),
         reply: false,
         retweet: false,
     };
 
-    println!("1 new tweet: {}", tweet.summarize());
+    // println!("1 new tweet: {}", tweet.summarize());
+    println!("1 new tweet: {}", tweet.(aggregator::say_hi()));
 }
