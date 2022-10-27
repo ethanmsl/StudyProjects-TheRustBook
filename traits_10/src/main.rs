@@ -31,4 +31,8 @@ fn main() {
     };
 
     println!("New article available! {}", article.summarize());
+    println!("----------------------------------");
+
+    aggregator::notify(&tweet);
+    aggregator::notify(&article);
 }

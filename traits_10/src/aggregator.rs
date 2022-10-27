@@ -57,4 +57,9 @@ impl Tweet {
     }
 }
 
+// function that takes a type that implements summary.... (I suppose)
+pub fn notify(item: &impl Summary) {
+    println!("Breaking news! {}", item.summarize());
+}
+
 ///////////////////////////////////////////////////////////////////////////////
