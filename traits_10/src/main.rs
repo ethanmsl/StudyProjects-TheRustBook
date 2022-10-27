@@ -1,4 +1,4 @@
-#![allow(unused_variables)]
+// #![allow(unused_variables)]
 
 use aggregator::{Summary, Tweet};
 mod aggregator;  // <-- sufficient along with raw path use for Tweet and say_hi()
@@ -13,5 +13,6 @@ fn main() {
     };
 
     println!("1 new tweet: {}", tweet.summarize());
+    println!("----------------------------------");
     tweet.say_hi();
 }
