@@ -91,5 +91,50 @@ pub fn to_compare<T: Summary>(item1: &T, item2: &T) {
 //     unimplemented!()
 // }
 
+pub fn returns_summarizable() -> impl Summary {
+    Tweet {
+        username: String::from("robomade"),
+        content: String::from("krrrrchnk"),
+        reply: true,
+        retweet: true,
+    }
+}
+
+
+// methods can be also be conditionally implemented, for structs with genetic types, for example
+// e.g.:
+use std::fmt::Display;
+
+#[allow(dead_code)]
+struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+#[allow(dead_code)]
+impl<T> Pair<T> {
+    fn new(x: T, y: T) -> Self {
+        Self { x, y }
+    }
+}
+
+#[allow(dead_code)]
+impl<T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
+}
+
+
+// // trait conditions can also be used on trait implementations
+// // e.g.:
+// impl<T: Display> ToString for T {
+//     // --snip--
+// }
+
 
 ///////////////////////////////////////////////////////////////////////////////
