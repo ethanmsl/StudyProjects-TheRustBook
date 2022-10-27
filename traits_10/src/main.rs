@@ -13,6 +13,12 @@ fn main() {
         reply: false,
         retweet: false,
     };
+    let tweet2 = Tweet {
+        username: String::from("bird_speaker"),
+        content: String::from("caw-caw-chirp"),
+        reply: true,
+        retweet: true,
+    };
 
     println!("1 new tweet: {}", tweet.summarize());
     println!("----------------------------------");
@@ -35,4 +41,5 @@ fn main() {
 
     aggregator::notify(&tweet);
     aggregator::friends_view(&article);
+    aggregator::to_compare(&tweet, &tweet2);
 }
