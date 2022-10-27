@@ -2,7 +2,7 @@
 
 use aggregator::{Summary, Tweet};
 
-use crate::aggregator::NewsArticle;
+use crate::aggregator::{NewsArticle, returns_summarizable};
 mod aggregator;  // <-- sufficient along with raw path use for Tweet and say_hi()
                  //     , but not sure hot to call the Summary trait with raw path
 
@@ -19,6 +19,14 @@ fn main() {
         reply: true,
         retweet: true,
     };
+    let tweet3 = returns_summarizable();
+    // NOTE: ^ reutrns 'impl Symmary' ... not what I expected...
+    //       the functions below wouldn't accept it as input
+    //       which notify() will take
+    //       but is NOT considered the same as tweet
+    //       for the purpose of ( T, T ) matching!!!
+    aggregator::notify(&tweet3);
+    // aggregator::to_compare(&tweet2, &tweet3);
 
     println!("1 new tweet: {}", tweet.summarize());
     println!("----------------------------------");
