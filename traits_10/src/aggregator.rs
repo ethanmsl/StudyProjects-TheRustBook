@@ -78,4 +78,18 @@ pub fn to_compare<T: Summary>(item1: &T, item2: &T) {
     );
 }
 
+// // two examples of '+' notation to specify multi trait boundedness
+// pub fn notify(item: &(impl Summary + Display)) {...}
+// pub fn notify<T: Summary + Display>(item: &T) {...}
+
+// // 'where' clause syntax
+// fn some_function<T, U>(t: &T, u: &U) -> i32
+// where
+//     T: Display + Clone,
+//     U: Clone + Debug,
+// {
+//     unimplemented!()
+// }
+
+
 ///////////////////////////////////////////////////////////////////////////////
