@@ -34,5 +34,5 @@ fn main() {
     println!("----------------------------------");
 
     aggregator::notify(&tweet);
-    aggregator::notify(&article);
+    aggregator::friends_view(&article);
 }

@@ -61,5 +61,8 @@ impl Tweet {
 pub fn notify(item: &impl Summary) {
     println!("Breaking news! {}", item.summarize());
 }
+pub fn friends_view<T: Summary>(item: &T) {
+    println!("Your friends recently read: {}", item.summarize());
+}
 
 ///////////////////////////////////////////////////////////////////////////////
