@@ -1,4 +1,31 @@
+#![allow(dead_code)]
+// struct with reference fields requires lifetimes
+struct ImportantExcerpt<'a> {
+    part: &'a str,
+}
+
+impl<'a> ImportantExcerpt<'a> {
+    fn level(&self) -> i32 {
+        3
+    }
+
+    fn announce_and_return_part(&self, announcement: &str) -> &str {
+        println!("Attention please: {}", announcement);
+        self.part
+    }
+}
+
 fn main() {
+    let novel = String::from("Call me Ishmael.  Some years ago...");
+    let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+    //                                     ^ first call goes to first element
+    println!("{}", first_sentence);
+    let i = ImportantExcerpt {
+        part: first_sentence,
+    };
+
+    let s: &'static str = "I have a static lifetime.";
+
     // // won't run as x does not live long enough to be used by r later
     // let r;
     // {
@@ -45,4 +72,19 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
 // since it returns something without using y doesn't need lifetime annotation
 fn first_argument<'a>(x: &'a str, y: &str) -> &'a str {
     x
+}
+
+use std::fmt::Display;
+
+fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+//                                                             ^ QUESTION: why no lifetime?
+where
+    T: Display,
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
 }
