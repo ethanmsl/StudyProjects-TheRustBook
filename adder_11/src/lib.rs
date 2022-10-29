@@ -14,11 +14,22 @@ impl Rectangle {
     }
 }
 
+pub fn greeting(name: &str) -> String {
+    format!("Hello {}!", name)
+}
+
+
 // a nice little testing module
 // that's created by default on `cargo new --lib` ! :)
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn greeting_contains_name() {
+        let result = greeting("Carol");
+        assert!(result.contains("Carol"));
+    }
 
 
     #[test]
