@@ -42,7 +42,7 @@ mod tests {
             height: 7,
         };
         let smaller = Rectangle {
-            width: 5, 
+            width: 5,
             height: 1,
         };
 
@@ -63,5 +63,11 @@ mod tests {
     fn it_works() {
         let result = add(2, 2);
         assert_eq!(result, 4);
+    }
+
+    #[test]
+    fn it_shouldnt_work() {
+        let result = add(2, 2);
+        assert_ne!(result, 7982);
     }
 }
