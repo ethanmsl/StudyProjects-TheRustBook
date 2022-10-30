@@ -44,7 +44,7 @@ mod tests {
 
     ///////////////////// Guess_tests /////////////////////
     #[test]
-    #[should_panic(expected = "should be within [1,100]")]
+    #[should_panic(expected = "between 1 and 100")]
     // #[should_panic]
     // ^ this is what allows our panic to result in a test pass, it seems
     fn greater_than_100() {
