@@ -16,9 +16,11 @@ impl Rectangle {
 
 pub fn greeting(name: &str) -> String {
     format!("Hello {}!", name)
+    // format!("Hello {}!", "boop")
+    // // ^ to break the 'greeting_contains_name()' test
 }
 
-
+//////////////////////////////////// TESTS ////////////////////////////////////
 // a nice little testing module
 // that's created by default on `cargo new --lib` ! :)
 #[cfg(test)]
@@ -28,9 +30,12 @@ mod tests {
     #[test]
     fn greeting_contains_name() {
         let result = greeting("Carol");
-        assert!(result.contains("Carol"));
+        assert!(
+            result.contains("Carol"),
+            "Greeting did not contain name, output value was '{}'",
+            result
+        );
     }
-
 
     #[test]
     fn larger_can_hold_smaller() {
@@ -39,7 +44,7 @@ mod tests {
             height: 7,
         };
         let smaller = Rectangle {
-            width: 5, 
+            width: 5,
             height: 1,
         };
 
