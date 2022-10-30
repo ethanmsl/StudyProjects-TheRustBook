@@ -45,6 +45,7 @@ mod tests {
     ///////////////////// Guess_tests /////////////////////
     #[test]
     #[should_panic(expected = "should be within [1,100]")]
+    // #[should_panic]
     // ^ this is what allows our panic to result in a test pass, it seems
     fn greater_than_100() {
         Guess::new(200);
@@ -103,9 +104,12 @@ mod tests {
     // }
 
     #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn it_works() -> Result<(), String> {
+        if 2 + 2 == 4 {
+            Ok(())
+        } else {
+            Err(String::from("two plus two does nto equal four"))
+        }
     }
 
     #[test]
