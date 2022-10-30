@@ -20,12 +20,37 @@ pub fn greeting(name: &str) -> String {
     // // ^ to break the 'greeting_contains_name()' test
 }
 
+pub struct Guess {
+    value: i32,
+}
+
+impl Guess {
+    pub fn new(value: i32) -> Guess {
+        // guardian: filters values
+        if !(1..=100).contains(&value) {
+            panic!("Guess value must be between 1 and 100, got {}.", value);
+        }
+        // uses values that passed guard to populate Guess
+        Guess { value }
+    }
+}
+
 //////////////////////////////////// TESTS ////////////////////////////////////
 // a nice little testing module
 // that's created by default on `cargo new --lib` ! :)
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    ///////////////////// Guess_tests /////////////////////
+    #[test]
+    #[should_panic]
+    // ^ this is what allows our panic to result in a test pass, it seems
+    fn greater_than_100() {
+        Guess::new(200);
+    }
+
+    //////////////////// greeting_tests ////////////////////
 
     #[test]
     fn greeting_contains_name() {
@@ -37,6 +62,7 @@ mod tests {
         );
     }
 
+    //////////////////// rectangle_tests ////////////////////
     #[test]
     fn larger_can_hold_smaller() {
         let larger = Rectangle {
@@ -65,6 +91,7 @@ mod tests {
         assert!(!smaller.can_hold(&larger));
     }
 
+    //////////////////// general_tests ////////////////////
     #[test]
     fn exploration() {
         assert_eq!(2 + 2, 4);
