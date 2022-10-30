@@ -19,22 +19,36 @@ pub fn add_two(a: i32) -> i32 {
 mod tests {
     use super::*;
 
-    //////////////////// choosing specific tests to run //////////////////
-    // Run tests containing phrase: `cargo test phrase`
+    //////////////////// use #[ignore] //////////////////
+    // Don't ignore #[ignore] attributed tests: `cargo test -- --include-ignored`
+    // Run *Only* #[ignore]'d tests: `cargo test -- --ignored`
     #[test]
-    fn add_two_and_two() {
-        assert_eq!(4, add_two(2));
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
     }
 
     #[test]
-    fn add_three_and_two() {
-        assert_eq!(5, add_two(3));
+    #[ignore]
+    fn expensive_test() {
+        // code that would take a long time to run
     }
 
-    #[test]
-    fn one_hundred() {
-        assert_eq!(102, add_two(100));
-    }
+    // //////////////////// choosing specific tests to run //////////////////
+    // // Run tests containing phrase: `cargo test phrase`
+    // #[test]
+    // fn add_two_and_two() {
+    //     assert_eq!(4, add_two(2));
+    // }
+    //
+    // #[test]
+    // fn add_three_and_two() {
+    //     assert_eq!(5, add_two(3));
+    // }
+    //
+    // #[test]
+    // fn one_hundred() {
+    //     assert_eq!(102, add_two(100));
+    // }
 
     // /////////////////// to compare output during tests //////////////////
     // // Show Output even if Successful: `cargo test -- --show-output`
