@@ -28,6 +28,12 @@ struct Config {
 
 impl Config {
     fn new(args: &[String]) -> Config {
+        // Guardian //
+        if args.len() <3 {
+            panic!("not enough arguments");
+        }
+
+        // Passed Guardian //
         // ignore calling_program = &args[0];
         let query = args[1].clone();
         let file_path = args[2].clone();
