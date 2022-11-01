@@ -1,7 +1,7 @@
 use std::env;
-use std::fs;
 use std::process;
-use std::error::Error;
+
+use minigrep_12::Config;
 
 // args = dbg!(args);
 // QUESTION: ^ args is immutable, if I give it's value away is ther anyway
@@ -23,7 +23,7 @@ fn main() {
     //         ^ just like patterns in a Match statement, can bind variables
     // NOTE: we use 'if let' vs 'unwrap_or_else' because we're not interested
     // in the output of run() [which is side-effect only]
-    if let Err(e) = run(config) {
+    if let Err(e) = minigrep_12::run(config) {
         println!("Application error: {e}");
         process::exit(1);
     }
@@ -31,34 +31,3 @@ fn main() {
     // // Answer: V(via below) - it apepars to just be within the brackets of the if let statement
     // println!("Application error: {e}");
 }
-
-fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.file_path)?;
-
-    println!();
-    println!("With text:\n{contents}");
-
-    Ok(())
-}
-
-struct Config {
-    query: String,
-    file_path: String,
-}
-
-impl Config {
-    fn build(args: &[String]) -> Result<Config, &'static str> {
-        // Guardian //
-        if args.len() <3 {
-            return Err("not enough arguments");
-        }
-
-        // Passed Guardian(s) //
-        // ignore calling_program = &args[0];
-        let query = args[1].clone();
-        let file_path = args[2].clone();
-
-        Ok(Config { query, file_path })
-    }
-}
-
