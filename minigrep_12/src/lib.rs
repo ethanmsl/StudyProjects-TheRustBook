@@ -14,7 +14,6 @@ impl Config {
         }
 
         // Passed Guardian(s) //
-        // ignore calling_program = &args[0];
         let query = args[1].clone();
         let file_path = args[2].clone();
 
@@ -24,9 +23,6 @@ impl Config {
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?;
-
-    println!();
-    println!("With text:\n{contents}");
 
     Ok(())
 }
