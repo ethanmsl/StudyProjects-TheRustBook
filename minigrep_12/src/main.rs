@@ -7,6 +7,9 @@ fn main() {
     //                       ^ NOTE: I'm not sure why "target" is there, probably
     //                               something to do with where the binary is kept
     dbg!(&args);
+    // args = dbg!(args);
+    // QUESTION: ^ args is immutable, if I give it's value away is ther anyway
+    //             for it to get ownership back??
 
     // ignore calling_program = &args[0];
     let query = &args[1];
