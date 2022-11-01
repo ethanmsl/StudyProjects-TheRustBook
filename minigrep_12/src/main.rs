@@ -6,6 +6,7 @@ fn main() {
     // e.g., in this case, "target/debug/minigrep_12"
     //                       ^ NOTE: I'm not sure why "target" is there, probably
     //                               something to do with where the binary is kept
+    dbg!(&args);
 
     // ignore calling_program = &args[0];
     let query = &args[1];
