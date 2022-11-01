@@ -1,5 +1,6 @@
 use std::env;
 use std::fs;
+use std::process;
 
 // args = dbg!(args);
 // QUESTION: ^ args is immutable, if I give it's value away is ther anyway
@@ -8,7 +9,10 @@ use std::fs;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let config = Config::new(&args);
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
 
     println!();
     println!("Searching for {}", config.query);
@@ -27,18 +31,18 @@ struct Config {
 }
 
 impl Config {
-    fn new(args: &[String]) -> Config {
+    fn build(args: &[String]) -> Result<Config, &'static str> {
         // Guardian //
         if args.len() <3 {
-            panic!("not enough arguments");
+            return Err("not enough arguments");
         }
 
-        // Passed Guardian //
+        // Passed Guardian(s) //
         // ignore calling_program = &args[0];
         let query = args[1].clone();
         let file_path = args[2].clone();
 
-        Config { query, file_path }
+        Ok(Config { query, file_path })
     }
 }
 
