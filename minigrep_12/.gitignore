@@ -1,0 +1,11 @@
+######################## custom adds ###########################
+#
+
+# ignoring a text file use to test stdout vs stderr direction
+# of the local program's output
+output.txt
+
+#################### standard Github GitIgnore ##################
+#
+
+# in parent directory, at same level as the .git directory
