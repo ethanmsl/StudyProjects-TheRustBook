@@ -65,4 +65,13 @@ fn main() {
     // let add_one_v2 = |x: u32| -> u32 { x + 1 };
     // let add_one_v3 = |x|             { x + 1 };
     // let add_one_v4 = |x|               x + 1  ;
+
+    // // NOTE: the first use of the closure will type it (by inference), potentially
+    // // preventing the second, otherwise valid, use from working due to type-mismatch
+    // let example_closure_01 = |x| x;
+    // let s = example_closure_01(String::from("hello"));
+    // let n = example_closure_01(5);
+    // let example_closure_02 = |x| x;
+    // let n = example_closure_02(5);
+    // let s = example_closure_02(String::from("hello"));
 }
