@@ -10,7 +10,7 @@ struct Inventory {
 
 impl Inventory {
     fn giveaway(&self, user_preference: Option<ShirtColor>) -> ShirtColor {
-        user_preference.unwrap_or_else(||self.most_stocked())
+        user_preference.unwrap_or_else(|| self.most_stocked())
         //                            ^ crux of the logic
     }
 
@@ -43,12 +43,26 @@ fn main() {
     println!(
         "The user with preference {:?} gets {:?}",
         user_pref1, giveaway1
-        );
+    );
 
     let user_pref2 = None;
     let giveaway2 = store.giveaway(user_pref2);
     println!(
         "The user with preference {:?} gets {:?}",
         user_pref2, giveaway2
-        );
+    );
+
+    // // typed closure
+    // let expensive_closure = |num: u32| -> u32 {
+    //     println!("calculating slowly...");
+    //     thread::sleep(Duration::from_secs(2));
+    //     num
+    // };
+
+    // // some examples of a function's vs various closures' syntaces
+    // // NOTE: v3 & v4 would make type inferences from the type supplied as an arg
+    // fn  add_one_v1   (x: u32) -> u32 { x + 1 }
+    // let add_one_v2 = |x: u32| -> u32 { x + 1 };
+    // let add_one_v3 = |x|             { x + 1 };
+    // let add_one_v4 = |x|               x + 1  ;
 }
