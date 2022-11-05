@@ -33,6 +33,8 @@ impl Inventory {
     }
 }
 
+use std::thread;
+
 fn main() {
     let store = Inventory {
         shirts: vec![ShirtColor::Blue, ShirtColor::Red, ShirtColor::Blue],
@@ -97,4 +99,15 @@ fn main() {
 
     borrows_mutably();
     println!("After calling closure: {:?}", list);
+
+    println!();
+
+    // forcing closure to take ownership before shiping to new thread
+    let list = vec![1,2,3];
+    println!("Before defining closure:  {:?}", list);
+
+    thread::spawn(move || println!("From thread: {:?}", list))
+        .join()
+        .unwrap();
+    // println!("After calling closure: {:?}", list);  //<-- error
 }
