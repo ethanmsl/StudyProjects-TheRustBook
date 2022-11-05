@@ -74,4 +74,27 @@ fn main() {
     // let example_closure_02 = |x| x;
     // let n = example_closure_02(5);
     // let s = example_closure_02(String::from("hello"));
+
+    println!();
+
+    // Demonstrating that the closure, in this case, chooses an immutable ref
+    let list = vec![1,2,3];
+    println!("Before defining closure:  {:?}", list);
+
+    let only_borrows = || println!("From closure: {:?}", list);
+
+    println!("Before calling closure: {:?}", list);
+    only_borrows();
+    println!("After calling closure: {:?}", list);
+
+    println!();
+
+    // Demonstrating that the closure, in this case, chooses an mutable ref
+    let mut list = vec![1,2,3];
+    println!("Before defining closure:  {:?}", list);
+
+    let mut borrows_mutably = || list.push(7);
+
+    borrows_mutably();
+    println!("After calling closure: {:?}", list);
 }
