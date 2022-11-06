@@ -117,6 +117,7 @@ fn main() {
         .unwrap();
     // println!("After calling closure: {:?}", list);  //<-- error
 
+    // Example of a closure with the FnMut trait
     let mut list = [
         Rectangle {
             width: 10,
@@ -132,6 +133,26 @@ fn main() {
         },
     ];
 
-    list.sort_by_key(|r| r.width);
-    println!("{:#?}", list);
+    // // Erroring call because closure does not implement 'FnMut' (or 'Fn')
+    // // Instead it merely implements 'FnOnce' -- which means (as it the case)
+    // // that it gives away ownership of one of the values it needs to run
+    // // hence it can't be repeatedly used
+    // // (we could repair that by taking a reference to 'value')
+    // list.sort_by_key(|r| r.width);
+    // println!("{:#?}", list);
+    //
+    // let mut list = [
+    //     Rectangle { width: 10, height: 1  },
+    //     Rectangle { width: 3,  height: 5  },
+    //     Rectangle { width: 7,  height: 12 },
+    // ];
+    //
+    // let mut sort_operations = vec![];
+    // let value = String::from("by key called");
+    //
+    // list.sort_by_key(|r| {
+    //     sort_operations.push(value);
+    //     r.width
+    // });
+    // println!("{:#?}", list);
 }
