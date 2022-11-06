@@ -36,7 +36,7 @@ impl Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?;
 
-    // chec config and call case-sensitivity-appropriate search function
+    // check config and call case-sensitivity-appropriate search function
     let results = if config.ignore_case {
         search_case_insensitive(&config.query, &contents)
     } else {
