@@ -5,4 +5,19 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[profile.dev]
+opt-level = 1
+
+[profile.release]
+opt-level = 's'
+# apparently the levels are of [0, 1, 2, 3, 's', 'z']
+
+[profile.bench]
+opt-level = 3
+
+# # `cargo build --profile xkglk` ~~> 
+# # "error: profile `xkglk` is missing an `inherits` directive (`inherits` is required for all profiles except `dev` or `release`)"
+# [profile.xkglk]
+# opt-level = 3
+
 [dependencies]
