@@ -3,6 +3,7 @@ use std::fs;
 
 use rename_directories_xxx as lib;
 use lib::test_prints::print_wave;
+use lib::arg_parse;
 
 fn main() -> std::io::Result<()> {
     // exploring how to call objects with modularized code
@@ -15,7 +16,12 @@ fn main() -> std::io::Result<()> {
 
     // get args, first should be path, if second we'll see if it's a path
     let args_iterator = env::args();
-    // let maybe_path = lib::check_for_path_argument(args_iterator);
+    let maybe_path = arg_parse::check_for_path_argument(args_iterator);
+    if let Some(path) = maybe_path {
+        println!("Path: {}", path);
+    } else {
+        println!("No path provided");
+    }
     //
     //
     // local path (test)
