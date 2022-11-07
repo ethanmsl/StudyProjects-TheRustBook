@@ -34,9 +34,6 @@ impl ToFromPair {
 
         // additional guardianship of path formatting could be added here
         // however this function is probably already deprecated, so I likely won't
-
-
-
         ToFromPair::new(from_arg, to_arg)
     }
 }
@@ -65,21 +62,21 @@ mod tests {
 
 
     #[test]
-    #[should_panic]
+    #[should_panic(expected = "prepend")]
     fn to_from_pair_from_args_prepend_broken() {
         let args = vec!["curr_dir".to_string(), "from".to_string(), "to".to_string()];
         ToFromPair::from_args(args.into_iter(), "prepend/");
     }
 
     #[test]
-    #[should_panic]
+    #[should_panic(expected = "neither from_raw nor to_raw")]
     fn to_from_pair_from_args_from_broken() {
         let args = vec!["curr_dir".to_string(), "/from".to_string(), "to".to_string()];
         ToFromPair::from_args(args.into_iter(), "prepend");
     }
 
     #[test]
-    #[should_panic]
+    #[should_panic(expected = "neither from_raw nor to_raw")]
     fn to_from_pair_from_args_to_broken() {
         let args = vec!["curr_dir".to_string(), "from".to_string(), "/to".to_string()];
         ToFromPair::from_args(args.into_iter(), "prepend");
