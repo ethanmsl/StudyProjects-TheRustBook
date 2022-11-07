@@ -11,6 +11,14 @@ impl ToFromPair {
     }
 
     pub fn from_args(mut args: impl Iterator<Item = String>, prepend: &str) -> ToFromPair {
+        // Guardian
+        if prepend.ends_with('/') {
+            panic!("prepend should not end with a '/'\nthe code assumes this came from a sanitized input");
+        }
+        // additional guardianship of path formatting could be added here
+        // however this function is probably already deprecated, so I likely won't
+
+        // Passed Guardian
         let curr_dir = args.next().unwrap();
         println!("curr_dir: {}", curr_dir);
         println!("prepend: {}", prepend);
