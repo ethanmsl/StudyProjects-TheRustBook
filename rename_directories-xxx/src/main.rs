@@ -2,7 +2,7 @@ use std::env;
 use std::fs;
 use std::fs::rename;
 
-use rename_directories_NULL as lib;
+use rename_directories_xxx as lib;
 
 fn main() -> std::io::Result<()> {
     // local path (test)
