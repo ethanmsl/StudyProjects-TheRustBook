@@ -60,7 +60,7 @@ pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(args_iterator: T, pat
 
             fs::rename(to_from.from, to_from.to,)?;
         },
-        _ => println!("Either a single path or two paths is expected & required."),
+        _ => eprintln!("Either a single path or two paths is expected & required."),
     };
 
     Ok(())
