@@ -1,9 +1,9 @@
 use std::fs;
 
-pub mod to_from_pair;
-use to_from_pair::ToFromPair;
+pub mod to_from;
+use to_from::ToFromPair;
 
-pub mod argument_parse;
+pub mod arg_parse;
 
 // NOTE: this allows 'print_bye' to be used without path call besides 'lib::'
 //       in parent caller (main.rs)
