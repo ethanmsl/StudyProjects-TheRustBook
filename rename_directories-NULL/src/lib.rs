@@ -1,3 +1,6 @@
+use std::env::Args;
+use std::fs;
+
 #[derive(Debug)]
 pub struct ToFromPair {
     pub from: String,
@@ -5,7 +8,7 @@ pub struct ToFromPair {
 }
 
 impl ToFromPair {
-    pub fn new(from: String, to: String,) -> ToFromPair {
+    pub fn new(from: String, to: String) -> ToFromPair {
         ToFromPair { from, to }
     }
 
@@ -17,7 +20,7 @@ impl ToFromPair {
         let from_arg = format!("{}/{}", prepend, args.next().unwrap());
         let to_arg = format!("{}/{}", prepend, args.next().unwrap());
 
-        ToFromPair::new(from_arg, to_arg,)
+        ToFromPair::new(from_arg, to_arg)
     }
 }
 
@@ -30,6 +33,30 @@ pub fn swap_dashes_and_underscores(input: &str) -> String {
             _ => c,
         })
         .collect()
+}
+
+pub fn run(args_iterator: Args, path_prepend: String) -> std::io::Result<()> {
+    let arg_length = args_iterator.len();
+
+    match arg_length {
+        3 => {
+                let to_from = ToFromPair::from_args(args_iterator, &path_prepend);
+                println!("to: {:?}", to_from);
+                fs::rename(to_from.from, to_from.to,)?;
+        },
+        2 => {
+            let to_arg = args_iterator.last().unwrap();
+            // println!("args_it...: {}", args_iterator.last().unwrap());
+            let swapped_name = swap_dashes_and_underscores(&to_arg);
+            println!("swapped_name: {}", swapped_name);
+
+            let to_from = ToFromPair::new(to_arg, swapped_name);
+            println!("tofrom: {:?}", to_from);
+        },
+        _ => println!("Please provide two arguments: the directory to rename and the new name for the directory."),
+    }
+
+    Ok(())
 }
 
 #[cfg(test)]
