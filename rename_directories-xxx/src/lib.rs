@@ -10,28 +10,34 @@ pub mod arg_parse;
 pub mod test_prints;
 pub use test_prints::print_bye;
 
+pub use string_change::*;
 
-pub fn swap_dashes_and_underscores(input: &str) -> String {
-    input
-        .chars()
-        .map(|c| match c {
-            '-' => '_',
-            '_' => '-',
-            _ => c,
-        })
-        .collect()
-}
+pub mod string_change {
+    use std::fs;
 
+    pub fn swap_dashes_and_underscores(input: &str) -> String {
+        input
+            .chars()
+            .map(|c| match c {
+                '-' => '_',
+                '_' => '-',
+                _ => c,
+            })
+            .collect()
+    }
 
-pub fn files_print_swaps(files_iterator: impl Iterator<Item = std::io::Result<fs::DirEntry>>) {
-    for file in files_iterator {
-        let file = file.unwrap().path();
-        let file_ref = file.to_str().unwrap();
-        println!("file o.: {:?}", file_ref);
-        let changed = swap_dashes_and_underscores(file_ref);
-        println!("changed: {:?}", changed);
+    pub fn files_print_swaps(files_iterator: impl Iterator<Item = std::io::Result<fs::DirEntry>>) {
+        for file in files_iterator {
+            let file = file.unwrap().path();
+            let file_ref = file.to_str().unwrap();
+            println!("file o.: {:?}", file_ref);
+            let changed = swap_dashes_and_underscores(file_ref);
+            println!("changed: {:?}", changed);
+        }
     }
 }
+
+
 
 // NOTE: this is not easily testable
 //       perhaps the main structure should be broken up for testing
