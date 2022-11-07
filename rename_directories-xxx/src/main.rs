@@ -28,6 +28,9 @@ fn main() -> std::io::Result<()> {
     };
     dbg!(&path_prepend);
     // ////////////////////////////////////////////////////////////
+    // TODO: argument-given path can have a '/' in it at the end
+    //       need to sanitize it
+    // ////////////////////////////////////////////////////////////
 
     let files_iterator = fs::read_dir(&path_prepend)?;
     lib::files_print_swaps(files_iterator);
