@@ -1,9 +1,9 @@
-use std::fs;
 use std::env;
+use std::fs;
 
 #[derive(Debug)]
 struct ToFromPair {
-    to: String,
+    to:   String,
     from: String,
 }
 
@@ -15,19 +15,14 @@ impl ToFromPair {
     fn from_args(mut args: impl Iterator<Item = String>, prepend: &str) -> ToFromPair {
         let curr_dir = args.next().unwrap();
         println!("curr_dir: {}", curr_dir);
-        println!("prepend: {}", prepend);
+        println!("prepend: {}",  prepend);
 
-        let to_arg   = format!("{}/{}", prepend,args.next().unwrap());
-        let from_arg = format!("{}/{}", prepend,args.next().unwrap());
+        let to_arg   = format!("{}/{}", prepend, args.next().unwrap());
+        let from_arg = format!("{}/{}", prepend, args.next().unwrap());
 
         ToFromPair::new(to_arg, from_arg)
     }
 }
-
-    // if let Err(e) = minigrep_12::run(config) {
-    //     eprintln!("Application error: {e}");
-    //     process::exit(1);
-    // }
 
 fn main() -> std::io::Result<()> {
     // local path (test)
