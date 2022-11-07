@@ -60,7 +60,7 @@ pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(args_iterator: T, pat
 
             fs::rename(to_from.from, to_from.to,)?;
         },
-        _ => println!("Please provide two arguments: the directory to rename and the new name for the directory."),
+        _ => println!("Either a single path or two paths is expected & required."),
     };
 
     Ok(())
