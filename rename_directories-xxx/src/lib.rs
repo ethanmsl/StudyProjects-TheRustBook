@@ -3,7 +3,7 @@ use std::fs;
 #[derive(Debug)]
 pub struct ToFromPair {
     pub from: String,
-    pub to: String,
+    pub to:   String,
 }
 
 impl ToFromPair {
@@ -17,7 +17,7 @@ impl ToFromPair {
         println!("prepend: {}", prepend);
 
         let from_arg = format!("{}/{}", prepend, args.next().unwrap());
-        let to_arg = format!("{}/{}", prepend, args.next().unwrap());
+        let to_arg   = format!("{}/{}", prepend, args.next().unwrap());
 
         ToFromPair::new(from_arg, to_arg)
     }
@@ -82,7 +82,7 @@ mod tests {
 
     #[test]
     fn line_swaps() {
-        let input = String::from("hello-world and -_---_-");
+        let input    = String::from("hello-world and -_---_-");
         let expected = String::from("hello_world and _-___-_");
         let actual = swap_dashes_and_underscores(&input);
         assert_eq!(expected, actual);
