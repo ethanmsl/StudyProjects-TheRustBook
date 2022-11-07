@@ -36,14 +36,17 @@ pub fn swap_dashes_and_underscores(input: &str) -> String {
         .collect()
 }
 
+// NOTE: this is not easily testable
+//       perhaps the main structure should be broken up for testing
+//       ... I'm really not sure how best to deal with this...
 pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(args_iterator: T, path_prepend: String) -> std::io::Result<()> {
     let arg_length = args_iterator.len();
 
     match arg_length {
         3 => {
-                let to_from = ToFromPair::from_args(args_iterator, &path_prepend);
-                println!("to: {:?}", to_from);
-                fs::rename(to_from.from, to_from.to,)?;
+            let to_from = ToFromPair::from_args(args_iterator, &path_prepend);
+            println!("to: {:?}", to_from);
+            fs::rename(to_from.from, to_from.to,)?;
         },
         2 => {
             let to_arg = args_iterator.last().unwrap();
@@ -74,8 +77,8 @@ mod tests {
 
     // #[test]
     // fn to_from_pair_from_args() {
-    //     let args = Args::new("boop", "bop");
-    //     println!("args: {:?}", args);
-    //     assert_eq!(expected, actual);
+    //     let fake_args = vec![String::from("path"), String::from("--a--b__c.boop")];
+    //     run(fake_args.into_iter(), String::from("."));
+    //     // assert_eq!(expected, actual);
     // }
 }
