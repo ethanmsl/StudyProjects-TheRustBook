@@ -1,6 +1,5 @@
 use std::env;
 use std::fs;
-use std::fs::rename;
 
 use rename_directories_xxx as lib;
 
