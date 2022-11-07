@@ -21,3 +21,26 @@ impl ToFromPair {
         ToFromPair::new(from_arg, to_arg)
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn to_from_pair() {
+        let from = String::from("from");
+        let to   = String::from("to");
+        let pair_struct = ToFromPair::new(from, to);
+        assert_eq!(pair_struct.from, "from");
+        assert_eq!(pair_struct.to, "to");
+    }
+
+    #[test]
+    fn to_from_pair_from_args() {
+        let args = vec!["curr_dir".to_string(), "from".to_string(), "to".to_string()];
+        let pair_struct = ToFromPair::from_args(args.into_iter(), "prepend");
+        assert_eq!(pair_struct.from, "prepend/from");
+        assert_eq!(pair_struct.to, "prepend/to");
+    }
+}
