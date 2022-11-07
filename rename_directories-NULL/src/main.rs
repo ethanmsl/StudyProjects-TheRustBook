@@ -21,11 +21,7 @@ fn main() -> std::io::Result<()> {
     } else {
         println!("did not match 'a.txt'");
     }
-    // for elem in files {
-    //     println!("elem: {:?}", elem?.path());
-    // }
-    // let files = fs::read_dir(&path_prepend)?;
-    // fs:rename(from, to)
+
     // lib::run(args_iterator, path_prepend)
     Ok(())
 }
