@@ -36,6 +36,17 @@ pub fn swap_dashes_and_underscores(input: &str) -> String {
         .collect()
 }
 
+pub fn files_print_swaps(files_iterator: impl Iterator<Item = std::io::Result<fs::DirEntry>>) {
+    for file in files_iterator {
+        let file = file.unwrap().path();
+        let file_ref = file.to_str().unwrap();
+        println!("file o.: {:?}", file_ref);
+        let changed = swap_dashes_and_underscores(file_ref);
+        println!("changed: {:?}", changed);
+
+    }
+}
+
 // NOTE: this is not easily testable
 //       perhaps the main structure should be broken up for testing
 //       ... I'm really not sure how best to deal with this...
