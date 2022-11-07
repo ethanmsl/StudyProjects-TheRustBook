@@ -1,0 +1,5 @@
+This is text in the file and says "a.txt", and also "b.txt".
+This file should be git-versioned as a.txt, but may change hands as part of testing the package
+
+"cargo run -- <to_file> <from_file>"
+(e.g. "carr -- a.txt b.txt")
