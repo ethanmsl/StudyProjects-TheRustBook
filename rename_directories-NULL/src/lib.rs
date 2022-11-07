@@ -5,7 +5,7 @@ pub struct ToFromPair {
 }
 
 impl ToFromPair {
-    fn new(from: String, to: String,) -> ToFromPair {
+    pub fn new(from: String, to: String,) -> ToFromPair {
         ToFromPair { from, to }
     }
 
@@ -21,7 +21,7 @@ impl ToFromPair {
     }
 }
 
-pub fn swap_dashes_and_underscores(input: String) -> String {
+pub fn swap_dashes_and_underscores(input: &str) -> String {
     input
         .chars()
         .map(|c| match c {
@@ -40,7 +40,7 @@ mod tests {
     fn line_swaps() {
         let input = String::from("hello-world and -_---_-");
         let expected = String::from("hello_world and _-___-_");
-        let actual = swap_dashes_and_underscores(input);
+        let actual = swap_dashes_and_underscores(&input);
         assert_eq!(expected, actual);
     }
 }
