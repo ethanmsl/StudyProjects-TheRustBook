@@ -9,7 +9,7 @@ pub struct ToFromPair {
 }
 
 impl ToFromPair {
-    pub fn new(from: String, to: String) -> ToFromPair {
+    fn new(from: String, to: String) -> ToFromPair {
         ToFromPair { from, to }
     }
 
@@ -39,7 +39,8 @@ pub fn swap_dashes_and_underscores(input: &str) -> String {
 // NOTE: this is not easily testable
 //       perhaps the main structure should be broken up for testing
 //       ... I'm really not sure how best to deal with this...
-pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(args_iterator: T, path_prepend: String) -> std::io::Result<()> {
+pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(args_iterator: T, path_prepend: String)
+-> std::io::Result<()> {
     let arg_length = args_iterator.len();
 
     match arg_length {
@@ -56,9 +57,11 @@ pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(args_iterator: T, pat
 
             let to_from = ToFromPair::new(to_arg, swapped_name);
             println!("tofrom: {:?}", to_from);
+
+            fs::rename(to_from.from, to_from.to,)?;
         },
         _ => println!("Please provide two arguments: the directory to rename and the new name for the directory."),
-    }
+    };
 
     Ok(())
 }
