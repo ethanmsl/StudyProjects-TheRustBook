@@ -16,8 +16,10 @@ fn main() -> std::io::Result<()> {
         .collect();
     println!("files: {:?}", files[3]);
     if files[3].to_str() == Some("./a.txt") {
-        println!("is_dir");
+        println!("matched 'a.txt'");
         fs::rename(&files[3], &files[3].with_file_name("b.txt"))?;
+    } else {
+        println!("did not match 'a.txt'");
     }
     // for elem in files {
     //     println!("elem: {:?}", elem?.path());
