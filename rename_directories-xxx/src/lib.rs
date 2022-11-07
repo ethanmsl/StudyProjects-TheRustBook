@@ -12,7 +12,7 @@ pub use string_change::*;
 pub mod string_change {
     use std::fs;
 
-    pub fn swap_dashes_and_underscores(input: &str) -> String {
+    fn swap_dashes_and_underscores(input: &str) -> String {
         input
             .chars()
             .map(|c| match c {
@@ -32,17 +32,17 @@ pub mod string_change {
             println!("changed: {:?}", changed);
         }
     }
-}
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+    #[cfg(test)]
+    mod tests {
+        use super::*;
 
-    #[test]
-    fn line_swaps() {
-        let input = String::from("hello-world and -_---_-");
-        let expected = String::from("hello_world and _-___-_");
-        let actual = swap_dashes_and_underscores(&input);
-        assert_eq!(expected, actual);
+        #[test]
+        fn line_swaps() {
+            let input = String::from("hello-world and -_---_-");
+            let expected = String::from("hello_world and _-___-_");
+            let actual = swap_dashes_and_underscores(&input);
+            assert_eq!(expected, actual);
+        }
     }
 }
