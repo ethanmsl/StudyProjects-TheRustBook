@@ -1,27 +1,15 @@
 use std::fs;
 
-#[derive(Debug)]
-pub struct ToFromPair {
-    pub from: String,
-    pub to:   String,
-}
+pub mod to_from_pair;
+use to_from_pair::ToFromPair;
 
-impl ToFromPair {
-    fn new(from: String, to: String) -> ToFromPair {
-        ToFromPair { from, to }
-    }
+pub mod argument_parse;
 
-    pub fn from_args(mut args: impl Iterator<Item = String>, prepend: &str) -> ToFromPair {
-        let curr_dir = args.next().unwrap();
-        println!("curr_dir: {}", curr_dir);
-        println!("prepend: {}", prepend);
+// NOTE: this allows 'print_bye' to be used without path call besides 'lib::'
+//       in parent caller (main.rs)
+pub mod test_prints;
+pub use test_prints::print_bye;
 
-        let from_arg = format!("{}/{}", prepend, args.next().unwrap());
-        let to_arg   = format!("{}/{}", prepend, args.next().unwrap());
-
-        ToFromPair::new(from_arg, to_arg)
-    }
-}
 
 pub fn swap_dashes_and_underscores(input: &str) -> String {
     input
@@ -33,6 +21,7 @@ pub fn swap_dashes_and_underscores(input: &str) -> String {
         })
         .collect()
 }
+
 
 pub fn files_print_swaps(files_iterator: impl Iterator<Item = std::io::Result<fs::DirEntry>>) {
     for file in files_iterator {
