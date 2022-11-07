@@ -14,6 +14,6 @@ fn main() -> std::io::Result<()> {
 
     println!("to: {:?}", to_from);
 
-    // fs::rename("/Users/eskowronski-lutz/Documents/Programming_Langs/Rust/book-projects-rust/boop.txt", "peeb.txt")?;
+    fs::rename(to_from.to, to_from.from)?;
     Ok(())
 }
