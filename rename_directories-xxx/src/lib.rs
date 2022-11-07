@@ -1,17 +1,14 @@
-use std::fs;
-
-pub mod to_from;
-use to_from::ToFromPair;
-
-pub mod arg_parse;
-
 // NOTE: this allows 'print_bye' to be used without path call besides 'lib::'
 //       in parent caller (main.rs)
 pub mod test_prints;
 pub use test_prints::print_bye;
 
-pub use string_change::*;
+pub mod to_from;
+pub use to_from::ToFromPair;
 
+pub mod arg_parse;
+
+pub use string_change::*;
 pub mod string_change {
     use std::fs;
 
@@ -37,56 +34,15 @@ pub mod string_change {
     }
 }
 
-
-
-// NOTE: this is not easily testable
-//       perhaps the main structure should be broken up for testing
-//       ... I'm really not sure how best to deal with this...
-pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(
-    args_iterator: T,
-    path_prepend: String,
-) -> std::io::Result<()> {
-    let arg_length = args_iterator.len();
-
-    match arg_length {
-        3 => {
-            let to_from = ToFromPair::from_args(args_iterator, &path_prepend);
-            println!("to: {:?}", to_from);
-            fs::rename(to_from.from, to_from.to)?;
-        }
-        2 => {
-            let to_arg = args_iterator.last().unwrap();
-            // println!("args_it...: {}", args_iterator.last().unwrap());
-            let swapped_name = swap_dashes_and_underscores(&to_arg);
-            println!("swapped_name: {}", swapped_name);
-
-            let to_from = ToFromPair::new(to_arg, swapped_name);
-            println!("tofrom: {:?}", to_from);
-
-            fs::rename(to_from.from, to_from.to)?;
-        }
-        _ => eprintln!("Either a single path or two paths is expected & required."),
-    };
-
-    Ok(())
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn line_swaps() {
-        let input    = String::from("hello-world and -_---_-");
+        let input = String::from("hello-world and -_---_-");
         let expected = String::from("hello_world and _-___-_");
         let actual = swap_dashes_and_underscores(&input);
         assert_eq!(expected, actual);
     }
-
-    // #[test]
-    // fn to_from_pair_from_args() {
-    //     let fake_args = vec![String::from("path"), String::from("--a--b__c.boop")];
-    //     run(fake_args.into_iter(), String::from("."));
-    //     // assert_eq!(expected, actual);
-    // }
 }
