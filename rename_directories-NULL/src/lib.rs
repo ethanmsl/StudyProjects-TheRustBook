@@ -1,6 +1,7 @@
 use std::env::Args;
 use std::fs;
 
+
 #[derive(Debug)]
 pub struct ToFromPair {
     pub from: String,
@@ -35,7 +36,7 @@ pub fn swap_dashes_and_underscores(input: &str) -> String {
         .collect()
 }
 
-pub fn run(args_iterator: Args, path_prepend: String) -> std::io::Result<()> {
+pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(args_iterator: T, path_prepend: String) -> std::io::Result<()> {
     let arg_length = args_iterator.len();
 
     match arg_length {
@@ -70,4 +71,11 @@ mod tests {
         let actual = swap_dashes_and_underscores(&input);
         assert_eq!(expected, actual);
     }
+
+    // #[test]
+    // fn to_from_pair_from_args() {
+    //     let args = Args::new("boop", "bop");
+    //     println!("args: {:?}", args);
+    //     assert_eq!(expected, actual);
+    // }
 }
