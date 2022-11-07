@@ -1,7 +1,6 @@
 use std::env::Args;
 use std::fs;
 
-
 #[derive(Debug)]
 pub struct ToFromPair {
     pub from: String,
@@ -43,23 +42,24 @@ pub fn files_print_swaps(files_iterator: impl Iterator<Item = std::io::Result<fs
         println!("file o.: {:?}", file_ref);
         let changed = swap_dashes_and_underscores(file_ref);
         println!("changed: {:?}", changed);
-
     }
 }
 
 // NOTE: this is not easily testable
 //       perhaps the main structure should be broken up for testing
 //       ... I'm really not sure how best to deal with this...
-pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(args_iterator: T, path_prepend: String)
--> std::io::Result<()> {
+pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(
+    args_iterator: T,
+    path_prepend: String,
+) -> std::io::Result<()> {
     let arg_length = args_iterator.len();
 
     match arg_length {
         3 => {
             let to_from = ToFromPair::from_args(args_iterator, &path_prepend);
             println!("to: {:?}", to_from);
-            fs::rename(to_from.from, to_from.to,)?;
-        },
+            fs::rename(to_from.from, to_from.to)?;
+        }
         2 => {
             let to_arg = args_iterator.last().unwrap();
             // println!("args_it...: {}", args_iterator.last().unwrap());
@@ -69,8 +69,8 @@ pub fn run<T: ExactSizeIterator + Iterator<Item = String>>(args_iterator: T, pat
             let to_from = ToFromPair::new(to_arg, swapped_name);
             println!("tofrom: {:?}", to_from);
 
-            fs::rename(to_from.from, to_from.to,)?;
-        },
+            fs::rename(to_from.from, to_from.to)?;
+        }
         _ => eprintln!("Either a single path or two paths is expected & required."),
     };
 
