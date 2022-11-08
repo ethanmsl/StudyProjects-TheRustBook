@@ -1,7 +1,10 @@
+// //////////////////////// TEST PRINTS ////////////////////////
+// // exploring how to call objects with modularized code
 // NOTE: this allows 'print_bye' to be used without path call besides 'lib::'
 //       in parent caller (main.rs)
-pub mod test_prints;
-pub use test_prints::print_bye;
+// pub mod test_prints;
+// pub use test_prints::print_bye;
+// ////////////////////////////////////////////////////////////
 
 pub mod to_from;
 pub use to_from::ToFromPair;

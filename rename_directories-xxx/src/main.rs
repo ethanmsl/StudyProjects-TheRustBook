@@ -1,16 +1,17 @@
+use lib::arg_parse;
 use std::env;
 use std::fs;
 
-use lib::arg_parse;
-use lib::test_prints::print_wave;
 use rename_directories_xxx as lib;
 
 fn main() -> std::io::Result<()> {
     // //////////////////////// TEST PRINTS ////////////////////////
-    // exploring how to call objects with modularized code
-    lib::test_prints::print_hello(); // because can call 'lib'
-    lib::print_bye();                // because lib has a use statement bringing in 'print_bye()'
-    print_wave();                    // becuase we have a use statment from 'lib::...' in this file
+    // // exploring how to call objects with modularized code
+    // use lib::test_prints::print_wave;
+    //
+    // lib::test_prints::print_hello(); // because can call 'lib'
+    // lib::print_bye();                // because lib has a use statement bringing in 'print_bye()'
+    // print_wave();                    // becuase we have a use statment from 'lib::...' in this file
     // test_prints::print_bye();     // Not Valid
     // print_bye();                  // Not Valid
     // ////////////////////////////////////////////////////////////
