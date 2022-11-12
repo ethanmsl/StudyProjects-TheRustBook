@@ -1,8 +1,22 @@
-use doc_comments_14::GREETING;
+//! # doc_comments_14 -- main.rs file
+//!
+//! `my_crate` is a collection of utilities to make performing certain
+//! calculations more convenient./// does this produce documentation ?
+//! this is in lib.rs
+//! ```
+//! assert_eq!(6,6);
+//! ```
+//  ^ NOTE: that test is **NOT** run
+//          **NOR** is the documentation produced
+
+// use doc_comments_14::GREETING;
 
 fn main() {
-    println!("{}", GREETING);
+    // println!("{}", GREETING);
 }
+
+// WARNING: the following does NOT generate docs **IF** lib.rs also exists
+// WARNING TWO: and the tests are not run regardless!
 
 /// Adds one to the number given.
 ///
