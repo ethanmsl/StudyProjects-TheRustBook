@@ -1,3 +1,25 @@
+//! Look at *Me*  
+//! I'm a library and get special treatment  
+//! with regard to both *Docs* **and** *Testing*  
+//! WoooOHeeeE  
+
+mod helper;
+
+/// juse here to use a helper file
+///
+/// # Examples
+/// ...
+pub fn use_helper() {
+    helper::helper_pub();
+}
+
+/// adds left and right
+///
+/// # Examples
+/// ```
+/// let result = lib_docs_14::add(1, 2);
+/// assert_eq!(3, result);
+/// ```
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
