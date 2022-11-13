@@ -3,9 +3,9 @@
 //! with regard to both *Docs* **and** *Testing*  
 //! WoooOHeeeE  
 
-// Aha!
-// declaring this as `pub` gets the doccomments to be used
-// in documentation
+/// Aha!
+/// NOTE: declaring this as `pub` gets the doccomments to be used in documentation
+/// ALSO NOTE: these '///' don't produce documentation for our `pub mod` declaration
 pub mod helper;
 
 /// juse here to use a helper file
