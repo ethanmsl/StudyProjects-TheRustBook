@@ -3,7 +3,10 @@
 //! with regard to both *Docs* **and** *Testing*  
 //! WoooOHeeeE  
 
-mod helper;
+// Aha!
+// declaring this as `pub` gets the doccomments to be used
+// in documentation
+pub mod helper;
 
 /// juse here to use a helper file
 ///
