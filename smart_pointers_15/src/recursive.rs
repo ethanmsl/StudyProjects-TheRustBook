@@ -6,5 +6,5 @@
 //!
 //! # Conceptual Example
 //! pseudo-code representation of a cons list containing 1,2, and 3:
-//!     `(1, (2, (3, (Null))))`
+//!     `(1, (2, (3, (Nil))))`
 //!
