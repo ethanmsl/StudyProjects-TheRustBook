@@ -3,5 +3,10 @@
 
 /// the function that serves as insertion to run
 fn main() {
-    println!("Hello, world!");
+    let b = Box::new(5);
+    println!("b = {}", b);
+    let b = Box::new(5.);
+    println!("b = {}", b);
+    let b: Box<u8> = Box::new(5);
+    println!("b = {}", b);
 }
