@@ -5,9 +5,40 @@ pub use recursive::List::{Cons, Nil};
 
 /// the function that serves as insertion to run
 fn main() {
+    // /////// Deref'ing /////// //
+    {
+        let x = 5;
+        let y = &x;
+        // the asserts will panic on normal run if not-true
+        assert_eq!(5, x);
+        assert_eq!(5, *y);
+
+        let z = *y;
+        println!("z: {}, y: {}, x: {}", z, y, x);
+
+        let x = 6;
+        let y = x;
+        let z = y;
+        println!("z: {}, y: {}, x: {}", z, y, x);
+        // ^ because of copy trait
+        
+        // try with something on the heap
+        let x = String::from("hello");
+        let y = &x;
+        let z = y;
+        println!("z: {}, y: {}, x: {}", z, y, x);
+
+        let x = String::from("hello");
+        let y = &x;
+        // let z = *y;
+        let z = &**y;
+        println!("z: {}, y: {}, x: {}", z, y, x);
+
+    }
+
 
     // /////// Recursive Type with Box /////// //
-    let rec_list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
+    let _rec_list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
 
     // ////// Basic Box Syntax ////// //
     let b = Box::new(5);
