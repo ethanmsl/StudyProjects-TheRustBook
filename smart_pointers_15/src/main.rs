@@ -34,6 +34,12 @@ fn main() {
         let z = &**y;
         println!("z: {}, y: {}, x: {}", z, y, x);
 
+
+        // now with boxes
+        let x = 5;
+        let y = Box::new(x);
+        assert_eq!(5, x);
+        assert_eq!(5, *y);
     }
 
 
