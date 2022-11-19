@@ -30,10 +30,16 @@ fn main() {
 
         let x = String::from("hello");
         let y = &x;
-        // let z = *y;
-        let z = &**y;
+        let z = &y;
+        let a = *z;
+        // let b = *a; => String
+        // let c = *b; => str
+        // let d = *c; => xxx
+    
         println!("z: {}, y: {}, x: {}", z, y, x);
-
+        
+        // let a = String::from("wowowwow");
+        // let b = *a;
 
         // now with boxes
         let x = 5;
