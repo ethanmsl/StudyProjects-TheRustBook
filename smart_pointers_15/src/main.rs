@@ -46,6 +46,9 @@ fn main() {
 
         let myboxed_string = MyBox::new(String::from("Rust"));
         hello(&myboxed_string);
+        // ^ ¡QUELLE SURPRISE!
+        // Rust will **dereference as many times as 'needed' to get a matching type!
+        // (presumably these deref chains are always linear (?) ... yeah)
     }
 
     // /////// Deref'ing /////// //
