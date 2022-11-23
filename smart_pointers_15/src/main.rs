@@ -24,7 +24,7 @@ impl<T> Deref for MyBox<T> {
     fn deref(&self) -> &Self::Target {
         &self.0
     }
-    // ^ NOTE: `*` will BOTH run the above deref and then do a standard deref of the 
+    // ^ NOTE: `*` will BOTH run the above deref and then do a standard deref of the
     //         returned value -- hence:
     //         *(MyBox(beep)) ~~> *(MyBox(beep).deref()) ~~> *(&beep) ~~> beep
     //         If we returned the value itself then we'd be taking ownership
@@ -38,6 +38,16 @@ struct MyBox<T>(T);
 
 /// the function that serves as insertion to run
 fn main() {
+    // /////// Deref Coercion /////// //
+    {
+        fn hello(name: &str) {
+            println!("Hello, {}!", name);
+        }
+
+        let myboxed_string = MyBox::new(String::from("Rust"));
+        hello(&myboxed_string);
+    }
+
     // /////// Deref'ing /////// //
     {
         let x = 5;
