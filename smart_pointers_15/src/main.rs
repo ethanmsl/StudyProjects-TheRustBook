@@ -3,6 +3,30 @@
 mod recursive;
 pub use recursive::List::{Cons, Nil};
 
+///
+
+impl<T> MyBox<T> {
+    fn new(x: T) -> MyBox<T> {
+        MyBox(x)
+    }
+}
+
+use std::ops::Deref;
+impl<T> Deref for MyBox<T> {
+    type Target = T;
+    // NOTE: `-> &Self` not `-> &self` (capital 'S')
+    // capital-`Self` references the TYPE
+    // lowercase-`self` is synsugar for `param: Self`
+    //     sugar mapping:
+    //     //    self       ~=>~ self: Self
+    //     //    &self      ~=>~ self: &Self
+    //     //    &mut self  ~=>~ self: &mut Self
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+struct MyBox<T>(T);
+
 /// the function that serves as insertion to run
 fn main() {
     // /////// Deref'ing /////// //
@@ -21,7 +45,7 @@ fn main() {
         let z = y;
         println!("z: {}, y: {}, x: {}", z, y, x);
         // ^ because of copy trait
-        
+
         // try with something on the heap
         let x = String::from("hello");
         let y = &x;
@@ -35,9 +59,9 @@ fn main() {
         // let b = *a; => String
         // let c = *b; => str
         // let d = *c; => xxx
-    
+
         println!("z: {}, y: {}, x: {}", z, y, x);
-        
+
         // let a = String::from("wowowwow");
         // let b = *a;
 
@@ -47,7 +71,6 @@ fn main() {
         assert_eq!(5, x);
         assert_eq!(5, *y);
     }
-
 
     // /////// Recursive Type with Box /////// //
     let _rec_list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
