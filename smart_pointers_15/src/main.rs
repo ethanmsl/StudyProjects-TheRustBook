@@ -24,6 +24,15 @@ impl<T> Deref for MyBox<T> {
     fn deref(&self) -> &Self::Target {
         &self.0
     }
+    // ^ NOTE: `*` will BOTH run the above deref and then do a standard deref of the 
+    //         returned value -- hence:
+    //         *(MyBox(beep)) ~~> *(MyBox(beep).deref()) ~~> *(&beep) ~~> beep
+    //         If we returned the value itself then we'd be taking ownership
+    //         away from the object, which is rarely what we'd want -- so this ends up
+    //         being ergonomic (we we to get around it -- which we probably wouldn't
+    //         want to as it would be unexpected deref behavior) -- I don't know if we
+    //         could nicely do that via standard impl methods... (mostly curious as to
+    //         the allowances and means of working with the system)
 }
 struct MyBox<T>(T);
 
