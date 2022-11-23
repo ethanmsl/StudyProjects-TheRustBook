@@ -32,6 +32,28 @@ fn main() {
     // /////// Deref'ing /////// //
     {
         let x = 5;
+        let y = MyBox::new(x);
+        assert_eq!(5, x);
+        // ^ I think this works because i32 implements Copy
+        assert_eq!(5, *y);
+
+        let x = String::from("five");
+        assert_eq!("five", x);
+        if "five" == x {
+            println!("x is five");
+        }
+        // Okay so even though "five" is probably a "string literal"
+        // it seems to "==" a string with the same char sequence
+
+        // let x = String::from("five");
+        // let y = MyBox::new(x);
+        // assert_eq!("five", x);
+        // // ^ Yep! the value was now borrowed! :)
+        // assert_eq!("five", *y);
+    }
+
+    {
+        let x = 5;
         let y = &x;
         // the asserts will panic on normal run if not-true
         assert_eq!(5, x);
