@@ -43,13 +43,18 @@ fn main() {
     {
         // /////// Custom Drop in a Custom Smart Pointer /////// //
         let c = CustomSmartPointer {
-            data: String::from("my stuff"),
+            data: String::from("c: my stuff"),
+        };
+        let d = CustomSmartPointer {
+            data: String::from("d: other stuff"),
         };
     }
-        let d = CustomSmartPointer {
-            data: String::from("other stuff"),
-        };
-        println!("CustomSmartPointers created.");
+    let e = CustomSmartPointer {
+        data: String::from("e: yet more stuff"),
+    };
+    println!("CustomSmartPointers created.");
+
+
     // /////// Deref Coercion /////// //
     {
         fn hello(name: &str) {
