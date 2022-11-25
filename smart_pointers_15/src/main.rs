@@ -52,7 +52,13 @@ fn main() {
     let e = CustomSmartPointer {
         data: String::from("e: yet more stuff"),
     };
+    let f = CustomSmartPointer {
+        data: String::from("f: something I'm going to call `drop()` on"),
+    };
     println!("CustomSmartPointers created.");
+
+    drop(f);
+    println!("CustomSmartPointer `f` dropped before the end of main.");
 
 
     // /////// Deref Coercion /////// //
