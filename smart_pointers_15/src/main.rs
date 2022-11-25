@@ -1,6 +1,8 @@
 //! Ch. 15. Smart Pointers - "The Rust Programming Language"
 
+mod customsmartptr;
 mod recursive;
+pub use customsmartptr::CustomSmartPointer;
 pub use recursive::List::{Cons, Nil};
 
 ///
@@ -38,6 +40,16 @@ struct MyBox<T>(T);
 
 /// the function that serves as insertion to run
 fn main() {
+    {
+        // /////// Custom Drop in a Custom Smart Pointer /////// //
+        let c = CustomSmartPointer {
+            data: String::from("my stuff"),
+        };
+        let d = CustomSmartPointer {
+            data: String::from("other stuff"),
+        };
+        println!("CustomSmartPointers created.");
+    }
     // /////// Deref Coercion /////// //
     {
         fn hello(name: &str) {
