@@ -27,3 +27,8 @@ pub enum List {
     Cons(i32, Box<List>),
     Nil,
 }
+
+// ^ coming back to this... WTF -- how is that where we define `Cons`
+// how does the compiler know what this stuff is...
+// ... I guess it's part of enum syntax 
+//     -- arbitrary names for values, with optional types

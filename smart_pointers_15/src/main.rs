@@ -1,4 +1,5 @@
 //! Ch. 15. Smart Pointers - "The Rust Programming Language"
+#![allow(unused_variables)]
 
 mod customsmartptr;
 mod recursive;
@@ -38,10 +39,25 @@ impl<T> Deref for MyBox<T> {
 }
 struct MyBox<T>(T);
 
+pub enum ListRc {
+    ConsR(i32, Rc<ListRc>),
+    Nilly,
+}
+    use std::rc::Rc;
+
 /// the function that serves as insertion to run
 fn main() {
+    // /////// Rc<t> : Multi-Ownership /////// //
+    use crate::ListRc::{ConsR, Nilly};
+    let a = Rc::new(ConsR(5, Rc::new(ConsR(10, Rc::new(Nilly)))));
+    let b = ConsR(3, Rc::clone(&a));
+    let c = ConsR(4, Rc::clone(&a));
+
+
+
+
+    // /////// Custom Drop in a Custom Smart Pointer /////// //
     {
-        // /////// Custom Drop in a Custom Smart Pointer /////// //
         let c = CustomSmartPointer {
             data: String::from("c: my stuff"),
         };
@@ -59,7 +75,6 @@ fn main() {
 
     drop(f);
     println!("CustomSmartPointer `f` dropped before the end of main.");
-
 
     // /////// Deref Coercion /////// //
     {
