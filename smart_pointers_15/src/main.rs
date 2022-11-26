@@ -62,6 +62,18 @@ fn main() {
         drop(b);
         println!("count after creating a = {}", Rc::strong_count(&a));
     }
+    println!("---------------------------------");
+
+    {
+        let core_data = (1, 2.0, true);
+        let alpha = (Rc::new(&core_data), true);
+        let beta = (Rc::new(&alpha), true);
+        let gamma = (Rc::new(&beta), true);
+
+        println!("alpha is equal to {:?}", &alpha);
+    }
+    println!("---------------------------------");
+
 
     // /////// Custom Drop in a Custom Smart Pointer /////// //
     {
@@ -82,6 +94,7 @@ fn main() {
 
     drop(f);
     println!("CustomSmartPointer `f` dropped before the end of main.");
+    println!("---------------------------------");
 
     // /////// Deref Coercion /////// //
     {
@@ -95,6 +108,8 @@ fn main() {
         // Rust will **dereference as many times as 'needed' to get a matching type!
         // (presumably these deref chains are always linear (?) ... yeah)
     }
+    println!("---------------------------------");
+
 
     // /////// Deref'ing /////// //
     {
@@ -118,6 +133,7 @@ fn main() {
         // // ^ Yep! the value was now borrowed! :)
         // assert_eq!("five", *y);
     }
+    println!("---------------------------------");
 
     {
         let x = 5;
@@ -160,9 +176,13 @@ fn main() {
         assert_eq!(5, x);
         assert_eq!(5, *y);
     }
+    println!("---------------------------------");
+
 
     // /////// Recursive Type with Box /////// //
     let _rec_list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
+    println!("---------------------------------");
+
 
     // ////// Basic Box Syntax ////// //
     let b = Box::new(5);
