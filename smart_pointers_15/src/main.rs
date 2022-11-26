@@ -48,18 +48,20 @@ use std::rc::Rc;
 /// the function that serves as insertion to run
 fn main() {
     // /////// Rc<t> : Multi-Ownership /////// //
-    use crate::ListRc::{ConsR, Nilly};
-    let a = Rc::new(ConsR(5, Rc::new(ConsR(10, Rc::new(Nilly)))));
-    println!("count after creating a = {}", Rc::strong_count(&a));
-    let b = ConsR(3, Rc::clone(&a));
-    println!("count after creating a = {}", Rc::strong_count(&a));
     {
-        let c = ConsR(4, Rc::clone(&a));
+        use crate::ListRc::{ConsR, Nilly};
+        let a = Rc::new(ConsR(5, Rc::new(ConsR(10, Rc::new(Nilly)))));
+        println!("count after creating a = {}", Rc::strong_count(&a));
+        let b = ConsR(3, Rc::clone(&a));
+        println!("count after creating a = {}", Rc::strong_count(&a));
+        {
+            let c = ConsR(4, Rc::clone(&a));
+            println!("count after creating a = {}", Rc::strong_count(&a));
+        }
+        println!("count after creating a = {}", Rc::strong_count(&a));
+        drop(b);
         println!("count after creating a = {}", Rc::strong_count(&a));
     }
-    println!("count after creating a = {}", Rc::strong_count(&a));
-    drop(b);
-    println!("count after creating a = {}", Rc::strong_count(&a));
 
     // /////// Custom Drop in a Custom Smart Pointer /////// //
     {
