@@ -65,12 +65,55 @@ fn main() {
     println!("---------------------------------");
 
     {
-        let core_data = (1, 2.0, true);
+        let mut core_data = (1, 2.0, true);
         let alpha = (Rc::new(&core_data), true);
         let beta = (Rc::new(&alpha), true);
         let gamma = (Rc::new(&beta), true);
 
+        println!("core_data is equal to {:?}", &core_data);
         println!("alpha is equal to {:?}", &alpha);
+        println!("beta is equal to {:?}", &beta);
+        println!("gamma is equal to {:?}", &gamma);
+
+        // // what occurs below would require new assignments, as I'd be looking at 
+        // // changed data
+        core_data.0 = 79;
+        println!();
+        // println!("core_data is equal to {:?}", &core_data);
+        // println!("alpha is equal to {:?}", &alpha);
+        // println!("beta is equal to {:?}", &beta);
+        let mut alpha = (Rc::new(&core_data), true);
+        let beta = (Rc::new(&alpha), true);
+        let gamma = (Rc::new(&beta), true);
+
+        println!("core_data is equal to {:?}", &core_data);
+        println!("alpha is equal to {:?}", &alpha);
+        println!("beta is equal to {:?}", &beta);
+        println!("gamma is equal to {:?}", &gamma);       // println!("gamma is equal to {:?}", &gamma);
+
+        // Okay, now what about changing alpha, but NOT the Rc portino?
+        alpha.1 = false;
+        println!();
+        let beta = (Rc::new(&alpha), true);
+        let gamma = (Rc::new(&beta), true);
+
+        println!("core_data is equal to {:?}", &core_data);
+        println!("alpha is equal to {:?}", &alpha);
+        println!("beta is equal to {:?}", &beta);
+        println!("gamma is equal to {:?}", &gamma);       // println!("gamma is equal to {:?}", &gamma);
+                                                          //
+        // // Okay, now what about changing via an Rc?
+        // // *NOPE* -- "cannot assign to datta in (sic; 'through') an Rc"
+        // //  (DerefMut not implemented for it)
+        // alpha.0.2 = false;
+        // println!();
+        // let beta = (Rc::new(&alpha), true);
+        // let gamma = (Rc::new(&beta), true);
+        //
+        // println!("core_data is equal to {:?}", &core_data);
+        // println!("alpha is equal to {:?}", &alpha);
+        // println!("beta is equal to {:?}", &beta);
+        // println!("gamma is equal to {:?}", &gamma);       // println!("gamma is equal to {:?}", &gamma);
     }
     println!("---------------------------------");
 
