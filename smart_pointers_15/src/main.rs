@@ -47,6 +47,15 @@ use std::rc::Rc;
 
 /// the function that serves as insertion to run
 fn main() {
+
+    println!("---------------------------------");
+    let mut x = 2112;
+    let y = &x;
+
+    println!("y: {}", y);
+    x += 1;
+    println!("x: {}", x);
+    // println!("y: {}", y);
     println!("---------------------------------");
 
 
