@@ -58,6 +58,8 @@ fn main() {
         println!("count after creating a = {}", Rc::strong_count(&a));
     }
     println!("count after creating a = {}", Rc::strong_count(&a));
+    drop(b);
+    println!("count after creating a = {}", Rc::strong_count(&a));
 
     // /////// Custom Drop in a Custom Smart Pointer /////// //
     {
