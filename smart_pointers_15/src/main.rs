@@ -47,6 +47,9 @@ use std::rc::Rc;
 
 /// the function that serves as insertion to run
 fn main() {
+    println!("---------------------------------");
+
+
     // /////// Rc<t> : Multi-Ownership /////// //
     {
         use crate::ListRc::{ConsR, Nilly};
