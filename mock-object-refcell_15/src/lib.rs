@@ -28,6 +28,7 @@ where
 
         let percentage_of_max = self.value as f64 / self.max as f64;
 
+    
         if percentage_of_max >= 1.0 {
             self.messenger.send("Error: You are over your quota!");
         } else if percentage_of_max >= 0.9 {
@@ -65,7 +66,7 @@ mod tests {
 
 
     #[test]
-    fn it_setnds_an_over_75_percent_warning_message() {
+    fn it_sends_an_over_75_percent_warning_message() {
         let mock_messenger = MockMessenger::new();
         let mut limit_tracker = LimitTracker::new(&mock_messenger, 100);
 
