@@ -27,8 +27,6 @@ where
         self.value = value;
 
         let percentage_of_max = self.value as f64 / self.max as f64;
-
-    
         if percentage_of_max >= 1.0 {
             self.messenger.send("Error: You are over your quota!");
         } else if percentage_of_max >= 0.9 {
@@ -63,7 +61,6 @@ mod tests {
             self.sent_messages.borrow_mut().push(String::from(message));
         }
     }
-
 
     #[test]
     fn it_sends_an_over_75_percent_warning_message() {
