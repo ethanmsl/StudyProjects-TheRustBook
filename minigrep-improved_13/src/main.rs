@@ -1,7 +1,7 @@
 use std::env;
 use std::process;
 
-use minigrep_12::Config;
+use minigrep_improved_13::Config;
 
 // args = dbg!(args);
 // QUESTION: ^ args is immutable, if I give it's value away is ther anyway
@@ -13,7 +13,7 @@ fn main() {
         process::exit(1);
     });
 
-    if let Err(e) = minigrep_12::run(config) {
+    if let Err(e) = minigrep_improved_13::run(config) {
         eprintln!("Application error: {e}");
         process::exit(1);
     }
