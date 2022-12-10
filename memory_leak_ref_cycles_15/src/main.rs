@@ -17,19 +17,39 @@ impl List {
     }
 }
 
+use rand::{
+    distributions::{Distribution, Standard},
+    Rng,
+};
+
 #[derive(Debug)]
 enum Muskateer {
-    _Athos,
+    Athos,
     Porthos,
-    _Aramis,
+    Aramis,
+}
+
+impl Distribution<Muskateer> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> Muskateer {
+        match rng.gen_range(0..=2) {
+            0 => Muskateer::Athos,
+            1 => Muskateer::Porthos,
+            _ => Muskateer::Aramis,
+            // ^ hmm, gives me guff if I have that as '2', seems like it can't tell
+            // that the generated o-domain is only {0,1,2} / perhaps there's something
+            // about the code *I* don't understand
+        }
+    }
 }
 
 fn main() {
     println!("-----------------------------\n");
 
-    let m = Muskateer::Porthos;
+    let m_static = Muskateer::Porthos;
+    let m_rand = rand::random::<Muskateer>();
 
-    println!("Muskateer \"m\" is {:?}", m);
+    println!("Muskateer \"m_static\" is {:?}", m_static);
+    println!("Muskateer \"m_rand\" is {:?}", m_rand);
     println!("-----------------------------\n");
 
     let a = Rc::new( Cons(  5, RefCell::new(Rc::new(Nil)) ) );
