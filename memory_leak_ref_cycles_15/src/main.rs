@@ -1,4 +1,4 @@
-use crate::List::{Cons, Nil};  // Huh, so importing locally
+use crate::List::{Cons, Nil}; // Huh, so importing locally
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -43,37 +43,44 @@ impl Distribution<Muskateer> for Standard {
 }
 
 fn main() {
-    println!("-----------------------------\n");
+    {
+        // Three Muskateers Enum w/ Random & Static assignment
+        println!("-----------------------------\n");
 
-    let m_static = Muskateer::Porthos;
-    let m_rand = rand::random::<Muskateer>();
+        let m_static = Muskateer::Porthos;
+        let m_rand = rand::random::<Muskateer>();
 
-    println!("Muskateer \"m_static\" is {:?}", m_static);
-    println!("Muskateer \"m_rand\" is {:?}", m_rand);
-    println!("-----------------------------\n");
-
-    let a = Rc::new( Cons(  5, RefCell::new(Rc::new(Nil)) ) );
-
-    println!("a initial rc count = {}", Rc::strong_count(&a));
-    println!("a next item = {:?}", a.tail());
-    println!("-----------------------------\n");
-
-    let b = Rc::new( Cons( 10, RefCell::new(Rc::clone(&a)) ) );
-
-    println!("a rc count after b creation = {}", Rc::strong_count(&a));
-    println!("b initial rc count = {}", Rc::strong_count(&b));
-    println!("b next item = {:?}", b.tail());
-    println!("-----------------------------\n");
-
-    if let Some(link) = a.tail() {
-        *link.borrow_mut() = Rc::clone(&b);
+        println!("Muskateer \"m_static\" is {:?}", m_static);
+        println!("Muskateer \"m_rand\" is {:?}", m_rand);
     }
 
-    println!("b rc count after changing a = {}", Rc::strong_count(&b));
-    println!("a rc count after changing a = {}", Rc::strong_count(&a));
-    println!("-----------------------------\n");
+    {
+        // Reference Cycle --> Memory Leak
+        println!("-----------------------------\n");
 
-    // Uncomment the next line to see that we have a cycle;
-    // it will overflow the stack
-    // println!("a next item = {:?}", a.tail());
+        let a = Rc::new(Cons(5, RefCell::new(Rc::new(Nil))));
+
+        println!("a initial rc count = {}", Rc::strong_count(&a));
+        println!("a next item = {:?}", a.tail());
+        println!("-----------------------------\n");
+
+        let b = Rc::new(Cons(10, RefCell::new(Rc::clone(&a))));
+
+        println!("a rc count after b creation = {}", Rc::strong_count(&a));
+        println!("b initial rc count = {}", Rc::strong_count(&b));
+        println!("b next item = {:?}", b.tail());
+        println!("-----------------------------\n");
+
+        if let Some(link) = a.tail() {
+            *link.borrow_mut() = Rc::clone(&b);
+        }
+
+        println!("b rc count after changing a = {}", Rc::strong_count(&b));
+        println!("a rc count after changing a = {}", Rc::strong_count(&a));
+        println!("-----------------------------\n");
+
+        // Uncomment the next line to see that we have a cycle;
+        // it will overflow the stack
+        // println!("a next item = {:?}", a.tail());
+    }
 }
