@@ -17,7 +17,19 @@ impl List {
     }
 }
 
+#[derive(Debug)]
+enum Muskateer {
+    _Athos,
+    Porthos,
+    _Aramis,
+}
+
 fn main() {
+    println!("-----------------------------\n");
+
+    let m = Muskateer::Porthos;
+
+    println!("Muskateer \"m\" is {:?}", m);
     println!("-----------------------------\n");
 
     let a = Rc::new( Cons(  5, RefCell::new(Rc::new(Nil)) ) );
