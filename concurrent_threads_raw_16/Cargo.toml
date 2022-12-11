@@ -1,5 +1,5 @@
 [package]
-name = "concurrent_threads_16"
+name = "concurrent_threads_raw_16"
 version = "0.1.0"
 edition = "2021"
 
