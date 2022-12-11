@@ -27,12 +27,29 @@ fn main() {
     }
     println!("----------------------------------------\n");
 
-    fn use_scope(x: i32) -> i32 {
-        let out = x + tup.0 + tup.1;
-        out
+    // fn use_scope(x: i32) -> i32 {
+    //     let out = x + tup.0 + tup.1;
+    //     out
+    // }
+    // // ^ won't work -- our function can't use elements defined in it's scope
+    // // capturing those values is for closures
+
+    // {
+    //     let cls_3 = |x|  tup.x;
+    //     // ^ doesn't work becuase of syntax
+    // }
+    // println!("----------------------------------------\n");
+
+    let arr = [1, 2, 3, 4, 5];
+    {
+        let cls_4 = |x| arr[x];
+        println!("arr = {:?}", arr);
+        println!("cls_4(0) = {}", cls_4(0));
+        println!("cls_4(4) = {}", cls_4(4));
+        // println!("cls_4(5) = {}", cls_4(5));
+        // // ^ will panic in release and debug due to out of bounds
     }
-    // ^ won't work -- our function can't use elements defined in it's scope
-    // capturing those values is for closures
+    println!("----------------------------------------\n");
 
     // let v_1 = vec![1, 2, 3, 5, 6, 7, 8, 9, 10];
     // {
