@@ -62,14 +62,23 @@ fn main() {
 
         println!("a initial rc count = {}", Rc::strong_count(&a));
         println!("a next item = {:?}", a.tail());
+        // ^ interesting that `tail` is defined for `List`, but works for
+        // `Rc<List>`; also it prints out value of `Nil`, not `Rc(Nil)`
+        // Clearly the judo/movement of pointers & smart pointers is something I
+        // still must learn more about (re: basics/norms)
         println!("-----------------------------\n");
 
         let b = Rc::new(Cons(10, RefCell::new(Rc::clone(&a))));
+        //                                    ^ note: this is an *Rc*::clone
 
         println!("a rc count after b creation = {}", Rc::strong_count(&a));
         println!("b initial rc count = {}", Rc::strong_count(&b));
         println!("b next item = {:?}", b.tail());
         println!("-----------------------------\n");
+
+        let link = a.tail();
+        // ^ this seems to work fine, so why were we treating `a.tail()` 
+        // as an option below?
 
         if let Some(link) = a.tail() {
             *link.borrow_mut() = Rc::clone(&b);
@@ -82,5 +91,6 @@ fn main() {
         // Uncomment the next line to see that we have a cycle;
         // it will overflow the stack
         // println!("a next item = {:?}", a.tail());
+        //   ^ lol
     }
 }
