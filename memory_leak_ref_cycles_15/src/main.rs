@@ -65,16 +65,40 @@ fn main() {
         });
 
         println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
+        println!(
+            "leaf strong count = {}, weak count = {}",
+            Rc::strong_count(&leaf),
+            Rc::weak_count(&leaf),
+        );
 
-        let branch = Rc::new(Node {
-            value: 5,
-            parent: RefCell::new(Weak::new()),
-            children: RefCell::new(vec![Rc::clone(&leaf)]),
-        });
+        {
+            let branch = Rc::new(Node {
+                value: 5,
+                parent: RefCell::new(Weak::new()),
+                children: RefCell::new(vec![Rc::clone(&leaf)]),
+            });
 
-        // updating leaf's `parent` field to point to branch
-        *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
-        println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
+            // updating leaf's `parent` field to point to branch
+            *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
+            println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
+
+            println!(
+                "branch strong count = {}, weak count = {}",
+                Rc::strong_count(&branch),
+                Rc::weak_count(&branch),
+            );
+            println!(
+                "leaf strong count = {}, weak count = {}",
+                Rc::strong_count(&leaf),
+                Rc::weak_count(&leaf),
+            );
+            println!("---branch goes out of scope---");
+        }
+        println!(
+            "leaf strong count = {}, weak count = {}",
+            Rc::strong_count(&leaf),
+            Rc::weak_count(&leaf),
+        );
     }
 
     {
