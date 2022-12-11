@@ -17,6 +17,7 @@ impl List {
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
 use rand::{
     distributions::{Distribution, Standard},
     Rng,
@@ -41,8 +42,29 @@ impl Distribution<Muskateer> for Standard {
         }
     }
 }
+////////////////////////////////////////////////////////////////////////////////
+
+#[derive(Debug)]
+struct Node {
+    value: i32,
+    children: RefCell<Vec<Rc<Node>>>,
+}
 
 fn main() {
+    {
+        // Using Weak references (which return an Option
+
+        let leaf = Rc::new(Node {
+            value: 3,
+            children: RefCell::new(vec![]),
+        });
+
+        let branch = Rc::new(Node {
+            value: 5,
+            children: RefCell::new(vec![Rc::clone(&leaf)]),
+        });
+    }
+
     {
         // Three Muskateers Enum w/ Random & Static assignment
         println!("-----------------------------\n");
@@ -77,7 +99,7 @@ fn main() {
         println!("-----------------------------\n");
 
         let link = a.tail();
-        // ^ this seems to work fine, so why were we treating `a.tail()` 
+        // ^ this seems to work fine, so why were we treating `a.tail()`
         // as an option below?
 
         if let Some(link) = a.tail() {
