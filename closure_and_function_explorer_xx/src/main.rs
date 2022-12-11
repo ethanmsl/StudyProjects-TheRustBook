@@ -51,6 +51,21 @@ fn main() {
     }
     println!("----------------------------------------\n");
 
+    let mut vec = vec![1, 2, 3, 4, 5];
+    vec[0] += 10;  // Fine, before closure even touches it
+    {
+        let cls_5 = |x| vec[x];
+        // vec[0] += 100;  // PROBLEM: changes vec after touched, but before last look
+        println!("vec = {:?}", vec);
+        println!("cls_5(0) = {}", cls_5(0));
+        println!("cls_5(4) = {}", cls_5(4));
+        // println!("cls_5(5) = {}", cls_5(5));
+        // // ^ will panic in release and debug due to out of bounds
+        vec[0] += 1000;  // Fine, after closure last looked at it
+        println!("vec = {:?}", vec);
+    }
+    println!("----------------------------------------\n");
+
     // let v_1 = vec![1, 2, 3, 5, 6, 7, 8, 9, 10];
     // {
     //     let cls_2 = || {
