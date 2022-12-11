@@ -74,12 +74,12 @@ fn main() {
     }
     println!("----------------------------------------\n");
 
-    let v_22 = vec![10, 20, 30, 50, 60, 70, 80, 90, 100];
-    {
-        let cls_22 = || v_22[out_1..out_2];
-        //              ^ doesn't work because of 'no known size at compilation time'
-        println!("v_22 = {:?}", v_22);
-        println!("cls_22() = {:?}", cls_22());
-    }
-    println!("----------------------------------------\n");
+    // let v_22 = vec![10, 20, 30, 50, 60, 70, 80, 90, 100];
+    // {
+    //     let cls_22 = || v_22[out_1..out_2];
+    //     //              ^ doesn't work because of 'no known size at compilation time'
+    //     println!("v_22 = {:?}", v_22);
+    //     println!("cls_22() = {:?}", cls_22());
+    // }
+    // println!("----------------------------------------\n");
 }
