@@ -4,6 +4,9 @@
 use std::sync::mpsc;
 //              ^ multi-producer, single-consumer
 use std::thread;
+use std::time::Duration;
+// import sleep
+use std::thread::sleep;
 
 fn main() {
     println!("--------------------------------------------\n");
@@ -12,6 +15,12 @@ fn main() {
 
         // Spawned thread, which communicates via the tx channel defined above
         thread::spawn(move || {
+            for i in 0..10 {
+                println!("- spawned: loop #{}", i);
+                sleep(Duration::from_millis(100));
+                // ^ sleeping, so slow
+            }
+
             let val = String::from("hi");
             tx.send(val).unwrap();
             // ^ NOTE: the last two lines disambiguate the type of the `let (tx, rx)`
@@ -21,5 +30,17 @@ fn main() {
 
         let received = rx.recv().unwrap();
         println!("`rx` got the following message: {}", received);
+        // ^ even if commented out the entire spawned thread's slow loop prints out
+        //   before the main threads fast loop
+        //   so presumably the main thread is 'blocked' (right term?) wiating for rx...
+        //   By Contrast:
+        //                If we comment out both received (and the line using it)
+        //                Then main loop prints fully mostly or wholly pre-empting the
+        //                spawned thread's loop
+
+        for i in 0..10 {
+            println!("main: loop #{}", i);
+            // no sleep, so fast
+        }
     }
 }
