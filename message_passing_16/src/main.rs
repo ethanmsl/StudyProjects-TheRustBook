@@ -17,12 +17,13 @@ fn main() {
         thread::spawn(move || {
             for i in 0..10 {
                 println!("- spawned: loop #{}", i);
-                sleep(Duration::from_millis(100));
+                sleep(Duration::from_millis(50));
                 // ^ sleeping, so slow
             }
 
             let val = String::from("hi");
-            tx.send(val).unwrap();
+            tx.send(val)
+                .expect("\nFailed to send value - from initial spawn thread\n--------------------------------------------\n");
             // ^ NOTE: the last two lines disambiguate the type of the `let (tx, rx)`
             //         declaration above
             // ^ also NOTE: that `tx` is *moved* into this closure
@@ -71,4 +72,29 @@ fn main() {
     //     let received = rx.recv().unwrap();
     //     println!("`rx` got the following message: {}", received);
     // }
+
+    println!("--------------------------------------------\n");
+    println!("sleeping to wait for initial spawned thread to error out as it attempts to send to a channel that's fallen out of scope...");
+    thread::sleep(Duration::from_millis(1000));
+    println!("--------------------------------------------\n");
+    {
+        let (tx2, rx2) = mpsc::channel();
+        thread::spawn(move || {
+            let vals = vec![
+                String::from("hi"),
+                String::from("from"),
+                String::from("the"),
+                String::from("thread"),
+            ];
+
+            for val in vals {
+                tx2.send(val).unwrap();
+                thread::sleep(Duration::from_secs(1));
+            }
+        });
+
+        for received in rx2 {
+            println!("Got: {}", received);
+        }
+    }
 }
