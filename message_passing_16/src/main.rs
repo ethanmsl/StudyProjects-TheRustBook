@@ -79,6 +79,9 @@ fn main() {
     println!("--------------------------------------------\n");
     {
         let (tx2, rx2) = mpsc::channel();
+
+        let tx2_clone = tx2.clone();
+
         thread::spawn(move || {
             let vals = vec![
                 String::from("hi"),
@@ -89,6 +92,20 @@ fn main() {
 
             for val in vals {
                 tx2.send(val).unwrap();
+                thread::sleep(Duration::from_secs(1));
+            }
+        });
+
+        thread::spawn(move || {
+            let vals = vec![
+                String::from("s2 boop"),
+                String::from("s2 beep"),
+                String::from("s2 crackle"),
+                String::from("s2 kkkkshh"),
+            ];
+
+            for val in vals {
+                tx2_clone.send(val).unwrap();
                 thread::sleep(Duration::from_secs(1));
             }
         });
