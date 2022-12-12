@@ -83,7 +83,7 @@ fn main() {
             let vals = vec![
                 String::from("hi"),
                 String::from("from"),
-                String::from("the"),
+                String::from("spawned"),
                 String::from("thread"),
             ];
 
@@ -93,6 +93,7 @@ fn main() {
             }
         });
 
+        // `Receiver` being treatd as an *iterator* (and it working)
         for received in rx2 {
             println!("Got: {}", received);
         }
