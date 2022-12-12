@@ -28,19 +28,28 @@ fn main() {
             // ^ also NOTE: that `tx` is *moved* into this closure
         });
 
-        let received = rx.recv().unwrap();
-        println!("`rx` got the following message: {}", received);
-        // ^ even if commented out the entire spawned thread's slow loop prints out
-        //   before the main threads fast loop
-        //   so presumably the main thread is 'blocked' (right term?) wiating for rx...
-        //   By Contrast:
-        //                If we comment out both received (and the line using it)
-        //                Then main loop prints fully mostly or wholly pre-empting the
-        //                spawned thread's loop
+        // let received = rx.recv().unwrap();
+        // println!("`rx` got the following message: {}", received);
+        // // ^ even if commented out the entire spawned thread's slow loop prints out
+        // //   before the main threads fast loop
+        // //   so presumably the main thread is 'blocked' (right term?) wiating for rx...
+        // //   By Contrast:
+        // //                If we comment out both received (and the line using it)
+        // //                Then main loop prints fully mostly or wholly pre-empting the
+        // //                spawned thread's loop
 
         for i in 0..10 {
             println!("main: loop #{}", i);
             // no sleep, so fast
         }
+
+        sleep(Duration::from_millis(1200));
+        // ^ can turn on or off to allow the spanwed thread to finish
+        if let Ok(received) = rx.try_recv() {
+            println!("`rx` got the following message wraped in `Ok()`: {}", received);
+        } else {
+            println!("`rx` did not receive an `Ok()` wrapped-result");
+        };
+        // ^ returns a `Result`, and is non-blocking
     }
 }
