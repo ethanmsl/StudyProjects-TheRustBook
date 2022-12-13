@@ -82,4 +82,16 @@ fn main() {
         print_coordinates(&point);
     }
     println!("----------------------------------------\n");
+{
+        let maybe_num: Option<u64> = "12".parse().ok();
+        //                           ^ convert Result~~>Option
+        if let Some(x) = maybe_num {
+            // x is (appropriately) confined to this scope! :)
+        }
+
+        // println!("x : {:?}", x);
+        // // ^ because x is confined to the above (conditional) scope it is not 
+        // //   available here
+    }
+    println!("----------------------------------------\n");
 }
