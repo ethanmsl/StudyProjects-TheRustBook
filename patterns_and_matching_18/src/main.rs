@@ -57,7 +57,6 @@ fn main() {
         // let (w, r) = (1, 2, 3);
         // //         ^ produces a compile time error
 
-
         // give me a result type with a specific error type
 
         let boop = "42".parse::<u64>();
@@ -77,12 +76,11 @@ fn main() {
             println!("Current location: (-{}= ={}-)", x, y);
         }
 
-
         let point = (3, 5);
         print_coordinates(&point);
     }
     println!("----------------------------------------\n");
-{
+    {
         let maybe_num: Option<u64> = "12".parse().ok();
         //                           ^ convert Result~~>Option
         if let Some(x) = maybe_num {
@@ -90,8 +88,14 @@ fn main() {
         }
 
         // println!("x : {:?}", x);
-        // // ^ because x is confined to the above (conditional) scope it is not 
+        // // ^ because x is confined to the above (conditional) scope it is not
         // //   available here
+        //
+
+        // will warn as the conditional test will always be true
+        if let y = 12 {
+            println!("This should always print, if we reached the connected \"test\"")
+        }
     }
     println!("----------------------------------------\n");
 }
