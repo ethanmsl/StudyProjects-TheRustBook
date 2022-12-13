@@ -98,4 +98,44 @@ fn main() {
         }
     }
     println!("----------------------------------------\n");
+
+    // scope and shadowing
+    {
+        let x = Some(5);
+        let y = 10;
+
+        match x {
+            Some(50) => println!("Got 50"),
+            Some(y) => println!("Matched, y = {:?}", y),
+            _ => println!("Default case, x = {:?}", x),
+        }
+
+        println!("at the end: x = {:?}, y = {:?}", x, y);
+    }
+    println!("----------------------------------------\n");
+
+    // various syntaxes
+    {
+        let x = 1;
+
+        match x {
+            1 | 2 => println!("one or two"),
+            3 => println!("three"),
+            _ => println!("anything"),
+        }
+
+        let x = 5;
+        // Only allowed for `char` and numeric types!!!
+        // (apparently because those are the only types the compiler
+        //  can check the range for emptyness)
+        //  Very strange seeming to me .. I'd have thought ... hmm
+        //  ... I was going to say anything with absolute ordering, but
+        //  absolute ordering is not the same as finite-enumerability
+        //  interesting perhaps
+        match x {
+            1..=5 => println!("one through five"),
+            _ => println!("something other than [1, 5]"),
+        }
+    }
+    println!("----------------------------------------\n");
 }
