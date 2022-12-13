@@ -486,8 +486,8 @@ fn main() {
 
         // rust will complain about unecessary parentheses
         // , but I'm inclined to think that's still the better choice
-        #[allow(unused_parens)]  // will only avoid for some def of locally - great
-                                 // (see below example that still gets a warning)
+        #[allow(unused_parens)] // will only avoid for some def of locally - great
+        // (see below example that still gets a warning)
         match x {
             (4 | 5 | 6) if y => println!("yes"),
             _ => println!("no"),
@@ -498,6 +498,37 @@ fn main() {
         match x {
             (4 | 5 | 6) if y => println!("yes"),
             _ => println!("no"),
+        }
+    }
+    println!("----------------------------------------\n");
+
+    // `@` bindings
+    {
+        enum Message {
+            Hello { id: i32 },
+        }
+
+        let msg = Message::Hello { id: 18 };
+
+        match msg {
+            Message::Hello {
+                id: id_variable @ 3..=7,
+            } => println!("Found an id in range [3, 7]: {}", id_variable),
+
+            Message::Hello { id: 10..=12 } => {
+                println!("Found an id in another range ( [10,12] )")
+            }
+
+            Message::Hello { id: boops } if boops == 13 => {
+                println!("Found an id equal to thirteen: {}", boops)
+            }
+
+            // if id is in range 15..=20
+            Message::Hello { id } if (14..=20).contains(&id) => {
+                println!("Found an id inclusively betwen fourteen and fifteen: {}", id)
+            }
+
+            Message::Hello { id } => println!("Found some other id: {}", id),
         }
     }
     println!("----------------------------------------\n");
