@@ -350,6 +350,77 @@ fn main() {
         println!("{:?}", s);
         // ^ this is okay becaue the `_` didn't bind the value
     }
+    println!("----------------------------------------\n");
 
+    // ignoring parts with ..
+    {
+        struct Point {
+            x: i32,
+            y: i32,
+            z: i32,
+        }
+
+        let origin = Point { x: 0, y: 0, z: 0 };
+
+        match origin {
+            Point { x, .. } => println!("x is {}", x),
+        }
+
+        let numbers = (2, 4, 8, 16, 32);
+
+        // this is an **un**ambiguous use of `..`
+        match numbers {
+            (first, .., last) => {
+                println!("Some numbers: {}, {}", first, last);
+            }
+        }
+
+        // // but this is an AMBIGUOUS use of `..`
+        // // (compiler error says that `..` can only be used once per tuple pattern)
+        // match numbers {
+        //     (.., second, ..) => {
+        //         println!("A number: {}", second);
+        //     }
+        // }
+
+        struct LotsOfNumbers {
+            a: i32,
+            b: i32,
+            c: i32,
+            d: i32,
+            e: i32,
+        }
+
+        let lots_of_numbers = LotsOfNumbers {
+            a: 1,
+            b: 2,
+            c: 3,
+            d: 4,
+            e: 5,
+        };
+
+        // // even though we're using shorthand naming conventions here (or writing in a
+        // // way that would be consistent with it)
+        // // the extra `..` is not allowed
+        // // in fact the compiler error says that the `..` bust be
+        // // at the end of the pattern
+        // match lots_of_numbers  {
+        //     LotsOfNumbers { .., b, .. } => println!(" b: {}", b),
+        // }
+
+        // // also not allowed
+        // // the `..` must be at the **end** of the struct destructuring pattern
+        // match origin {
+        //     Point { x, z, .. } => println!("x is {} and z is {}", x, z),
+        // }
+
+        // this **IS** allowed, even though `x` and `z` are not 'contiguous'
+        // in the struct declaration
+        // (now that I think about it I'm not sure there is any real ordering there
+        //  , in the object we create)
+        match origin {
+            Point { x, z, .. } => println!("x is {} and z is {}", x, z),
+        }
+    }
     println!("----------------------------------------\n");
 }
