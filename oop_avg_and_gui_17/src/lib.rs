@@ -4,26 +4,11 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
-/////// example of implementing trait defined elsewhere
-use gui::Draw;
-
-struct SelectBox {
-    width: u32,
-    height: u32,
-    options: Vec<String>,
-}
-
-impl Draw for SelectBox {
-    fn draw(&self) {
-        // where code to draw self woudl go
-    }
-}
-
 /// A non-functioning, but organization suggestive library of code
 /// for putting together a gui-library that could have the components it operates on
 /// extended by way of users implementing defined traits on their
 /// own objects/components.
-mod gui {
+pub mod gui {
 
     /// A trait-type (method-bound type?) that ensures drawability
     pub trait Draw {
