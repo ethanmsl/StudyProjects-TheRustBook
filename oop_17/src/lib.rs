@@ -4,11 +4,14 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
-/// Does this create documentation for the module `avg_cache`?
+///////////////////////////////////////////////////////////////////////
+
+/// Does this create documentation for the module `avg_cache`?  
+/// (Yes! :)  
 /// **Hi***!*
 mod avg_cache {
-    /// look at me, I'm documentation
-    /// I store a vector and an average of it's terms
+    /// look at me, I'm documentation  
+    /// I store a vector and an average of it's terms  
     /// *de facto* caching the average
     pub struct AveragedCollection {
         list: Vec<i32>,
