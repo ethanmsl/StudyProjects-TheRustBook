@@ -472,4 +472,33 @@ fn main() {
         println!("at the end: x = {:?}, y = {}", x, y);
     }
     println!("----------------------------------------\n");
+
+    // precedence clarification wrt match guards
+    {
+        let x = 4;
+        let y = false;
+
+        // note that the `if y` applies to all the or'd conditions (`4 | 5 | 6`)
+        match x {
+            4 | 5 | 6 if y => println!("yes"),
+            _ => println!("no"),
+        }
+
+        // rust will complain about unecessary parentheses
+        // , but I'm inclined to think that's still the better choice
+        #[allow(unused_parens)]  // will only avoid for some def of locally - great
+                                 // (see below example that still gets a warning)
+        match x {
+            (4 | 5 | 6) if y => println!("yes"),
+            _ => println!("no"),
+        }
+
+        // rust will complain about unecessary parentheses
+        // , but I'm inclined to think that's still the better choice
+        match x {
+            (4 | 5 | 6) if y => println!("yes"),
+            _ => println!("no"),
+        }
+    }
+    println!("----------------------------------------\n");
 }
