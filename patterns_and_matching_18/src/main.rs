@@ -149,4 +149,29 @@ fn main() {
         }
     }
     println!("----------------------------------------\n");
+    // destructuring structs
+    {
+        struct Point {
+            x: i32,
+            y: i32,
+        }
+
+        let p = Point { x: 0, y: 7 };
+        // longhand form
+        let Point { x: a, y: b } = p;
+        assert_eq!(0, a);
+        assert_eq!(7, b);
+
+        let p = Point { x: 1, y: 8 };
+        // shorthand form
+        let Point { x, y } = p;
+        assert_eq!(1, x);
+        assert_eq!(8, y);
+
+        let p = Point { x: 3, y: 9 };
+        // partial extraction shorthand form
+        let Point { x, .. } = p;
+        assert_eq!(3, x);
+    }
+    println!("----------------------------------------\n");
 }
