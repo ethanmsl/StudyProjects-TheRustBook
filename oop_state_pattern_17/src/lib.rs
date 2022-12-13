@@ -2,6 +2,7 @@
 
 
 pub mod blog_oop_trad;
+pub mod blog_rust_vrnt;
 
 
 // #[cfg(test)]
