@@ -1,4 +1,5 @@
 //! Ch 18 -- on patterns and matching
+#![allow(unused_variables)]
 
 fn main() {
     println!("----------------------------------------\n");
@@ -55,6 +56,17 @@ fn main() {
         let (x, y, z) = (1, 2, 3);
         // let (w, r) = (1, 2, 3);
         // //         ^ produces a compile time error
+
+
+        // give me a result type with a specific error type
+
+        let boop = "42".parse::<u64>();
+        let bop = Ok::<u64, std::num::ParseIntError>(42);
+        let beep = Err::<u64, _>("boop");
+        println!("boop: {:?}, beep: {:?}", boop, beep);
+        // let Ok(bopped) = bop;
+        // // ^ "refutable pattern"; not accepted
+        // println!("pattern unmatched bop: {}", bopped);
     }
     println!("----------------------------------------\n");
 }
