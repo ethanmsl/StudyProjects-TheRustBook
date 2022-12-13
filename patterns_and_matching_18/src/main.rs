@@ -188,6 +188,10 @@ fn main() {
             Point { x, y: 0 } => println!("y is zero & x: {}", x),
             Point { x, y } => println!("x: {}, y: {}", x, y),
         }
+
+        // destructuring strucs and tuples
+        let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
+        println!("feet: {}, inches: {}, x: {}, y: {}", feet, inches, x, y);
     }
     println!("----------------------------------------\n");
 
