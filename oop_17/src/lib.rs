@@ -4,6 +4,21 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
+/////// example of implementing trait defined elsewhere
+use gui::Draw;
+
+struct SelectBox {
+    width: u32,
+    height: u32,
+    options: Vec<String>,
+}
+
+impl Draw for SelectBox {
+    fn draw(&self) {
+        // where code to draw self woudl go
+    }
+}
+
 /// A non-functioning, but organization suggestive library of code
 /// for putting together a gui-library that could have the components it operates on
 /// extended by way of users implementing defined traits on their
@@ -19,7 +34,7 @@ mod gui {
     /// A Vector of `Draw`able types
     /// (evidently all trait-type specifications require use of a pointer
     /// (and use the special `dyn` keyword)
-    /// This contrats with the use of 
+    /// This contrats with the use of
     /// ```ignore
     /// where
     ///    T: Draw,
@@ -40,7 +55,7 @@ mod gui {
         //                       share the same **t-type**
         //                       [Sidenote: logically, (re: the logic-abstraction level)
         //                        Traits are just a "type",
-        //                        Rust does not seem to treat them this way and, 
+        //                        Rust does not seem to treat them this way and,
         //                        implementation wise there *may* be good reasons for
         //                        this -- however traits are just nodes and
         //                        functions/methods are just edges / morphisms
@@ -59,9 +74,22 @@ mod gui {
         }
     }
 
+    /// example component: A Button that can be drawn
+    pub struct Button {
+        pub width: u32,
+        pub height: u32,
+        pub label: String,
+    }
 
-
+    impl Draw for Button {
+        fn draw(&self) {
+            // no real code here
+            // this is all just for illustration purposes
+            // ... / not at all, ~lol
+        }
+    }
 }
+
 ///////////////////////////////////////////////////////////////////////
 
 /// Does this create documentation for the module `avg_cache`?  
