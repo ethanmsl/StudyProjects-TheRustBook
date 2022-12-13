@@ -24,6 +24,7 @@ fn main() {
         }
     }
     println!("----------------------------------------\n");
+
     // `while let` conditional loop
     {
         let mut stack = Vec::new();
@@ -35,6 +36,16 @@ fn main() {
         println!("stack vector: {:?}", stack);
         while let Some(top) = stack.pop() {
             println!("{}", top);
+        }
+    }
+    println!("----------------------------------------\n");
+
+    // `for loop` 'destructuring' pattern
+    {
+        let v = vec!['a', 'b', 'c'];
+
+        for (index, value) in v.iter().enumerate() {
+            println!("{} is at index {}", value, index);
         }
     }
     println!("----------------------------------------\n");
