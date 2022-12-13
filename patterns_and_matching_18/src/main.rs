@@ -254,4 +254,70 @@ fn main() {
         }
     }
     println!("----------------------------------------\n");
+
+    // ignoring values in a pattern
+    {
+        /// This function takes two parameters, but only uses the second
+        /// It uses a declaration nlike this `_: i32` and ignores the first
+        /// , *but*, ~~I assume,~~ still type checks it -- which is kinda interesting
+        fn foo(_: i32, y: i32) {
+            println!("This code only uses the y parameter: {}", y);
+        }
+
+        foo(3, 4);
+
+        // foo('h', 5);
+        // //   ^ yep, even though this value isn't used it's still type-checked
+
+        let mut setting_value = Some(5);
+        let new_setting_value = Some(10);
+
+
+        println!("(pre-match) setting is {:?}", setting_value);
+
+        match (setting_value, new_setting_value) {
+            // matches if both values are of type `Som(T)`
+            // *also* both types `T` must be the same
+            // *not* because of the `Some(_), Some(_)` pattern
+            // , but because one of the results in another branch involves
+            // setting one to the value of the other and nothing is proteceting against
+            // those mismatch variables getting there
+            // (not sure if there is a nice way to do that ... perhaps the type algebra
+            //  will allow it)
+            (Some(_), Some(_)) => {
+                println!("Can't overwrite an existing customized value");
+            }
+            _ => {
+                setting_value = new_setting_value;
+            }
+        }
+
+        // let mut setting_value = Some('c');
+        // let new_setting_value = Some(10);
+        // match (setting_value, new_setting_value) {
+        //     (Some(_), Some(_)) => {
+        //         println!("Can't overwrite an existing customized value");
+        //     }
+        //     (Some(T), Some(X)) => {
+        //         // interesting (1): this recognizes that `T` and `X` are types
+        //         // and that it's getting a `char` and an `i32` fed to it, resp.
+        //         println!("different some types");
+        //     }
+        //     (T, X) => {
+        //         println!("different types");
+        //     }
+        //     _ => {
+        //         setting_value = new_setting_value;
+        //         // interesting (2): this does not recognize that non-equal types
+        //         // won't be able to make it to this branch :|
+        //     }
+        // }
+        ///////////////////////////////////////////////////////////////////////////
+        //         // Copied for easier discovery:
+        //         // interesting (2): this does not recognize that non-equal types
+        //         // won't be able to make it to this branch :|
+
+        println!("(post-match) setting is {:?}", setting_value);
+    }
+    println!("----------------------------------------\n");
 }
