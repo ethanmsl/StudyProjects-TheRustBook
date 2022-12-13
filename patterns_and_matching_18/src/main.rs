@@ -423,4 +423,30 @@ fn main() {
         }
     }
     println!("----------------------------------------\n");
+
+    // match Guards!!! :)
+    {
+        let num_vec = vec![Some(4), Some(5), Some(6), Some(7)];
+
+        for num in num_vec {
+            // Neat and nice! :)
+            match num {
+                Some(x) if x % 2 == 0 => println!("The number {} is even", x),
+                Some(x) => println!("The number {} is odd", x),
+                None => (),
+            }
+        }
+
+        // // this doesn't work because num_vec was moved in the above case!
+        // // (and also used had an `into_iter` call on it)
+        // for num in num_vec.iter() {
+        //     // Neat and nice! :)
+        //     match num {
+        //         Some(x) if x % 2 == 0 => println!("The number {} is even", x),
+        //         Some(x) => println!("The number {} is odd", x),
+        //         None => (),
+        //     }
+        // }
+    }
+    println!("----------------------------------------\n");
 }
