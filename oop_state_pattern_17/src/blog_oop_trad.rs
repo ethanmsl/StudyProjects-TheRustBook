@@ -17,12 +17,20 @@ impl Post {
             content: String::new(),
         }
     }
-}
 
+    /// add text to content field
+    pub fn add_text(&mut self, text: &str) {
+        self.content.push_str(text);
+    }
+
+    /// get content from Post
+    pub fn content(&self) -> &str {
+        ""
+    }
+}
 
 trait State {}
 
 struct Draft {}
 
 impl State for Draft {}
-
