@@ -30,4 +30,26 @@ impl DraftPost {
     pub fn add_text(&mut self, text: &str) {
         self.content.push_str(text);
     }
+
+    /// the generator function for a `PendingReviewPost`
+    pub fn request_review(self) -> PendingReviewPost {
+        PendingReviewPost {
+            content: self.content,
+        }
+    }
+}
+
+/// Pending-Review Post  
+/// generatable from a `DraftPost`
+pub struct PendingReviewPost {
+    content: String,
+}
+
+impl PendingReviewPost {
+    /// generates a (Posted-)Post_r
+    pub fn approve(self) -> Post_r {
+        Post_r {
+            content: self.content,
+        }
+    }
 }
