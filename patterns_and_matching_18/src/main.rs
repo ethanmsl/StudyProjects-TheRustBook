@@ -272,7 +272,6 @@ fn main() {
         let mut setting_value = Some(5);
         let new_setting_value = Some(10);
 
-
         println!("(pre-match) setting is {:?}", setting_value);
 
         match (setting_value, new_setting_value) {
@@ -319,5 +318,38 @@ fn main() {
 
         println!("(post-match) setting is {:?}", setting_value);
     }
+    println!("----------------------------------------\n");
+
+    // more patter ignoring
+    {
+        let numbers = (2, 4, 8, 16, 32);
+
+        match numbers {
+            (first, _, third, _, fifth) => println!("Some numbers: {first}, {third}, {fifth}"),
+        }
+    }
+    println!("----------------------------------------\n");
+
+    // binding vs non binding with `_*`
+    {
+        let s = Some(String::from("Hello!"));
+
+        if let Some(_s) = s {
+            println!("found a string");
+        }
+
+        // println!("{:?}", s);
+        // // ^ will cause an error because `_s` above took ownership of the `s` value
+
+        let s = Some(String::from("Hello!"));
+
+        if let Some(_) = s {
+            println!("found a string");
+        }
+
+        println!("{:?}", s);
+        // ^ this is okay becaue the `_` didn't bind the value
+    }
+
     println!("----------------------------------------\n");
 }
