@@ -132,9 +132,20 @@ fn main() {
         //  ... I was going to say anything with absolute ordering, but
         //  absolute ordering is not the same as finite-enumerability
         //  interesting perhaps
+        //
+        //  I suppose one could create an onto mapping from some set to numerics
+        //  or chars
         match x {
             1..=5 => println!("one through five"),
             _ => println!("something other than [1, 5]"),
+        }
+
+        let x = 'c';
+        // note that the `alpha..=beta` syntax seems to be much preferred here
+        match x {
+            'a'..='j' => println!("early ASCII letter"),
+            'k'..='z' => println!("late ASCII letter"),
+            _ => println!("something else"),
         }
     }
     println!("----------------------------------------\n");
