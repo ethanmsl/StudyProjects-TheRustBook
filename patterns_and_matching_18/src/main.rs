@@ -49,4 +49,12 @@ fn main() {
         }
     }
     println!("----------------------------------------\n");
+
+    // `let` statements:  `let PATTERN = EXPRESSION`
+    {
+        let (x, y, z) = (1, 2, 3);
+        // let (w, r) = (1, 2, 3);
+        // //         ^ produces a compile time error
+    }
+    println!("----------------------------------------\n");
 }
