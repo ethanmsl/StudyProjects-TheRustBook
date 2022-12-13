@@ -1,7 +1,7 @@
 //! coding with the **state pattern**, often associatted with Object-Oriented design
 
 
-mod blog_oop_trad;
+pub mod blog_oop_trad;
 
 
 // #[cfg(test)]
