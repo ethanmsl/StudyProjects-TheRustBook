@@ -172,6 +172,22 @@ fn main() {
         // partial extraction shorthand form
         let Point { x, .. } = p;
         assert_eq!(3, x);
+
+        let p = Point { x: 4, y: 5 };
+        // partial extraction shorthand form
+        if let Point { x: 4, y } = p {
+            assert_eq!(5, y);
+        } else {
+            assert!(false);
+        }
+
+        let p = Point { x: 2, y: 0 };
+        // partial extraction in a match statement
+        match p {
+            Point { x: 0, y } => println!("x is zero & y: {}", y),
+            Point { x, y: 0 } => println!("y is zero & x: {}", x),
+            Point { x, y } => println!("x: {}, y: {}", x, y),
+        }
     }
     println!("----------------------------------------\n");
 }
