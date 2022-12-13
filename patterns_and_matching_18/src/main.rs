@@ -24,4 +24,18 @@ fn main() {
         }
     }
     println!("----------------------------------------\n");
+    // `while let` conditional loop
+    {
+        let mut stack = Vec::new();
+
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+
+        println!("stack vector: {:?}", stack);
+        while let Some(top) = stack.pop() {
+            println!("{}", top);
+        }
+    }
+    println!("----------------------------------------\n");
 }
