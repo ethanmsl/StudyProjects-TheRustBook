@@ -79,6 +79,9 @@ fn main() {
 
     // `extern` for foreign function interface-ing
     {
+        // taking from elsewhere and bringing here
+
+        // `extern` keyword is used to specify that the function is implemented
         // WOW! -- I'm impressed/surprised that that just worked.
         // ... I suppose C is so integral to most computers that a lot of common
         // functions/libraries are easy to find ... ?
@@ -94,6 +97,18 @@ fn main() {
             //  ^ or putting whole term in block
             println!("Absolute value of -3 according to C: {}", abs(-3));
         }
+
+
+        // setting up to send from here to elsewhere
+        #[no_mangle]
+        pub extern "C" fn call_from_c() {
+            println!("Just called a Rust function from C!");
+        }
+        // NOTE: ^ the above is for compiling into a *libary* and then linking in
+        //         another program
+        //         I don't think it would make sense defined in `main.rs`, but
+        //         still, it's an example of syntax
+        //         also NOTE: this use of extern, naturally, doesn't require "`unsafe`"
     }
     println!("----------------------------------------\n");
 }
