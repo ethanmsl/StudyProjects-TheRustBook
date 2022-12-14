@@ -129,7 +129,7 @@ fn main() {
         unsafe {
             println!("COUNTER: {}", COUNTER);
         }
-        
+
         fn add_to_count(inc: u32) {
             unsafe {
                 COUNTER += inc;
@@ -140,6 +140,38 @@ fn main() {
         unsafe {
             println!("COUNTER: {}", COUNTER);
         }
+    }
+    println!("----------------------------------------\n");
+
+    // unsafe Traits
+    {
+        unsafe trait Foo {
+            // methods here
+        }
+
+        // ^ less sure what this is for...
+        // seems to be about an assumption of trait methods that relies on unsafety
+        // , but where the methods are meant, taking trait-related assumptions for
+        // granted, to be safe to use
+        // ~i.e. safe methods and unsafe trait suggests the methods are a safe api
+        //       (though the "trait" is nothing but signatures so the "assumptions"
+        //        bit is somewhat of an imagined vision)
+        // by contrast unsafe methods ... well, it would suggest that even accepting
+        // some imagined assumptions of the trait there are additional unsafe elements
+        // in the methods call specifically
+        // i.e. that accepting some cannonical assumptions associatted with the trait
+        //      would not be enough to make the method safe
+        //      (so the method would, in this imagined dichotomy, have additinoal
+        //      assumptions associatted with it -- in principle you could roll those
+        //      into the trait assumptions, but for whatever particular model of
+        //      conceptual dependence that is not the cannonical parsing proffered)
+
+        unsafe impl Foo for i32 {
+            // methdo implementations would go here
+        }
+
+        // latter can be, for example, used to implement `Send` or `Sync` on
+        // a type that doesn't otherwise meet the qualifications
     }
     println!("----------------------------------------\n");
 }
