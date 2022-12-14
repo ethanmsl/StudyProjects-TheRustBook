@@ -98,7 +98,6 @@ fn main() {
             println!("Absolute value of -3 according to C: {}", abs(-3));
         }
 
-
         // setting up to send from here to elsewhere
         #[no_mangle]
         pub extern "C" fn call_from_c() {
@@ -109,6 +108,38 @@ fn main() {
         //         I don't think it would make sense defined in `main.rs`, but
         //         still, it's an example of syntax
         //         also NOTE: this use of extern, naturally, doesn't require "`unsafe`"
+    }
+    println!("----------------------------------------\n");
+
+    // modifying `static` variables
+    // (`static` variables are the same as `const` variables, including use of
+    //  "SCREAMING_SNAKE_CASE" norms.
+    //  , but `static` variables have a **fixed memory location** (at least relative
+    //  to whatever hardware abstractions rust gets access to... (??))
+    //  and *can* be mutable, but `static mut` can only be used (including read)
+    //  via `unsafe` methods
+    {
+        static HELLO_WORLD_s: &str = "Hello, world!";
+        const HELLO_WORLD_c: &str = "Hello, world!";
+        println!("static 'HELLO_WORLD': {}", HELLO_WORLD_s);
+        println!("const  'HELLO_WORLD': {}", HELLO_WORLD_c);
+
+        static mut COUNTER: u32 = 0;
+
+        unsafe {
+            println!("COUNTER: {}", COUNTER);
+        }
+        
+        fn add_to_count(inc: u32) {
+            unsafe {
+                COUNTER += inc;
+            }
+        }
+
+        add_to_count(3);
+        unsafe {
+            println!("COUNTER: {}", COUNTER);
+        }
     }
     println!("----------------------------------------\n");
 }
