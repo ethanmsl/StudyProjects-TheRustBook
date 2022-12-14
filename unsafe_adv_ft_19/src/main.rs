@@ -30,4 +30,18 @@ fn main() {
             // // ^ lol, resulted in `segmentation fault`
         }
     }
+    println!("----------------------------------------\n");
+
+    // Unsafe functions and methods
+    {
+        unsafe fn dangerous() {
+            println!("I bet you didn't know that I was dan-ger-ous\nI bet you didn't know someone could love you this much.\n-Big Data");
+        }
+
+        // dangerous();
+        // // ^ can't be called outside of an `unsafe` block
+        unsafe {
+            dangerous();
+        }
+    }
 }
