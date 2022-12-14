@@ -75,10 +75,28 @@ fn main() {
             i_did_a_thing();
         }
     }
-}
+    println!("----------------------------------------\n");
 
-// remake of `split_at_mut`
-use std::slice;
+    // `extern` for foreign function interface-ing
+    {
+        // WOW! -- I'm impressed/surprised that that just worked.
+        // ... I suppose C is so integral to most computers that a lot of common
+        // functions/libraries are easy to find ... ?
+        extern "C" {
+            fn abs(input: i32) -> i32;
+        }
+
+        println!("Abs val C: {}", unsafe { abs(-3) });
+        //                          ^ calling unsafe here!
+        //              not sure if best practice to not frontload the `unsafe` keyword
+        //              (from a visibility & clarity perspective)
+        unsafe {
+            //  ^ or putting whole term in block
+            println!("Absolute value of -3 according to C: {}", abs(-3));
+        }
+    }
+    println!("----------------------------------------\n");
+}
 
 fn do_a_thing() -> () {
     println!("I'm doing a thing!");
@@ -86,6 +104,9 @@ fn do_a_thing() -> () {
 fn i_did_a_thing() -> () {
     println!("I did a thing!");
 }
+
+// remake of `split_at_mut`
+use std::slice;
 
 fn split_at_mut_bespoke(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
     let len = values.len();
