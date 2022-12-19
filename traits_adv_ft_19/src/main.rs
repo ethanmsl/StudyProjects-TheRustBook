@@ -28,6 +28,12 @@ impl IteratorBespoke for Counter {
     type Item = u32;
 
     fn next(&mut self) -> Option<Self::Item> {
+        //                         ^ this is a bit confusing tome
+        //          as it's really just whatever type 'item' is which isn't related to,
+        //          in this case, IteratorBespoke or Counter.
+        //          I *think* the best way to think about it is 
+        //          as `Item` belongs to the trait-type (`IteratorBespoke`)
+        //          , the whole thing being replaced by the concrete type supplied
         self.count += 1;
 
         // l-o-f'ing-l
