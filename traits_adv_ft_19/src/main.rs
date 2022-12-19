@@ -106,4 +106,60 @@ fn main() {
         // dbg!(p5);
         // // no impl for i32+Point
     }
+    println!("---------------------------------------------\n");
+
+    // disambiguation syntax
+    {
+        struct Human;
+
+        trait Pilot {
+            fn fly(&self);
+            fn smile();
+        }
+
+        trait Wizard {
+            fn fly(&self);
+            fn smile();
+        }
+
+        impl Human {
+            fn fly(&self) {
+                println!("*waving arms furiously*");
+            }
+
+            fn smile() {
+                println!("*smiles*");
+            }
+        }
+
+        impl Pilot for Human {
+            fn fly(&self) {
+                println!("This is your captain speaking.");
+            }
+            fn smile() {
+                println!("*smiles broadly*");
+            }
+        }
+
+        impl Wizard for Human {
+            fn fly(&self) {
+                println!("Up!");
+            }
+            fn smile() {
+                println!("*winks*");
+            }
+        }
+
+        let person = Human;
+        person.fly();
+        Pilot::fly(&person);
+        Wizard::fly(&person);
+
+        Human::smile();
+        <Human as Pilot>::smile();
+        <Human as Wizard>::smile();
+        // There could be multiple implementaitons of the Pilot or Wizard traits
+        // for various types -- we need to specify the sub- & trait- types together
+    }
+    println!("---------------------------------------------\n");
 }
