@@ -131,4 +131,33 @@ fn main() {
         // this_is_the_song_that_never_ends();
     }
     println!("---------------------------------------------\n");
+
+    // `Sized` & `?Sized`
+    {
+        /// same as `generic_2`, but with the trait restriction (`T: Sized`) implicit
+        fn generic_1<T>(t: T) -> T {
+            t
+        }
+
+        /// same as `generic_1`, just explicit about the trait restriction
+        fn generic_2<T: Sized>(t: T) -> T {
+            t
+        }
+
+        // | `generic_1` === `generic_2`
+        // , but:
+        /// accepts non-sized generics, but NOTE: it takes a *reference* to the value
+        /// not the value itself
+        fn generic_different<T: ?Sized>(t: &T) -> &T {
+            t
+        }
+
+        // /// This won't compile.
+        // /// despite labelling T as `?Sized` a return value of known size is still
+        // /// required
+        // fn generic_different_no_compile<T: ?Sized>(t: &T) -> T {
+        //     *t
+        // }
+    }
+    println!("---------------------------------------------\n");
 }
