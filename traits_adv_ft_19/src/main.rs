@@ -1,5 +1,7 @@
 //! Advanced Traits -- Ch 19 Advanced Features
 
+use std::fmt::Display;
+
 /// Same as `Iterator`; here to look at syntax
 pub trait IteratorBespoke {
     type Item;
@@ -160,6 +162,43 @@ fn main() {
         <Human as Wizard>::smile();
         // There could be multiple implementaitons of the Pilot or Wizard traits
         // for various types -- we need to specify the sub- & trait- types together
+    }
+    println!("---------------------------------------------\n");
+
+    // "super traits" which are "sub-trait-types of other trait-types"
+    {
+        use std::fmt;
+
+        trait OutlinePrint: fmt::Display {
+            // a default implementation is provided
+            fn outline_print(&self) {
+                let output = self.to_string();
+                let len = output.len();
+                println!("{}", "*".repeat(len + 4));
+                println!("*{}*", " ".repeat(len + 2));
+                println!("* {} *", output);
+                println!("*{}*", " ".repeat(len + 2));
+                println!("{}", "*".repeat(len + 4));
+            }
+        }
+
+        struct Point {
+            x: i32,
+            y: i32,
+        }
+
+        impl fmt::Display for Point {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                write!(f, "({}, {})", self.x, self.y)
+            }
+        }
+
+        impl OutlinePrint for Point {
+
+        }
+
+        let p = Point { x: 72, y: 296 };
+        p.outline_print();
     }
     println!("---------------------------------------------\n");
 }
