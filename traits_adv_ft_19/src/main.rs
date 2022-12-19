@@ -193,12 +193,39 @@ fn main() {
             }
         }
 
-        impl OutlinePrint for Point {
-
-        }
+        impl OutlinePrint for Point {}
 
         let p = Point { x: 72, y: 296 };
         p.outline_print();
+
+        println!("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+
+        // NewType pattern and foundling rule
+        // NOTE: no runtime penalty for this -- wrapper type is elided as part of compile
+        struct Wrapper<D: fmt::Display>(Vec<D>);
+
+        impl<D> fmt::Display for Wrapper<D>
+        where
+            D: fmt::Display,
+        {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                write!(
+                    f,
+                    "[{}]",
+                    self.0
+                        .iter()
+                        .map(|x| x.to_string())
+                        .collect::<Vec<String>>()
+                        .join(", ")
+                )
+            }
+        }
+
+        impl<D> OutlinePrint for Wrapper<D> where D: fmt::Display {}
+
+        let w = Wrapper(vec![1, 2, 3, 4, 5, 6, 7]);
+        println!("w = {}", w);
+        w.outline_print();
     }
     println!("---------------------------------------------\n");
 }
