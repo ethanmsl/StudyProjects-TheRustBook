@@ -126,4 +126,81 @@ fn main() {
         println!("list_of_statuses: {:?}", list_of_statuses);
     }
     println!("----------------------------------------\n");
+
+    // returning closures, which have no concrete type(!)
+    {
+        // /// won't compile
+        // fn returns_closure_a() -> dyn Fn(i32) -> i32 {
+        //     |x| x + 1
+        // }
+
+        /// *will* compile; what the compiler recommended when I gave it
+        /// the above voce (`... -> **dyn** Fn(i32) -> i32`)
+        /// apparently this implies **static dispatch**
+        /// this want's something like a single concrete type at compile time
+        /// but as closures nominally don't *have* concrete types it's unclear
+        /// what the under the hood reqs are for this
+        ///
+        /// `impl trait` in an *input* parameter is an alias for giving a generic
+        /// a trait-type
+        /// e.g.
+        /// `fn f(x: impl X) -> ...`
+        ///  =
+        /// `fn f<X: trait>(x: X) -> ...`
+        ///
+        /// ALSO usable as an *output* parameter e.g.
+        /// `fn f() -> impl X`
+        /// ^ in the above case, the `impl X` suggests that the specifics of what
+        /// is being returned is **known at compile time** and has some
+        /// "single concrete type" (though what that means for closures is not entirely clear)
+        /// So taking two types that implement Display (e.g. char and i32)
+        /// and trying to return either for a function that returns `impl Display`
+        /// would **NOT** work
+        fn returns_closure_b() -> impl Fn(i32) -> i32 {
+            |x| x + 1
+        }
+
+        /// what the rust book recommended (...)
+        /// `ptr<dyn trait>` nominally allows for dynamic elements of a trait to be
+        /// returned, but it's not clear what that would mean with the signature
+        /// being used here...
+        fn returns_closure_c() -> Box<dyn Fn(i32) -> i32> {
+            Box::new(|x| x + 1)
+        }
+
+        // // `impl` in type alias blocks is an *un*stable feature
+        // type Ci32x2 = impl Fn(i32) -> i32;
+        // /// *will* compile; what the compiler recommended when I gave it
+        // /// the above voce (`... -> **dyn** Fn(i32) -> i32`)
+        // /// apparently this implies **static dispatch**
+        // fn returns_closure_d() -> Ci32x2 {
+        //     |x| x + 1
+        // }
+    }
+    println!("----------------------------------------\n");
+
+    // taking a look at `impl trait` in return type
+    {
+        // use std::fmt::Display;
+        // /// will NOT compile
+        // /// `impl trait` in return type requires a *specific* type
+        // /// (probably not the best choice of syntax given that
+        // /// it means something else in input type position)
+        // /// ...
+        // /// I think it's related to both resulting in monomorphization
+        // /// ... but ... hmmm ... I still have questions about why trait-types
+        // /// require dynamic dispatch in many cases still
+        // /// as I'd think 
+        // /// hm.... in my case below ... maybe it's related to the 
+        // /// compiler wanting to know what it can plug into in a...
+        // /// ...
+        // /// lots tbd still
+        // fn returns_displayable(choice: bool) -> impl Display {
+        //     if choice {
+        //         return 42;
+        //     }
+        //     'f'
+        // }
+    }
+    println!("----------------------------------------\n");
 }
