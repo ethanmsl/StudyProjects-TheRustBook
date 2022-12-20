@@ -10,9 +10,12 @@ fn do_twice(f: fn(i32) -> i32, arg: i32) -> i32 {
 
 // /// not valid
 // /// the `where` syntax seems to be for traits only
+// /// one of the compiler errors that comes up is:
+// /// "equality constraints are not yet supported in `where` clauses"
+// /// the "yet" being, hopefully, noteworthy :)
 // fn do_thrice(f: F, arg: i32) -> i32
 // where
-//     F = Fn(i32) -> i32,
+//     F = fn(i32) -> i32,
 // {
 //     f(f(f(arg)))
 // }
