@@ -91,6 +91,7 @@ fn main() {
     }
     println!("----------------------------------------\n");
 
+    // dynamic ~function generation via closures
     {
         let add_one = |x| x + 1;
         let add_forty_two = repeat(add_one, 42);
@@ -98,6 +99,31 @@ fn main() {
             "Answer arrived at via closure composition is: {}",
             add_forty_two(0)
         );
+    }
+    println!("----------------------------------------\n");
+
+    // functions as inputs, anonymous, named, derived
+    {
+        // with anonymous function
+        let list_of_numbers = vec![1, 2, 3];
+        let list_of_strings: Vec<String> = list_of_numbers.iter().map(|i| i.to_string()).collect();
+        dbg!(list_of_strings);
+
+        // with named function
+        let list_of_numbers = vec![1, 2, 3];
+        let list_of_strings: Vec<String> =
+            list_of_numbers.iter().map(ToString::to_string).collect();
+        dbg!(list_of_strings);
+
+        // using the derived initializer function of an Enum
+        #[derive(Debug)]
+        enum Status {
+            Value(u32),
+            Stop,
+        }
+        let list_of_statuses: Vec<Status> = (0u32..20).map(Status::Value).collect();
+        // dbg!(list_of_statuses);  // <-- noisy
+        println!("list_of_statuses: {:?}", list_of_statuses);
     }
     println!("----------------------------------------\n");
 }
