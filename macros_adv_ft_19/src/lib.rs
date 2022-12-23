@@ -10,3 +10,20 @@ macro_rules! vec_bespoke {
         }
     };
 }
+
+///////////////////////////////////////////////////////////////
+
+// use proc_macro;
+//
+// #[some_attribute]
+// pub fn some_name(input: TokenStream) -> TokenStream {
+// }
+
+///////////////////////////////////////////////////////////////
+
+// macro defined
+// the macro derive is in a *seperate crate* within this crate's main directory
+// (that crates is called "hello_macro_derive")
+pub trait HelloMacro {
+    fn hello_macro();
+}
