@@ -42,11 +42,12 @@ fn handle_connection(mut stream: TcpStream) {
     //                  ^ wraps the stream data, while doing "infrequent" chunk reads
     //                    so that we can make small 'frequent' calls to it
     //                    without the innefficiency of the same number of system calls
-    let http_request: Vec<_> = buf_reader
-        .lines()
-        .map(|result| result.unwrap())
-        .take_while(|line| !line.is_empty())
-        .collect();
+
+    // let http_request: Vec<_> = buf_reader
+    //     .lines()
+    //     .map(|result| result.unwrap())
+    //     .take_while(|line| !line.is_empty())
+    //     .collect();
 
     //   ^ we take all the elements up until the nominal end of the request as denoted
     //     by an empty line (consecutive endline chars in the raw stream)
@@ -61,17 +62,31 @@ fn handle_connection(mut stream: TcpStream) {
     //   (/ perhaps that's something that a more robust system would need to account for
     //    or perhaps it's something that the HTTP protocol itself guarantees (?) )
 
-    println!("Request: {:#?}", http_request);
-    // ^ console output to let us see details of request
+    // println!("Request: {:#?}", http_request);
+    // // ^ console output to let us see details of request
 
     // let response = "HTTP/1.1 200 OK\r\n\r\n";
     // //  ^ custom & complete HTTP response; success, no more details
-    let status_line = "HTTP/1.1 200 OK";
-    let contents = fs::read_to_string("hello.html").unwrap();
-    let length = contents.len();
 
-    let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
-    stream.write_all(response.as_bytes()).unwrap();
-    //                                     ^ unwraps a `Result<()> -- which is just a 
-    //                                       way of proviging an Ok|x|Error code.`
+    let request_line = buf_reader.lines().next().unwrap().unwrap();
+    // Notable that we have two unwraps in a row -- related to the
+    // delayed/as_needed/"lazy" style of the iterator I assume
+    // Specifically: `lines()` returns an iterator, which *will* return a Result<>
+    // and then `.next()` returns a definite object, which is *also* a Result<>
+
+    let (status_line, contents, length) = if request_line == "GET / HTTP/1.1" {
+        let status_line = "HTTP/1.1 200 OK";
+        let contents = fs::read_to_string("hello.html").unwrap();
+        let length = contents.len();
+        (status_line, contents, length)
+    } else {
+        let status_line = "HTTP/1.1 404 NOT FOUND";
+        let contents = fs::read_to_string("404.html").unwrap();
+        let length = contents.len();
+        (status_line, contents, length)
+    };
+        let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+        stream.write_all(response.as_bytes()).unwrap();
+        //                                     ^ unwraps a `Result<()> -- which is just a
+        //                                       way of proviging an Ok|x|Error code.`
 }
