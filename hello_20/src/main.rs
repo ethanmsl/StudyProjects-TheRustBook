@@ -83,12 +83,12 @@ fn handle_connection(mut stream: TcpStream) {
         let filename = "404.html";
         (status_line, filename)
     };
-        let contents = fs::read_to_string(filename).unwrap();
-        let length = contents.len();
+    let contents = fs::read_to_string(filename).unwrap();
+    let length = contents.len();
 
-        let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+    let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
-        stream.write_all(response.as_bytes()).unwrap();
-        //                                     ^ unwraps a `Result<()> -- which is just a
-        //                                       way of proviging an Ok|x|Error code.`
+    stream.write_all(response.as_bytes()).unwrap();
+    //                                     ^ unwraps a `Result<()> -- which is just a
+    //                                       way of proviging an Ok|x|Error code.`
 }
