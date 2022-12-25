@@ -8,6 +8,7 @@
 //! Run program then use a browser (for example) aimed at "127.0.0.1:7878"
 
 use std::{
+    fs,
     io::{prelude::*, BufReader},
     net::{TcpListener, TcpStream},
 };
@@ -61,4 +62,16 @@ fn handle_connection(mut stream: TcpStream) {
     //    or perhaps it's something that the HTTP protocol itself guarantees (?) )
 
     println!("Request: {:#?}", http_request);
+    // ^ console output to let us see details of request
+
+    // let response = "HTTP/1.1 200 OK\r\n\r\n";
+    // //  ^ custom & complete HTTP response; success, no more details
+    let status_line = "HTTP/1.1 200 OK";
+    let contents = fs::read_to_string("hello.html").unwrap();
+    let length = contents.len();
+
+    let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+    stream.write_all(response.as_bytes()).unwrap();
+    //                                     ^ unwraps a `Result<()> -- which is just a 
+    //                                       way of proviging an Ok|x|Error code.`
 }
