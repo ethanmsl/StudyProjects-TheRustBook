@@ -74,18 +74,20 @@ fn handle_connection(mut stream: TcpStream) {
     // Specifically: `lines()` returns an iterator, which *will* return a Result<>
     // and then `.next()` returns a definite object, which is *also* a Result<>
 
-    let (status_line, contents, length) = if request_line == "GET / HTTP/1.1" {
+    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
         let status_line = "HTTP/1.1 200 OK";
-        let contents = fs::read_to_string("hello.html").unwrap();
-        let length = contents.len();
-        (status_line, contents, length)
+        let filename = "hello.html";
+        (status_line, filename)
     } else {
         let status_line = "HTTP/1.1 404 NOT FOUND";
-        let contents = fs::read_to_string("404.html").unwrap();
-        let length = contents.len();
-        (status_line, contents, length)
+        let filename = "404.html";
+        (status_line, filename)
     };
+        let contents = fs::read_to_string(filename).unwrap();
+        let length = contents.len();
+
         let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+
         stream.write_all(response.as_bytes()).unwrap();
         //                                     ^ unwraps a `Result<()> -- which is just a
         //                                       way of proviging an Ok|x|Error code.`
