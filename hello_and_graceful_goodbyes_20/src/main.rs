@@ -18,7 +18,7 @@ use std::{
 use hello_and_graceful_goodbyes_20::ThreadPool;
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+    let listener = TcpListener::bind("127.0.0.1:7878").expect("binding to socket failed");
     //                                _________
     //                                   |      ____
     //                                   |       |
@@ -65,10 +65,10 @@ fn handle_connection(mut stream: TcpStream) {
             ("HTTP/1.1 404 NOT FOUND", "404.html")
         }
     };
-    let contents = fs::read_to_string(filename).unwrap();
+    let contents = fs::read_to_string(filename).expect("unable to read file to string");
     let length = contents.len();
 
     let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
-    stream.write_all(response.as_bytes()).unwrap();
+    stream.write_all(response.as_bytes()).expect("unable to write response to stream");
 }

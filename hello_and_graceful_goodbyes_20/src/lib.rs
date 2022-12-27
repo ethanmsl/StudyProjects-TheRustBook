@@ -61,7 +61,9 @@ impl ThreadPool {
         F: FnOnce() + Send + 'static,
     {
         let job = Box::new(f);
-        self.sender.send(job).unwrap();
+        self.sender
+            .send(job)
+            .expect("receiver unavailable (likley dropped)");
     }
 }
 
@@ -77,7 +79,7 @@ impl Drop for ThreadPool {
                 //                                 Seems like there ought to have been
                 //                                 a way to just take ownership of the
                 //                                 worker struct itself
-                thread.join().unwrap();
+                thread.join().expect("couldn't join on associated thread");
             }
         }
     }
@@ -91,7 +93,11 @@ struct Worker {
 impl Worker {
     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
         let thread = thread::spawn(move || loop {
-            let job = receiver.lock().unwrap().recv().unwrap();
+            let job = receiver
+                .lock()
+                .expect("mutex likely poisoned")
+                .recv()
+                .expect("sender no longer available");
 
             println!("--Worker {} got a job; executing.--", id);
 
