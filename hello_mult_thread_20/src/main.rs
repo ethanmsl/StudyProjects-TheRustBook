@@ -15,6 +15,8 @@ use std::{
     time::Duration,
 };
 
+use hello_mult_thread_20::ThreadPool;
+
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     //                                _________
@@ -25,6 +27,8 @@ fn main() {
     //                            (generic across systems)
     //                  Note: IPv6 uses `::1` as localhost
 
+    let pool = ThreadPool::new(4);
+
     for stream in listener.incoming() {
         //                 ^ returns an iterator over connection attempts received on this
         //                   "listener"
@@ -34,7 +38,7 @@ fn main() {
         //
         let stream = stream.unwrap();
 
-        thread::spawn(|| {
+        pool.execute(|| {
             println!("Connection established!");
             handle_connection(stream);
         });
