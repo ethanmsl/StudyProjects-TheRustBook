@@ -55,6 +55,7 @@ impl ThreadPool {
         Ok(ThreadPool { workers, sender })
     }
 
+    /// delivers a closure to the ThreadPool to be executed by a worker thread
     pub fn execute<F>(&self, f: F)
     where
         F: FnOnce() + Send + 'static,
@@ -64,9 +65,27 @@ impl ThreadPool {
     }
 }
 
+impl Drop for ThreadPool {
+    fn drop(&mut self) {
+        for worker in &mut self.workers {
+            println!("Shutting down worker {}", worker.id);
+
+            if let Some(thread) = worker.thread.take() {
+                //                               ^ feels a but wonkadoo
+                //                                 a workaround to wanting ownership
+                //                                 , but working through a ref.
+                //                                 Seems like there ought to have been
+                //                                 a way to just take ownership of the
+                //                                 worker struct itself
+                thread.join().unwrap();
+            }
+        }
+    }
+}
+
 struct Worker {
     id: usize,
-    thread: thread::JoinHandle<()>,
+    thread: Option<thread::JoinHandle<()>>,
 }
 
 impl Worker {
@@ -79,6 +98,9 @@ impl Worker {
             job();
         });
 
-        Worker { id, thread }
+        Worker {
+            id,
+            thread: Some(thread),
+        }
     }
 }
