@@ -11,7 +11,7 @@ type Job = Box<dyn FnOnce() + Send + 'static>;
 
 pub struct ThreadPool {
     workers: Vec<Worker>,
-    sender: mpsc::Sender<Job>,
+    sender: Option<mpsc::Sender<Job>>,
 }
 
 /// Errors that can occur when creating a new `ThreadPool`.
@@ -52,7 +52,10 @@ impl ThreadPool {
             workers.push(Worker::new(id, Arc::clone(&receiver)));
         }
 
-        Ok(ThreadPool { workers, sender })
+        Ok(ThreadPool {
+            workers,
+            sender: Some(sender),
+        })
     }
 
     /// delivers a closure to the ThreadPool to be executed by a worker thread
@@ -62,6 +65,8 @@ impl ThreadPool {
     {
         let job = Box::new(f);
         self.sender
+            .as_ref()
+            .unwrap()
             .send(job)
             .expect("receiver unavailable (likley dropped)");
     }
@@ -69,6 +74,14 @@ impl ThreadPool {
 
 impl Drop for ThreadPool {
     fn drop(&mut self) {
+        drop(self.sender.take());
+        // |               ^ moves sender from ThreadPool and then gives it to drop
+        // |                 while leaving a `None` in its place
+        // |                 (so we can shut down possible sends first and then take
+        // |                  care of shutting down the workers)
+        // ^ closes the mpsc-channel, which will error out the `recv` calls in
+        //   all of the threads' `loop`s
+
         for worker in &mut self.workers {
             println!("Shutting down worker {}", worker.id);
 
@@ -93,15 +106,24 @@ struct Worker {
 impl Worker {
     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
         let thread = thread::spawn(move || loop {
-            let job = receiver
-                .lock()
-                .expect("mutex likely poisoned")
-                .recv()
-                .expect("sender no longer available");
+            let message = receiver.lock().expect("mutex likely poisoned").recv();
 
-            println!("--Worker {} got a job; executing.--", id);
-
-            job();
+            match message {
+                Ok(job) => {
+                    println!("--Worker {} got a job; executing.--", id);
+                    job();
+                }
+                Err(_) => {
+                    println!(
+                        "Worker {} received shutdown signal or otherwise errored out.",
+                        id
+                    );
+                    break;
+                    // would be nicer to better pass a message that causes graceful closure
+                    // rather than causing an error that could plausibly represent
+                    // multiple histories/causes
+                }
+            };
         });
 
         Worker {

@@ -29,7 +29,11 @@ fn main() {
 
     let pool = ThreadPool::build(4).expect("Failed to build ThreadPool");
 
-    for stream in listener.incoming() {
+    // for stream in listener.incoming() {
+    for stream in listener.incoming().take(3) {
+        //                 |           |
+        //                 |           |
+        //                 |           ^ just to create a(n artificial) shutdown trigger
         //                 ^ returns an iterator over connection attempts received on this
         //                   "listener"
         //                 WHERE "connection" represents the whole request&respond
@@ -43,6 +47,8 @@ fn main() {
             handle_connection(stream);
         });
     }
+
+    println!("Shutting down.");
 }
 
 fn handle_connection(mut stream: TcpStream) {
@@ -70,5 +76,7 @@ fn handle_connection(mut stream: TcpStream) {
 
     let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
-    stream.write_all(response.as_bytes()).expect("unable to write response to stream");
+    stream
+        .write_all(response.as_bytes())
+        .expect("unable to write response to stream");
 }
