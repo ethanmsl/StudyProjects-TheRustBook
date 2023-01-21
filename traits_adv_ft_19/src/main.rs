@@ -30,7 +30,7 @@ impl IteratorBespoke for Counter {
     type Item = u32;
 
     fn next(&mut self) -> Option<Self::Item> {
-        //                         ^ this is a bit confusing tome
+        //                         ^ this is a bit confusing to me
         //          as it's really just whatever type 'item' is which isn't related to,
         //          in this case, IteratorBespoke or Counter.
         //          I *think* the best way to think about it is
