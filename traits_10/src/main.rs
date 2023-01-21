@@ -25,6 +25,10 @@ fn main() {
     //       which notify() will take
     //       but is NOT considered the same as tweet
     //       for the purpose of ( T, T ) matching!!!
+    //       (later addition comment: `tweet2` may be returning a "trait object"
+    //         the story around dynamic dispatch only implementation of generics
+    //         vs an Enum treatment seems quite unfortunate
+    //         would be good to have both options)
     aggregator::notify(&tweet3);
     // aggregator::to_compare(&tweet2, &tweet3);
 
