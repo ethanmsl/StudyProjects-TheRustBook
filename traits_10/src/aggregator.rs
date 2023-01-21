@@ -68,7 +68,7 @@ pub fn friends_view<T: Summary>(item: &T) {
 // 'trait bound' syntax in a case where it's easier to read
 pub fn to_compare<T: Summary>(item1: &T, item2: &T) {
     //                        ^ note: those must both be of the same precise type
-    //                               not merely any times implementing trait
+    //                               not merely any items implementing trait
     //                               (e.g. two tweets or two newsarticles
     //                               , but not one of each)
     println!(
@@ -101,7 +101,7 @@ pub fn returns_summarizable() -> impl Summary {
 }
 
 
-// methods can be also be conditionally implemented, for structs with genetic types, for example
+// methods can be also be conditionally implemented, for structs with generic types, for example
 // e.g.:
 use std::fmt::Display;
 

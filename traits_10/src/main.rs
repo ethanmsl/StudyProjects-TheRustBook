@@ -20,7 +20,7 @@ fn main() {
         retweet: true,
     };
     let tweet3 = returns_summarizable();
-    // NOTE: ^ reutrns 'impl Symmary' ... not what I expected...
+    // NOTE: ^ returns 'impl Summary' ... not what I expected...
     //       the functions below wouldn't accept it as input
     //       which notify() will take
     //       but is NOT considered the same as tweet
